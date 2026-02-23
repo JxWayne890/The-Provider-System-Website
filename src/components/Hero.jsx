@@ -43,10 +43,13 @@ export default function Hero() {
                 </p>
 
                 <div className="hero-anim">
-                    <button className="group relative overflow-hidden rounded-[2rem] bg-accent text-white px-8 py-4 font-heading text-lg font-semibold hover:scale-[1.03] transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-lg hover:shadow-accent/25">
+                    <a
+                        href="#contact"
+                        className="group inline-block relative overflow-hidden rounded-[2rem] bg-accent text-white px-8 py-4 font-heading text-lg font-semibold hover:scale-[1.03] transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-lg hover:shadow-accent/25"
+                    >
                         <span className="relative z-10">Book a consultation</span>
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-0"></div>
-                    </button>
+                    </a>
                 </div>
             </div>
         </section>
