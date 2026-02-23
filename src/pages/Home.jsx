@@ -12,13 +12,24 @@ export default function Home() {
 
     useEffect(() => {
         if (hash) {
-            const element = document.getElementById(hash.replace('#', ''));
-            if (element) {
-                // Short timeout to ensure components are fully rendered before scrolling
-                setTimeout(() => {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-            }
+            const targetId = hash.replace('#', '');
+
+            // Larger timeout to wait for heavy animations/images to settle
+            const scrollTimer = setTimeout(() => {
+                const element = document.getElementById(targetId);
+                if (element) {
+                    const offset = 80; // Account for fixed navbar
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            }, 600);
+
+            return () => clearTimeout(scrollTimer);
         }
     }, [hash]);
 
