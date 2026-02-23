@@ -38,8 +38,8 @@ export default function Hero() {
                     </span>
                 </h1>
 
-                <p className="hero-anim font-heading text-lg md:text-xl max-w-xl text-white/80 mb-10 font-light">
-                    AI + automation systems that give business owners their time back without sacrificing peace.
+                <p className="hero-anim font-heading text-lg md:text-xl max-w-2xl text-white/80 mb-10 font-light leading-relaxed">
+                    The Provider's System is a digital architecture group specializing in high-performance SaaS applications, dynamic corporate sites, and custom internal tools. We design automated workflows and scalable software infrastructures that allow founders and operators to reclaim their time without sacrificing operational control.
                 </p>
 
                 <div className="hero-anim">

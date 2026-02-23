@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,7 +52,7 @@ const projectCategories = [
                 id: 'abilene',
                 title: 'Abilene Commercial',
                 description: 'A localized, high-conversion commercial real estate platform optimizing lead generation.',
-                image: 'https://joshrader.com/og-image.png',
+                image: 'https://abilenecommercial.com/og-image.png',
                 link: 'https://abilenecommercial.com/'
             },
             {
@@ -134,6 +135,17 @@ export default function ProjectsArchive() {
 
     return (
         <div className="h-screen bg-background overflow-hidden flex flex-col pt-32">
+            <SEO
+                title="Project Archive | Deployed Systems"
+                description="Explore our portfolio of scalable SaaS applications, high-performance static sites, and automated internal tools."
+                url="/projects"
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "CollectionPage",
+                    "name": "Project Archive - The Provider's System",
+                    "description": "Portfolio of deployed AI architectures and software systems."
+                }}
+            />
             <div className="max-w-7xl w-full mx-auto px-6 md:px-16 flex flex-col h-full">
 
                 {/* Fixed Header */}
@@ -145,8 +157,8 @@ export default function ProjectsArchive() {
                     <h1 className="font-heading font-bold text-5xl md:text-6xl text-primary tracking-tight mb-4">
                         Project Archive.
                     </h1>
-                    <p className="font-heading text-lg text-muted max-w-2xl">
-                        A comprehensive catalog of deployed architectures and internal tools.
+                    <p className="font-heading text-lg md:text-xl text-muted max-w-2xl leading-relaxed">
+                        What deployed systems has The Provider's System built? Our archive catalogs a proven track record of high-performance SaaS applications, conversion-optimized static sites, and custom internal workflow tools designed to scale operations and eliminate manual bottlenecks for our partners.
                     </p>
                 </header>
 

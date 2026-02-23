@@ -240,11 +240,16 @@ export default function Features() {
                     <div className="feature-card bg-white rounded-[2rem] p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-[400px]">
                         <div className="mb-6">
                             <h3 className="font-heading font-bold text-xl text-primary leading-tight mb-2">
-                                Automate the busywork
+                                Automate Data Extraction
                             </h3>
-                            <p className="font-heading text-muted text-sm leading-relaxed">
-                                Run smoother with fewer manual steps. Connect apps visually and mathematically.
-                            </p>
+                            <div className="font-heading text-muted text-sm leading-relaxed space-y-1">
+                                <p className="mb-2">We build custom routing systems that replace manual data entry.</p>
+                                <ul className="list-disc pl-4 space-y-1">
+                                    <li>Extract data from emails or forms</li>
+                                    <li>Apply custom business logic rules</li>
+                                    <li>Execute complex Zapier/Make workflows</li>
+                                </ul>
+                            </div>
                         </div>
                         <div className="flex-1 w-full bg-background rounded-[1.5rem] border border-muted/5 p-4 flex flex-col justify-end overflow-hidden">
                             <ShufflerCard />
@@ -255,11 +260,16 @@ export default function Features() {
                     <div className="feature-card bg-white rounded-[2rem] p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-[400px]">
                         <div className="mb-6">
                             <h3 className="font-heading font-bold text-xl text-primary leading-tight mb-2">
-                                Turn leads into follow ups
+                                Intelligent Lead Routing
                             </h3>
-                            <p className="font-heading text-muted text-sm leading-relaxed">
-                                Automatically execute outreach so money stops slipping through the cracks.
-                            </p>
+                            <div className="font-heading text-muted text-sm leading-relaxed space-y-1">
+                                <p className="mb-2">Stop losing revenue to slow response times.</p>
+                                <ul className="list-disc pl-4 space-y-1">
+                                    <li>Capture inbound leads instantly</li>
+                                    <li>Validate contact schemas</li>
+                                    <li>Trigger automated SMS/Email outreach</li>
+                                </ul>
+                            </div>
                         </div>
                         <div className="flex-1 w-full bg-background rounded-[1.5rem] border border-muted/5 p-2 overflow-hidden">
                             <TelemetryTypewriter />
@@ -270,11 +280,16 @@ export default function Features() {
                     <div className="feature-card bg-white rounded-[2rem] p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-[400px]">
                         <div className="mb-6">
                             <h3 className="font-heading font-bold text-xl text-primary leading-tight mb-2">
-                                Clean, repeatable systems
+                                Centralized Scheduling
                             </h3>
-                            <p className="font-heading text-muted text-sm leading-relaxed">
-                                Reclaim hours back every week without the organizational chaos.
-                            </p>
+                            <div className="font-heading text-muted text-sm leading-relaxed space-y-1">
+                                <p className="mb-2">Clean, repeatable systems for reclaiming hours.</p>
+                                <ul className="list-disc pl-4 space-y-1">
+                                    <li>Sync calendars automatically</li>
+                                    <li>Enforce meeting buffer protocols</li>
+                                    <li>Reduce organizational chaos</li>
+                                </ul>
+                            </div>
                         </div>
                         <div className="flex-1 w-full bg-background rounded-[1.5rem] border border-muted/5 p-4 overflow-hidden relative">
                             <ProtocolScheduler />

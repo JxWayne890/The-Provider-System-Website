@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# Specifically allow major AI crawlers for AEO
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: OmgiliBot
+Allow: /
+
+User-agent: Omgili
+Allow: /
+
+Sitemap: https://theprovidersystem.com/sitemap.xml
