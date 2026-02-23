@@ -48,7 +48,6 @@ export default function Navbar() {
 
                 <div className="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
                     <a href={getLink("#features")} className="hover:-translate-y-[1px] transition-transform">Systems</a>
-                    <a href={getLink("#philosophy")} className="hover:-translate-y-[1px] transition-transform">Philosophy</a>
                     <a href={getLink("#protocol")} className="hover:-translate-y-[1px] transition-transform">Protocol</a>
                     <Link to="/projects" className="hover:-translate-y-[1px] transition-transform">Projects</Link>
                 </div>
