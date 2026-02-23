@@ -1,26 +1,21 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import Philosophy from './components/Philosophy';
-import Protocol from './components/Protocol';
-import Projects from './components/Projects';
-import GetStarted from './components/GetStarted';
 import Footer from './components/Footer';
+import Home from './pages/Home';
+import ProjectsArchive from './pages/ProjectsArchive';
 
 function App() {
   return (
-    <div className="relative w-full min-h-screen bg-background text-dark overflow-x-hidden selection:bg-accent selection:text-white">
-      <Navbar />
-      <main>
-        <Hero />
-        <Features />
-        <Philosophy />
-        <Protocol />
-        <Projects />
-        <GetStarted />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="relative w-full min-h-screen bg-background text-dark overflow-x-hidden selection:bg-accent selection:text-white">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<ProjectsArchive />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
