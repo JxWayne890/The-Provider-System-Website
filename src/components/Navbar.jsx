@@ -42,6 +42,7 @@ export default function Navbar() {
                     <a href="#features" className="hover:-translate-y-[1px] transition-transform">Systems</a>
                     <a href="#philosophy" className="hover:-translate-y-[1px] transition-transform">Philosophy</a>
                     <a href="#protocol" className="hover:-translate-y-[1px] transition-transform">Protocol</a>
+                    <a href="#projects" className="hover:-translate-y-[1px] transition-transform">Projects</a>
                 </div>
 
                 <a
