@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 
 export default function SEO({ title, description, url, image, schema }) {
     // Base configuration
@@ -15,35 +15,67 @@ export default function SEO({ title, description, url, image, schema }) {
         image: image || defaultImage,
     };
 
-    return (
-        <Helmet>
-            {/* Primary Meta Tags */}
-            <title>{seo.title}</title>
-            <meta name="title" content={seo.title} />
-            <meta name="description" content={seo.description} />
-            <link rel="canonical" href={seo.url} />
+    useEffect(() => {
+        // Update standard meta tags
+        document.title = seo.title;
 
-            {/* Open Graph / Facebook */}
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={seo.url} />
-            <meta property="og:title" content={seo.title} />
-            <meta property="og:description" content={seo.description} />
-            <meta property="og:image" content={seo.image} />
+        const setMetaTag = (attr, key, content) => {
+            if (!content) return;
+            let element = document.querySelector(`meta[${attr}="${key}"]`);
+            if (!element) {
+                element = document.createElement('meta');
+                element.setAttribute(attr, key);
+                document.head.appendChild(element);
+            }
+            element.setAttribute('content', content);
+        };
 
-            {/* Twitter */}
-            <meta property="twitter:card" content="summary_large_image" />
-            <meta property="twitter:url" content={seo.url} />
-            <meta property="twitter:title" content={seo.title} />
-            <meta property="twitter:description" content={seo.description} />
-            <meta property="twitter:image" content={seo.image} />
+        const setLinkTag = (rel, href) => {
+            if (!href) return;
+            let element = document.querySelector(`link[rel="${rel}"]`);
+            if (!element) {
+                element = document.createElement('link');
+                element.setAttribute('rel', rel);
+                document.head.appendChild(element);
+            }
+            element.setAttribute('href', href);
+        };
 
-            {/* AEO / LLM Context Directives */}
-            {/* Schema.org JSON-LD structured data for search engines and answer engines (AEO) */}
-            {schema && (
-                <script type="application/ld+json">
-                    {JSON.stringify(schema)}
-                </script>
-            )}
-        </Helmet>
-    );
+        // Standard Meta
+        setMetaTag('name', 'title', seo.title);
+        setMetaTag('name', 'description', seo.description);
+        setLinkTag('canonical', seo.url);
+
+        // Open Graph
+        setMetaTag('property', 'og:type', 'website');
+        setMetaTag('property', 'og:url', seo.url);
+        setMetaTag('property', 'og:title', seo.title);
+        setMetaTag('property', 'og:description', seo.description);
+        setMetaTag('property', 'og:image', seo.image);
+
+        // Twitter
+        setMetaTag('property', 'twitter:card', 'summary_large_image');
+        setMetaTag('property', 'twitter:url', seo.url);
+        setMetaTag('property', 'twitter:title', seo.title);
+        setMetaTag('property', 'twitter:description', seo.description);
+        setMetaTag('property', 'twitter:image', seo.image);
+
+        // JSON-LD Schema
+        let scriptElement = document.querySelector('#seo-schema');
+        if (schema) {
+            if (!scriptElement) {
+                scriptElement = document.createElement('script');
+                scriptElement.type = 'application/ld+json';
+                scriptElement.id = 'seo-schema';
+                document.head.appendChild(scriptElement);
+            }
+            scriptElement.textContent = JSON.stringify(schema);
+        } else if (scriptElement) {
+            scriptElement.remove();
+        }
+
+    }, [seo.title, seo.description, seo.url, seo.image, schema]);
+
+    // React 19 allows title/meta in standard component returns, but standard useEffect injection is safer for deep replacements in SPAs
+    return null;
 }
