@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import Protocol from '../components/Protocol';
@@ -7,6 +8,20 @@ import GetStarted from '../components/GetStarted';
 import SEO from '../components/SEO';
 
 export default function Home() {
+    const { hash } = useLocation();
+
+    useEffect(() => {
+        if (hash) {
+            const element = document.getElementById(hash.replace('#', ''));
+            if (element) {
+                // Short timeout to ensure components are fully rendered before scrolling
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }, [hash]);
+
     return (
         <main>
             <SEO
