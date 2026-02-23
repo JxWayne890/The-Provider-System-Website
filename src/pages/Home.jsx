@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import Protocol from '../components/Protocol';
+import DiagnosticTerminal from '../components/DiagnosticTerminal';
 import ProjectCarousel from '../components/ProjectCarousel';
 import GetStarted from '../components/GetStarted';
 import SEO from '../components/SEO';
@@ -57,6 +58,7 @@ export default function Home() {
             />
             <Hero />
             <Features />
+            <DiagnosticTerminal />
             <Protocol />
             <ProjectCarousel />
             <GetStarted />
