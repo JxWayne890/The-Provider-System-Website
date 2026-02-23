@@ -84,20 +84,14 @@ const projectCategories = [
 
 export default function ProjectsArchive() {
     const [activeCategory, setActiveCategory] = useState(projectCategories[0].category);
-    const scrollRefs = useRef({});
+    const scrollContainerRef = useRef(null);
 
     const scrollToCategory = (category) => {
         setActiveCategory(category);
         const element = document.getElementById(`cat-${category.replace(/\s+/g, '-').toLowerCase()}`);
-        if (element) {
-            const offset = 100; // Account for fixed navbar
-            const bodyRect = document.body.getBoundingClientRect().top;
-            const elementRect = element.getBoundingClientRect().top;
-            const elementPosition = elementRect - bodyRect;
-            const offsetPosition = elementPosition - offset;
-
-            window.scrollTo({
-                top: offsetPosition,
+        if (element && scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTo({
+                top: element.offsetTop - 40,
                 behavior: 'smooth'
             });
         }
@@ -105,18 +99,23 @@ export default function ProjectsArchive() {
 
     useEffect(() => {
         const observers = [];
+        const container = scrollContainerRef.current;
 
         projectCategories.forEach((group) => {
             const id = `cat-${group.category.replace(/\s+/g, '-').toLowerCase()}`;
             const element = document.getElementById(id);
-            if (element) {
+            if (element && container) {
                 const observer = new IntersectionObserver(
                     ([entry]) => {
                         if (entry.isIntersecting) {
                             setActiveCategory(group.category);
                         }
                     },
-                    { threshold: 0.2, rootMargin: '-10% 0px -70% 0px' }
+                    {
+                        threshold: 0.1,
+                        root: container,
+                        rootMargin: '-5% 0px -80% 0px'
+                    }
                 );
                 observer.observe(element);
                 observers.push(observer);
@@ -127,31 +126,33 @@ export default function ProjectsArchive() {
     }, []);
 
     return (
-        <div className="pt-32 pb-20 bg-background min-h-screen">
-            <div className="max-w-7xl mx-auto px-6 md:px-16">
-                <header className="mb-16">
-                    <Link to="/" className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors mb-8 font-heading text-sm font-semibold">
+        <div className="h-screen bg-background overflow-hidden flex flex-col pt-32">
+            <div className="max-w-7xl w-full mx-auto px-6 md:px-16 flex flex-col h-full">
+
+                {/* Fixed Header */}
+                <header className="mb-12 flex-none">
+                    <Link to="/" className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors mb-6 font-heading text-sm font-semibold">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         Back to Systems
                     </Link>
-                    <h1 className="font-heading font-bold text-5xl md:text-7xl text-primary tracking-tight mb-4">
+                    <h1 className="font-heading font-bold text-5xl md:text-6xl text-primary tracking-tight mb-4">
                         Project Archive.
                     </h1>
-                    <p className="font-heading text-xl text-muted max-w-2xl">
-                        A comprehensive catalog of deployed architectures, internal tools, and high-performance digital environments.
+                    <p className="font-heading text-lg text-muted max-w-2xl">
+                        A comprehensive catalog of deployed architectures and internal tools.
                     </p>
                 </header>
 
-                <div className="flex flex-col md:flex-row gap-12 items-start">
-                    {/* Left Column: Category Sidebar */}
-                    <aside className="md:w-64 flex-none sticky top-32 z-20">
+                <div className="flex flex-col md:flex-row gap-12 items-start flex-1 min-h-0 pb-12">
+                    {/* Left Column: Fixed Category Sidebar */}
+                    <aside className="md:w-64 flex-none hidden md:block">
                         <nav className="flex flex-col gap-2">
                             {projectCategories.map((group) => (
                                 <button
                                     key={group.category}
                                     onClick={() => scrollToCategory(group.category)}
-                                    className={`text-left px-4 py-3 rounded-xl font-heading font-bold text-sm transition-all ${activeCategory === group.category
-                                            ? 'bg-primary text-white shadow-lg translate-x-1'
+                                    className={`text-left px-5 py-3.5 rounded-2xl font-heading font-bold text-sm transition-all ${activeCategory === group.category
+                                            ? 'bg-primary text-white shadow-xl translate-x-1'
                                             : 'text-muted hover:bg-primary/5 hover:translate-x-1'
                                         }`}
                                 >
@@ -161,16 +162,19 @@ export default function ProjectsArchive() {
                         </nav>
                     </aside>
 
-                    {/* Right Column: Project Grid */}
-                    <div className="flex-1 space-y-24">
+                    {/* Right Column: Scrollable Project Pane */}
+                    <div
+                        ref={scrollContainerRef}
+                        className="flex-1 h-full overflow-y-auto space-y-24 pr-4 hide-scrollbar scroll-smooth"
+                    >
                         {projectCategories.map((group) => (
                             <section
                                 key={group.category}
                                 id={`cat-${group.category.replace(/\s+/g, '-').toLowerCase()}`}
-                                className="scroll-mt-32"
+                                className="first:pt-0"
                             >
                                 <div className="flex items-center gap-4 mb-8">
-                                    <h2 className="font-heading font-bold text-2xl text-primary whitespace-nowrap">
+                                    <h2 className="font-heading font-bold text-xl text-primary whitespace-nowrap uppercase tracking-widest">
                                         {group.category}
                                     </h2>
                                     <div className="h-[1px] w-full bg-primary/10"></div>
@@ -179,7 +183,7 @@ export default function ProjectsArchive() {
                                     {group.projects.map((project) => (
                                         <div
                                             key={project.id}
-                                            className="group relative flex flex-col h-[400px] rounded-[2rem] overflow-hidden bg-primary shadow-xl hover:shadow-2xl transition-all duration-500 border border-primary/5"
+                                            className="group relative flex flex-col h-[380px] rounded-[2.5rem] overflow-hidden bg-primary shadow-lg hover:shadow-2xl transition-all duration-500 border border-primary/5"
                                         >
                                             {project.image ? (
                                                 <div className="absolute inset-0 w-full h-full transform transition-transform duration-700 group-hover:scale-105">
@@ -223,6 +227,16 @@ export default function ProjectsArchive() {
                     </div>
                 </div>
             </div>
+
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                .hide-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .scroll-smooth {
+                    scroll-behavior: smooth;
+                }
+            `}} />
         </div>
     );
 }
