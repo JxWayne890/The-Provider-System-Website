@@ -60,6 +60,13 @@ const projectCategories = [
                 description: 'Regional commercial real estate platform built for speed and SEO.',
                 image: 'https://texas-commercial.com/og-image.png',
                 link: 'https://texas-commercial.com/'
+            },
+            {
+                id: 'scalifying',
+                title: 'Scalifying AI',
+                description: 'Advanced AI automation and consulting platform for scaling operations.',
+                image: 'https://i.imgur.com/4LpuspF.png',
+                link: 'https://scalifyingai.com/'
             }
         ]
     },
@@ -91,7 +98,7 @@ export default function ProjectsArchive() {
         const element = document.getElementById(`cat-${category.replace(/\s+/g, '-').toLowerCase()}`);
         if (element && scrollContainerRef.current) {
             scrollContainerRef.current.scrollTo({
-                top: element.offsetTop - 40,
+                top: element.offsetTop,
                 behavior: 'smooth'
             });
         }
@@ -152,8 +159,8 @@ export default function ProjectsArchive() {
                                     key={group.category}
                                     onClick={() => scrollToCategory(group.category)}
                                     className={`text-left px-5 py-3.5 rounded-2xl font-heading font-bold text-sm transition-all ${activeCategory === group.category
-                                            ? 'bg-primary text-white shadow-xl translate-x-1'
-                                            : 'text-muted hover:bg-primary/5 hover:translate-x-1'
+                                        ? 'bg-primary text-white shadow-xl translate-x-1'
+                                        : 'text-muted hover:bg-primary/5 hover:translate-x-1'
                                         }`}
                                 >
                                     {group.category}
