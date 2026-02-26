@@ -95,7 +95,7 @@ export default function ProjectCarousel() {
                 {premierProjects.map((project) => (
                     <div
                         key={project.id}
-                        className="carousel-item flex-none w-[85vw] md:w-[400px] h-[450px] rounded-[2rem] overflow-hidden bg-primary relative snap-center isolate group shadow-xl"
+                        className="carousel-item flex-none w-[85vw] md:w-[400px] h-[320px] md:h-[450px] rounded-2xl md:rounded-[2rem] overflow-hidden bg-primary relative snap-center isolate group shadow-xl"
                     >
                         {project.image ? (
                             <div className="absolute inset-0 w-full h-full transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105">

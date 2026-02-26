@@ -130,7 +130,7 @@ export default function Protocol() {
                     style={{ zIndex: i + 10 }}
                 >
                     <div className={cn(
-                        "w-[90vw] max-w-5xl h-[70vh] rounded-[3rem] border p-8 md:p-16 flex flex-col md:flex-row gap-12 overflow-hidden relative shadow-2xl",
+                        "w-[90vw] max-w-5xl h-[50vh] md:h-[70vh] rounded-3xl md:rounded-[3rem] border p-6 md:p-16 flex flex-col md:flex-row gap-6 md:gap-12 overflow-hidden relative shadow-2xl",
                         "bg-dark border-muted/20"
                     )}>
 

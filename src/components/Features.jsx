@@ -237,7 +237,7 @@ export default function Features() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
                     {/* Card 1 */}
-                    <div className="feature-card bg-white rounded-[2rem] p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-[400px]">
+                    <div className="feature-card bg-white rounded-2xl md:rounded-[2rem] p-5 md:p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-auto min-h-[320px] md:h-[400px]">
                         <div className="mb-6">
                             <h3 className="font-heading font-bold text-xl text-primary leading-tight mb-2">
                                 Automate Data Extraction
@@ -257,7 +257,7 @@ export default function Features() {
                     </div>
 
                     {/* Card 2 */}
-                    <div className="feature-card bg-white rounded-[2rem] p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-[400px]">
+                    <div className="feature-card bg-white rounded-2xl md:rounded-[2rem] p-5 md:p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-auto min-h-[320px] md:h-[400px]">
                         <div className="mb-6">
                             <h3 className="font-heading font-bold text-xl text-primary leading-tight mb-2">
                                 Intelligent Lead Routing
@@ -277,7 +277,7 @@ export default function Features() {
                     </div>
 
                     {/* Card 3 */}
-                    <div className="feature-card bg-white rounded-[2rem] p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-[400px]">
+                    <div className="feature-card bg-white rounded-2xl md:rounded-[2rem] p-5 md:p-8 border border-muted/10 shadow-xl shadow-muted/5 flex flex-col h-auto min-h-[320px] md:h-[400px]">
                         <div className="mb-6">
                             <h3 className="font-heading font-bold text-xl text-primary leading-tight mb-2">
                                 Centralized Scheduling
