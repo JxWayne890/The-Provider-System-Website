@@ -28,6 +28,13 @@ const projectCategories = [
                 description: 'A responsive, dynamic web presence built for industrial and commercial scale operations.',
                 image: 'https://i.imgur.com/lSxsj0X.png',
                 link: 'https://www.mansfieldmining.com/'
+            },
+            {
+                id: 'charged-up',
+                title: 'Charged Up Nutrition',
+                description: 'A dynamic, high-energy web presence designed to drive sales and customer engagement for a nutrition brand.',
+                image: '', // Needs an image later
+                link: 'https://chargedupnutrition.biz/'
             }
         ]
     },
