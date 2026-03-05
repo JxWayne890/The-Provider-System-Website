@@ -198,37 +198,40 @@ export default function ProjectsArchive() {
                                     </h2>
                                     <div className="h-[1px] w-full bg-primary/10"></div>
                                 </div>
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <div className="flex flex-col gap-6">
                                     {group.projects.map((project) => (
                                         <div
                                             key={project.id}
-                                            className="group relative flex flex-col h-[380px] rounded-[2.5rem] overflow-hidden bg-primary shadow-lg hover:shadow-2xl transition-all duration-500 border border-primary/5"
+                                            className="group flex flex-col sm:flex-row h-auto sm:h-[200px] rounded-3xl overflow-hidden bg-primary shadow-md hover:shadow-xl transition-all duration-500 border border-primary/10"
                                         >
+                                            {/* Left side: Image Thumbnail */}
                                             {project.image ? (
-                                                <div className="absolute inset-0 w-full h-full transform transition-transform duration-700 group-hover:scale-105">
-                                                    <div className="absolute inset-0 bg-primary/20 mix-blend-multiply z-10"></div>
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent z-20"></div>
+                                                <div className="relative w-full sm:w-[280px] h-[200px] sm:h-full flex-shrink-0 overflow-hidden">
+                                                    <div className="absolute inset-0 bg-primary/10 mix-blend-multiply z-10 transition-opacity group-hover:opacity-0 duration-500"></div>
                                                     <img
                                                         src={project.image}
                                                         alt={project.title}
-                                                        className="w-full h-full object-cover"
+                                                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-primary to-[#050810]"></div>
+                                                <div className="relative w-full sm:w-[280px] h-[200px] sm:h-full flex-shrink-0 bg-gradient-to-br from-primary/80 to-[#050810]"></div>
                                             )}
 
-                                            <div className="relative z-30 mt-auto p-8 flex flex-col gap-3">
-                                                <h3 className="font-heading text-white font-bold text-2xl leading-tight">{project.title}</h3>
-                                                <p className="font-heading text-white/70 text-sm leading-relaxed line-clamp-2">
+                                            {/* Right side: Content */}
+                                            <div className="flex-1 p-6 md:p-8 flex flex-col justify-center bg-white">
+                                                <h3 className="font-heading text-primary font-bold text-xl md:text-2xl leading-tight mb-3">
+                                                    {project.title}
+                                                </h3>
+                                                <p className="font-heading text-muted text-sm leading-relaxed mb-6 max-w-2xl">
                                                     {project.description}
                                                 </p>
-                                                <div className="pt-2">
+                                                <div className="mt-auto">
                                                     <a
                                                         href={project.link}
                                                         target={project.link === '#contact' ? '_self' : '_blank'}
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 text-accent font-heading font-bold text-sm group/link"
+                                                        className="inline-flex items-center gap-2 text-accent font-heading font-bold text-sm group/link hover:text-accent/80 transition-colors"
                                                     >
                                                         <span>{project.link === '#contact' ? 'Inquire for Details' : 'Explore System'}</span>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover/link:translate-x-1 transition-transform">
