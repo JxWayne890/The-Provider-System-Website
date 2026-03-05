@@ -198,15 +198,15 @@ export default function ProjectsArchive() {
                                     </h2>
                                     <div className="h-[1px] w-full bg-primary/10"></div>
                                 </div>
-                                <div className="flex flex-col gap-6">
+                                <div className="flex flex-col gap-4 sm:gap-6">
                                     {group.projects.map((project) => (
                                         <div
                                             key={project.id}
-                                            className="group flex flex-col sm:flex-row h-auto sm:h-[200px] rounded-3xl overflow-hidden bg-primary shadow-md hover:shadow-xl transition-all duration-500 border border-primary/10"
+                                            className="group flex flex-row sm:flex-row h-[120px] sm:h-auto md:h-[200px] rounded-2xl sm:rounded-3xl overflow-hidden bg-primary shadow-sm hover:shadow-xl transition-all duration-500 border border-primary/10"
                                         >
                                             {/* Left side: Image Thumbnail */}
                                             {project.image ? (
-                                                <div className="relative w-full sm:w-[280px] h-[200px] sm:h-full flex-shrink-0 overflow-hidden">
+                                                <div className="relative w-[120px] sm:w-[200px] md:w-[280px] h-full flex-shrink-0 overflow-hidden bg-[#050810]">
                                                     <div className="absolute inset-0 bg-primary/10 mix-blend-multiply z-10 transition-opacity group-hover:opacity-0 duration-500"></div>
                                                     <img
                                                         src={project.image}
@@ -215,15 +215,15 @@ export default function ProjectsArchive() {
                                                     />
                                                 </div>
                                             ) : (
-                                                <div className="relative w-full sm:w-[280px] h-[200px] sm:h-full flex-shrink-0 bg-gradient-to-br from-primary/80 to-[#050810]"></div>
+                                                <div className="relative w-[120px] sm:w-[200px] md:w-[280px] h-full flex-shrink-0 bg-gradient-to-br from-primary/80 to-[#050810]"></div>
                                             )}
 
                                             {/* Right side: Content */}
-                                            <div className="flex-1 p-6 md:p-8 flex flex-col justify-center bg-white">
-                                                <h3 className="font-heading text-primary font-bold text-xl md:text-2xl leading-tight mb-3">
+                                            <div className="flex-1 p-3 sm:p-5 md:p-8 flex flex-col justify-center bg-white min-w-0">
+                                                <h3 className="font-heading text-primary font-bold text-base sm:text-xl md:text-2xl leading-tight sm:mb-2 truncate sm:whitespace-normal">
                                                     {project.title}
                                                 </h3>
-                                                <p className="font-heading text-muted text-sm leading-relaxed mb-6 max-w-2xl">
+                                                <p className="font-heading text-muted text-xs sm:text-sm leading-relaxed mb-2 sm:mb-6 max-w-2xl hidden sm:block line-clamp-2 md:line-clamp-none">
                                                     {project.description}
                                                 </p>
                                                 <div className="mt-auto">
@@ -231,10 +231,10 @@ export default function ProjectsArchive() {
                                                         href={project.link}
                                                         target={project.link === '#contact' ? '_self' : '_blank'}
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 text-accent font-heading font-bold text-sm group/link hover:text-accent/80 transition-colors"
+                                                        className="inline-flex items-center gap-1 sm:gap-2 text-accent font-heading font-bold text-[11px] sm:text-sm group/link hover:text-accent/80 transition-colors"
                                                     >
                                                         <span>{project.link === '#contact' ? 'Inquire for Details' : 'Explore System'}</span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover/link:translate-x-1 transition-transform">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover/link:translate-x-1 transition-transform sm:w-4 sm:h-4">
                                                             <line x1="5" y1="12" x2="19" y2="12"></line>
                                                             <polyline points="12 5 19 12 12 19"></polyline>
                                                         </svg>
