@@ -33,7 +33,7 @@ const projectCategories = [
                 id: 'charged-up',
                 title: 'Charged Up Nutrition',
                 description: 'A dynamic, high-energy web presence designed to drive sales and customer engagement for a nutrition brand.',
-                image: '', // Needs an image later
+                image: 'https://chargedupnutrition.biz/og-image.png',
                 link: 'https://chargedupnutrition.biz/'
             }
         ]
