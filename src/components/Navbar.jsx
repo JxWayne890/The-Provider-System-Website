@@ -51,6 +51,7 @@ export default function Navbar() {
                     <a href={getLink("#protocol")} className="hover:-translate-y-[1px] transition-transform">Protocol</a>
                     <Link to="/projects" className="hover:-translate-y-[1px] transition-transform">Projects</Link>
                     <Link to="/diagnostic" className="hover:-translate-y-[1px] transition-transform">Diagnostic</Link>
+                    <Link to="/faq" className="hover:-translate-y-[1px] transition-transform">FAQ</Link>
                 </div>
 
                 <a

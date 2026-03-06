@@ -31,7 +31,7 @@ export default function Footer() {
                         <Link to="/#protocol" className="hover:text-accent transition-colors font-heading">Protocol</Link>
                         <Link to="/projects" className="hover:text-accent transition-colors font-heading">Projects</Link>
                         <Link to="/diagnostic" className="hover:text-accent transition-colors font-heading">System Diagnostic</Link>
-                        <Link to="/#faq" className="hover:text-accent transition-colors font-heading">FAQ</Link>
+                        <Link to="/faq" className="hover:text-accent transition-colors font-heading">FAQ</Link>
                         <Link to="/#contact" className="hover:text-accent transition-colors font-heading">Contact</Link>
                     </div>
 

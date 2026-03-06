@@ -4,7 +4,6 @@ import Hero from '../components/Hero';
 import Features from '../components/Features';
 import Protocol from '../components/Protocol';
 import ProjectCarousel from '../components/ProjectCarousel';
-import FAQ from '../components/FAQ';
 import GetStarted from '../components/GetStarted';
 import SEO from '../components/SEO';
 
@@ -139,19 +138,6 @@ export default function Home() {
             "provider": { "@id": "https://theprovidersystem.com/#organization" },
             "serviceType": "Software as a Service Development",
             "description": "High-performance, fully deployed SaaS applications and internal tools built with modern frameworks for speed, scalability, and operational control."
-        },
-        // FAQPage
-        {
-            "@type": "FAQPage",
-            "@id": "https://theprovidersystem.com/#faq",
-            "mainEntity": homeFaqData.map(faq => ({
-                "@type": "Question",
-                "name": faq.question,
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": faq.answer
-                }
-            }))
         }
     ];
 
@@ -181,7 +167,6 @@ export default function Home() {
 
             <Protocol />
             <ProjectCarousel />
-            <FAQ faqs={homeFaqData} />
             <GetStarted />
         </main>
     );
