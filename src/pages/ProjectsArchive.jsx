@@ -75,6 +75,13 @@ const projectCategories = [
                 description: 'Advanced AI automation and consulting platform for scaling operations.',
                 image: 'https://i.imgur.com/4LpuspF.png',
                 link: 'https://scalifyingai.com/'
+            },
+            {
+                id: 'weathersbee',
+                title: 'Weathersbee Electric Co.',
+                description: 'A lightning-fast static site for San Angelo\'s premier electrical rebuilders, showcasing 90+ years of industrial expertise.',
+                image: '/images/projects/weathersbee.png',
+                link: 'https://weathersbeeelectric.com/'
             }
         ]
     },
