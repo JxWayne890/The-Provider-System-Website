@@ -19,7 +19,7 @@ export default async function handler(req, res) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                from: 'The Provider\'s System <theprovidersystem@gmail.com>',
+                from: 'The Provider\'s System <onboarding@resend.dev>',
                 to: 'theprovidersystem@gmail.com',
                 subject: `New Inquiry from ${name}`,
                 reply_to: email,

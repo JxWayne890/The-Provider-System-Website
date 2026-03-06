@@ -43,6 +43,12 @@ export default function GetStarted() {
                 body: JSON.stringify(formData),
             });
 
+            // Check if response is actually JSON before parsing
+            const contentType = res.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                throw new Error("API route not found. If testing locally, use 'npx vercel dev'.");
+            }
+
             const data = await res.json();
 
             if (!res.ok) {
@@ -72,16 +78,27 @@ export default function GetStarted() {
                     Stop leaking revenue through manual chaos. Send us a message to start your system audit.
                 </p>
 
-                {status === 'success' ? (
-                    <div className="cta-elem w-full max-w-xl bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-green-200 text-center flex flex-col items-center gap-4">
-                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                            <CheckCircle2 className="w-8 h-8 text-green-600" />
+                <div className="cta-elem w-full max-w-xl bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-muted/10 text-left relative overflow-hidden">
+                    {/* Success Overlay */}
+                    {status === 'success' && (
+                        <div className="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-500">
+                            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                                <CheckCircle2 className="w-10 h-10 text-green-600" />
+                            </div>
+                            <h3 className="font-heading font-bold text-3xl text-primary mb-4">Message Received</h3>
+                            <p className="font-heading text-muted text-lg leading-relaxed">
+                                We've successfully logged your inquiry. Our team will reach out to you within 24 hours.
+                            </p>
+                            <button
+                                onClick={() => setStatus('idle')}
+                                className="mt-8 font-data text-xs uppercase tracking-widest text-accent hover:text-primary transition-colors"
+                            >
+                                Send another message
+                            </button>
                         </div>
-                        <h3 className="font-heading font-bold text-2xl text-primary">Message Sent</h3>
-                        <p className="font-heading text-muted">We'll get back to you within 24 hours. Check your inbox for a confirmation.</p>
-                    </div>
-                ) : (
-                    <form onSubmit={handleSubmit} className="cta-elem w-full max-w-xl bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-muted/10 text-left">
+                    )}
+
+                    <form onSubmit={handleSubmit} className={status === 'success' ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}>
                         <div className="space-y-6">
                             <div>
                                 <label htmlFor="contact-name" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">Full Name</label>
@@ -90,10 +107,11 @@ export default function GetStarted() {
                                     name="name"
                                     type="text"
                                     required
+                                    disabled={status === 'sending'}
                                     value={formData.name}
                                     onChange={handleChange}
                                     placeholder="John Doe"
-                                    className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors"
+                                    className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
                                 />
                             </div>
                             <div>
@@ -103,10 +121,11 @@ export default function GetStarted() {
                                     name="email"
                                     type="email"
                                     required
+                                    disabled={status === 'sending'}
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="john@business.com"
-                                    className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors"
+                                    className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
                                 />
                             </div>
                             <div>
@@ -116,33 +135,45 @@ export default function GetStarted() {
                                     name="message"
                                     rows="4"
                                     required
+                                    disabled={status === 'sending'}
                                     value={formData.message}
                                     onChange={handleChange}
                                     placeholder="Tell us about your current bottlenecks..."
-                                    className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors resize-none"
+                                    className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors resize-none disabled:opacity-50"
                                 ></textarea>
                             </div>
 
                             {status === 'error' && (
-                                <div className="flex items-center gap-3 bg-red-50 text-red-700 px-5 py-3 rounded-xl text-sm font-heading">
-                                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                                    <span>{errorMsg}</span>
+                                <div className="flex items-start gap-3 bg-red-50 text-red-700 p-4 rounded-xl text-sm font-heading border border-red-100 animate-in slide-in-from-top-2">
+                                    <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                                    <div>
+                                        <p className="font-bold mb-1">Submission Failed</p>
+                                        <p className="opacity-80">{errorMsg}</p>
+                                    </div>
                                 </div>
                             )}
 
                             <button
                                 type="submit"
                                 disabled={status === 'sending'}
-                                className="group relative w-full overflow-hidden rounded-2xl bg-accent text-white py-5 font-heading text-lg font-bold hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-xl hover:shadow-accent/40 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                                className="group relative w-full overflow-hidden rounded-2xl bg-accent text-white py-5 font-heading text-lg font-bold hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-xl hover:shadow-accent/40 disabled:opacity-60 disabled:cursor-wait disabled:hover:scale-100"
                             >
-                                <span className="relative z-10 transition-colors group-hover:text-primary">
-                                    {status === 'sending' ? 'Sending...' : 'Send Message'}
+                                <span className="relative z-10 transition-colors group-hover:text-primary flex items-center justify-center gap-3">
+                                    {status === 'sending' ? (
+                                        <>
+                                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Sending System Data...
+                                        </>
+                                    ) : 'Send Message'}
                                 </span>
                                 <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-0"></div>
                             </button>
                         </div>
                     </form>
-                )}
+                </div>
 
             </div>
         </section>
