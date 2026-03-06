@@ -26,6 +26,7 @@ const protocols = [
     }
 ];
 
+// Simplified SVGs tailored for smaller card heights
 const ConcentricCircles = () => (
     <svg viewBox="0 0 100 100" className="w-full h-full opacity-40 animate-[spin_20s_linear_infinite]">
         <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 2" />
@@ -37,7 +38,7 @@ const ConcentricCircles = () => (
 
 const LaserGrid = () => (
     <div className="relative w-full h-full opacity-50 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#111827_100%)] z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#111827_100%)] z-10" />
         <div
             className="absolute w-[200%] h-[200%] rotate-45"
             style={{
@@ -48,8 +49,8 @@ const LaserGrid = () => (
         <div className="absolute top-0 left-0 w-full h-[2px] bg-accent shadow-[0_0_15px_#FF9F1C] z-20 animate-[scan_3s_ease-in-out_infinite_alternate]" />
         <style>{`
       @keyframes scan {
-        0% { transform: translateY(-50px); }
-        100% { transform: translateY(400px); }
+        0% { transform: translateY(-30px); }
+        100% { transform: translateY(200px); }
       }
     `}</style>
     </div>
@@ -57,7 +58,7 @@ const LaserGrid = () => (
 
 const Waveform = () => (
     <div className="w-full h-full flex items-center justify-center opacity-60">
-        <svg viewBox="0 0 200 100" className="w-full">
+        <svg viewBox="0 0 200 100" className="w-full relative top-4">
             <path
                 d="M 0 50 L 50 50 L 60 20 L 70 80 L 80 50 L 120 50 L 130 10 L 140 90 L 150 50 L 200 50"
                 fill="none"
@@ -81,81 +82,57 @@ export default function Protocol() {
 
     useEffect(() => {
         let ctx = gsap.context(() => {
-            const cards = gsap.utils.toArray('.protocol-card');
-
-            cards.forEach((card, i) => {
-                // Create ScrollTrigger for pinning each card
-                ScrollTrigger.create({
-                    trigger: card,
-                    start: "top top",
-                    endTrigger: containerRef.current,
-                    end: "bottom bottom",
-                    pin: true,
-                    pinSpacing: false,
-                });
-
-                // Animation for the card immediately below transitioning it off
-                if (i < cards.length - 1) {
-                    gsap.to(card, {
-                        scale: 0.9,
-                        opacity: 0.2,
-                        filter: "blur(10px)",
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: cards[i + 1],
-                            start: "top bottom",
-                            end: "top top",
-                            scrub: true,
-                        }
-                    });
+            gsap.fromTo('.protocol-card',
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: containerRef.current,
+                        start: "top 80%",
+                    }
                 }
-            });
-
+            );
         }, containerRef);
-
         return () => ctx.revert();
     }, []);
 
     return (
-        <section id="protocol" ref={containerRef} className="relative w-full bg-primary pt-10">
-
-            <div className="h-[20vh] flex items-center justify-center">
-                <h2 className="font-heading font-bold text-4xl text-white">System Deployment Protocol</h2>
-            </div>
-
-            {protocols.map((protocol, i) => (
-                <div
-                    key={protocol.step}
-                    className="protocol-card h-[100vh] w-full flex items-center justify-center sticky top-0"
-                    style={{ zIndex: i + 10 }}
-                >
-                    <div className={cn(
-                        "w-[90vw] max-w-5xl h-[50vh] md:h-[70vh] rounded-3xl md:rounded-[3rem] border p-6 md:p-16 flex flex-col md:flex-row gap-6 md:gap-12 overflow-hidden relative shadow-2xl",
-                        "bg-dark border-muted/20"
-                    )}>
-
-                        <div className="flex-1 flex flex-col justify-center relative z-20">
-                            <span className="font-data text-accent text-lg mb-6 block">PHASE {protocol.step}</span>
-                            <h3 className="font-heading text-5xl md:text-7xl font-bold text-white mb-6 uppercase tracking-tight">
-                                {protocol.title}
-                            </h3>
-                            <p className="font-heading text-xl text-white/50 max-w-lg">
-                                {protocol.desc}
-                            </p>
-                        </div>
-
-                        <div className="flex-1 relative flex items-center justify-center text-white/10 z-10 w-full h-full">
-                            {protocol.type === 'concentric' && <ConcentricCircles />}
-                            {protocol.type === 'laser' && <LaserGrid />}
-                            {protocol.type === 'waveform' && <Waveform />}
-                        </div>
-
-                    </div>
+        <section id="protocol" ref={containerRef} className="py-24 px-6 md:px-16 bg-primary flex flex-col items-center">
+            <div className="max-w-7xl mx-auto w-full">
+                <div className="text-center mb-16">
+                    <h2 className="protocol-card font-heading font-bold text-4xl md:text-5xl text-white">System Deployment Protocol</h2>
                 </div>
-            ))}
 
-            {/* Spacer to allow scrolling past the last pinned card */}
-            <div className="h-[50vh] bg-primary relative z-[99]" />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {protocols.map((protocol) => (
+                        <div
+                            key={protocol.step}
+                            className={cn(
+                                "protocol-card relative flex flex-col h-[400px] rounded-[2rem] border p-8 overflow-hidden shadow-2xl",
+                                "bg-dark border-muted/20 hover:border-accent/40 transition-colors duration-500 group"
+                            )}
+                        >
+                            <div className="relative z-20 flex-1">
+                                <span className="font-data text-accent text-sm md:text-xs uppercase tracking-widest mb-4 block opacity-80 group-hover:opacity-100 transition-opacity">
+                                    PHASE {protocol.step}
+                                </span>
+                                <h3 className="font-heading text-3xl font-bold text-white mb-3 uppercase tracking-tight">
+                                    {protocol.title}
+                                </h3>
+                                <p className="font-heading text-base text-white/50 leading-relaxed">
+                                    {protocol.desc}
+                                </p>
+                            </div>
+
+                            <div className="absolute inset-0 pointer-events-none mt-auto h-[70%] text-white/10 z-10 flex items-end opacity-50 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out">
+                                {protocol.type === 'concentric' && <ConcentricCircles />}
+                                {protocol.type === 'laser' && <LaserGrid />}
+                                {protocol.type === 'waveform' && <Waveform />}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </section>
     );
 }
