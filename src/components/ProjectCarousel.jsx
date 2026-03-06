@@ -55,15 +55,16 @@ export default function ProjectCarousel() {
                 ease: 'power3.out'
             });
 
-            gsap.from('.carousel-item', {
+            // Animate the entire track fading in rather than individual items 
+            // since the track itself is horizontally animating constantly.
+            gsap.from('.carousel-track-wrapper', {
                 scrollTrigger: {
-                    trigger: '.carousel-track',
-                    start: 'top 75%',
+                    trigger: '.carousel-track-wrapper',
+                    start: 'top 80%',
                 },
-                x: 50,
+                y: 30,
                 opacity: 0,
-                duration: 0.8,
-                stagger: 0.15,
+                duration: 1,
                 ease: 'power3.out'
             });
         }, containerRef);
@@ -96,40 +97,46 @@ export default function ProjectCarousel() {
                 </div>
             </div>
 
-            {/* Horizontal Scroll Track */}
-            <div className="carousel-track flex gap-6 px-6 md:px-16 overflow-x-auto pb-12 snap-x snap-mandatory hide-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {premierProjects.map((project) => (
-                    <div
-                        key={project.id}
-                        className="carousel-item flex-none w-[85vw] md:w-[400px] h-[320px] md:h-[450px] rounded-2xl md:rounded-[2rem] overflow-hidden bg-primary relative snap-center isolate group shadow-xl"
-                    >
-                        {project.image ? (
-                            <div className="absolute inset-0 w-full h-full transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105">
-                                <div className="absolute inset-0 bg-primary/30 mix-blend-multiply z-10"></div>
-                                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent z-20"></div>
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover opacity-70 transition-opacity duration-700 group-hover:opacity-100"
-                                />
-                            </div>
-                        ) : (
-                            <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-primary to-[#050810] z-0"></div>
-                        )}
+            {/* Horizontal Auto-Scrolling Marquee Track */}
+            <div className="carousel-track-wrapper overflow-hidden pb-12 w-full select-none cursor-default">
+                <div className="flex gap-6 w-max animate-scroll hover:[animation-play-state:paused]">
+                    {[...premierProjects, ...premierProjects].map((project, index) => (
+                        <div
+                            key={`${project.id}-${index}`}
+                            className="carousel-item flex-none w-[85vw] sm:w-[500px] md:w-[700px] lg:w-[800px] aspect-[4/3] md:aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden bg-primary relative isolate group shadow-xl"
+                        >
+                            {project.image ? (
+                                <div className="absolute inset-0 w-full h-full transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105">
+                                    <div className="absolute inset-0 bg-primary/30 mix-blend-multiply z-10 transition-opacity duration-500 group-hover:opacity-10"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent z-20"></div>
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover object-top opacity-70 transition-opacity duration-700 group-hover:opacity-100"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-primary to-[#050810] z-0"></div>
+                            )}
 
-                        <div className="relative z-30 mt-auto p-8 flex flex-col gap-2 transform transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] translate-y-4 group-hover:translate-y-0 h-full justify-end">
-                            <span className="font-data text-accent uppercase tracking-widest text-xs font-bold block mb-1">{project.category}</span>
-                            <h3 className="font-heading text-white font-bold text-2xl leading-tight">{project.title}</h3>
+                            <div className="relative z-30 mt-auto p-6 md:p-8 flex flex-col gap-2 transform transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] translate-y-2 group-hover:translate-y-0 h-full justify-end">
+                                <span className="font-data text-accent uppercase tracking-widest text-xs font-bold block mb-1">{project.category}</span>
+                                <h3 className="font-heading text-white font-bold text-xl md:text-3xl leading-tight">{project.title}</h3>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
-            {/* Global style to hide scrollbar for webkit (Chrome/Safari) */}
+            {/* Global style for continuous loop animation */}
             <style dangerouslySetInnerHTML={{
                 __html: `
-                .hide-scrollbar::-webkit-scrollbar {
-                    display: none;
+                @keyframes scroll {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(calc(-50% - 12px)); } /* 12px is half of the gap-6 (24px) */
+                }
+                .animate-scroll {
+                    animation: scroll 40s linear infinite;
                 }
             `}} />
         </section>
