@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
 
 export default function Footer() {
@@ -9,8 +10,13 @@ export default function Footer() {
 
                     <div className="col-span-1 md:col-span-2">
                         <Logo className="h-24 w-auto mb-6 filter brightness-0 invert" />
-                        <p className="font-heading text-white/50 max-w-sm mb-8">
-                            AI + automation systems that give business owners their time back without sacrificing peace.
+                        <p className="font-heading text-white/50 max-w-sm mb-6">
+                            AI-powered automation and SaaS systems that give business owners their time back without sacrificing operational control.
+                        </p>
+                        <p className="font-heading text-white/40 text-sm mb-8">
+                            <a href="mailto:josh@theprovidersystem.com" className="hover:text-accent transition-colors">
+                                josh@theprovidersystem.com
+                            </a>
                         </p>
                         {/* System Status */}
                         <div className="inline-flex items-center gap-3 bg-dark px-4 py-2 rounded-full border border-white/5">
@@ -21,9 +27,12 @@ export default function Footer() {
 
                     <div className="col-span-1 flex flex-col gap-4">
                         <h4 className="font-heading font-semibold text-white/50 text-sm tracking-wider uppercase mb-2">Navigation</h4>
-                        <a href="#features" className="hover:text-accent transition-colors font-heading">Systems</a>
-                        <a href="#philosophy" className="hover:text-accent transition-colors font-heading">Philosophy</a>
-                        <a href="#protocol" className="hover:text-accent transition-colors font-heading">Protocol</a>
+                        <Link to="/#features" className="hover:text-accent transition-colors font-heading">Systems</Link>
+                        <Link to="/#protocol" className="hover:text-accent transition-colors font-heading">Protocol</Link>
+                        <Link to="/projects" className="hover:text-accent transition-colors font-heading">Projects</Link>
+                        <Link to="/diagnostic" className="hover:text-accent transition-colors font-heading">System Diagnostic</Link>
+                        <Link to="/#faq" className="hover:text-accent transition-colors font-heading">FAQ</Link>
+                        <Link to="/#contact" className="hover:text-accent transition-colors font-heading">Contact</Link>
                     </div>
 
                     <div className="col-span-1 flex flex-col gap-4">
@@ -36,7 +45,7 @@ export default function Footer() {
                 </div>
 
                 <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-white/30 font-heading text-sm">
-                    <p>&copy; {new Date().getFullYear()} The ProviderSystem. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} The Provider's System. All rights reserved.</p>
                     <p className="mt-4 md:mt-0 font-data text-xs uppercase text-white/20">v1.0.0-PROD</p>
                 </div>
 
@@ -44,3 +53,4 @@ export default function Footer() {
         </footer>
     );
 }
+

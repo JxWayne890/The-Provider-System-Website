@@ -227,9 +227,12 @@ export default function Features() {
             <div className="max-w-6xl mx-auto">
                 <div className="mb-16">
                     <h2 className="font-heading font-bold text-3xl md:text-5xl text-primary mb-4">
-                        Interactive Functional Artifacts
+                        How We Automate Your Business Operations
                     </h2>
-                    <p className="font-data text-sm md:text-base text-muted uppercase tracking-widest">
+                    <p className="font-heading text-muted text-base md:text-lg leading-relaxed max-w-2xl mb-2">
+                        We build three core systems that eliminate manual work: automated data extraction pipelines, intelligent lead routing engines, and centralized scheduling tools. Each is custom-built for your specific workflows and runs silently in the background.
+                    </p>
+                    <p className="font-data text-sm md:text-base text-muted/60 uppercase tracking-widest">
                         Core Operational Leverage
                     </p>
                 </div>

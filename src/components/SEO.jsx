@@ -1,11 +1,21 @@
 import { useEffect } from 'react';
 
-export default function SEO({ title, description, url, image, schema }) {
+/**
+ * SEO Component — handles meta tags, OG tags, canonical, and JSON-LD schema injection.
+ * 
+ * @param {string} title - Page title (appended to site title)
+ * @param {string} description - Meta description
+ * @param {string} url - Canonical URL path (e.g., "/projects")
+ * @param {string} image - OG image URL
+ * @param {object} schema - Single JSON-LD schema object (backwards compat)
+ * @param {object[]} schemas - Array of JSON-LD objects, rendered inside an @graph block
+ */
+export default function SEO({ title, description, url, image, schema, schemas }) {
     // Base configuration
     const siteTitle = 'The Provider\'s System';
-    const defaultDescription = 'A high-performance digital architecture and consulting group specializing in AI-driven SaaS, dynamic corporate sites, and custom process automation.';
-    const defaultUrl = 'https://theprovidersystem.com'; // Adjust to actual production URL
-    const defaultImage = `${defaultUrl}/og-fallback.png`; // Fallback OpenGraph image
+    const defaultDescription = 'The Provider\'s System builds high-performance AI automation, SaaS applications, and internal workflow tools that help founders and operators reclaim their time without sacrificing operational control.';
+    const defaultUrl = 'https://theprovidersystem.com';
+    const defaultImage = `${defaultUrl}/og-fallback.png`;
 
     // Computed values
     const seo = {
@@ -44,6 +54,7 @@ export default function SEO({ title, description, url, image, schema }) {
         // Standard Meta
         setMetaTag('name', 'title', seo.title);
         setMetaTag('name', 'description', seo.description);
+        setMetaTag('name', 'robots', 'index, follow');
         setLinkTag('canonical', seo.url);
 
         // Open Graph
@@ -52,6 +63,7 @@ export default function SEO({ title, description, url, image, schema }) {
         setMetaTag('property', 'og:title', seo.title);
         setMetaTag('property', 'og:description', seo.description);
         setMetaTag('property', 'og:image', seo.image);
+        setMetaTag('property', 'og:site_name', siteTitle);
 
         // Twitter
         setMetaTag('property', 'twitter:card', 'summary_large_image');
@@ -60,22 +72,27 @@ export default function SEO({ title, description, url, image, schema }) {
         setMetaTag('property', 'twitter:description', seo.description);
         setMetaTag('property', 'twitter:image', seo.image);
 
-        // JSON-LD Schema
+        // JSON-LD Schema — supports both single `schema` and `schemas` array via @graph
         let scriptElement = document.querySelector('#seo-schema');
-        if (schema) {
+        const schemaData = schemas && schemas.length > 0
+            ? { "@context": "https://schema.org", "@graph": schemas }
+            : schema
+                ? (schema["@context"] ? schema : { "@context": "https://schema.org", ...schema })
+                : null;
+
+        if (schemaData) {
             if (!scriptElement) {
                 scriptElement = document.createElement('script');
                 scriptElement.type = 'application/ld+json';
                 scriptElement.id = 'seo-schema';
                 document.head.appendChild(scriptElement);
             }
-            scriptElement.textContent = JSON.stringify(schema);
+            scriptElement.textContent = JSON.stringify(schemaData);
         } else if (scriptElement) {
             scriptElement.remove();
         }
 
-    }, [seo.title, seo.description, seo.url, seo.image, schema]);
+    }, [seo.title, seo.description, seo.url, seo.image, schema, schemas]);
 
-    // React 19 allows title/meta in standard component returns, but standard useEffect injection is safer for deep replacements in SPAs
     return null;
 }

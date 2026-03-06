@@ -144,14 +144,34 @@ export default function ProjectsArchive() {
         <div className="h-screen bg-background overflow-hidden flex flex-col pt-32">
             <SEO
                 title="Project Archive | Deployed Systems"
-                description="Explore our portfolio of scalable SaaS applications, high-performance static sites, and automated internal tools."
+                description="Explore The Provider's System portfolio of deployed AI architectures, high-performance SaaS applications, conversion-optimized static sites, and custom internal workflow tools."
                 url="/projects"
-                schema={{
-                    "@context": "https://schema.org",
-                    "@type": "CollectionPage",
-                    "name": "Project Archive - The Provider's System",
-                    "description": "Portfolio of deployed AI architectures and software systems."
-                }}
+                schemas={[
+                    {
+                        "@type": "CollectionPage",
+                        "@id": "https://theprovidersystem.com/projects",
+                        "name": "Project Archive — The Provider's System",
+                        "description": "Portfolio of deployed AI architectures, SaaS applications, and custom automation systems.",
+                        "isPartOf": { "@id": "https://theprovidersystem.com/#website" }
+                    },
+                    {
+                        "@type": "BreadcrumbList",
+                        "@id": "https://theprovidersystem.com/projects#breadcrumbs",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://theprovidersystem.com/"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Projects"
+                            }
+                        ]
+                    }
+                ]}
             />
             <div className="max-w-7xl w-full mx-auto px-6 md:px-16 flex flex-col h-full">
 

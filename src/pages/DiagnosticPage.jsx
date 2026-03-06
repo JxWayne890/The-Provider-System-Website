@@ -89,9 +89,35 @@ export default function DiagnosticPage() {
     return (
         <div className="min-h-screen pt-24 pb-12 bg-[#05162D] text-white flex flex-col justify-center relative overflow-hidden">
             <SEO
-                title="System Diagnostic | The Provider's System"
-                description="Take our operational audit to identify your exact bottlenecks and generate a custom automation blueprint."
+                title="System Diagnostic | Free Automation Audit"
+                description="Take The Provider's System 2-minute operational audit to identify your exact bottlenecks, calculate financial leakage from manual processes, and generate a custom automation blueprint."
                 url="/diagnostic"
+                schemas={[
+                    {
+                        "@type": "WebPage",
+                        "@id": "https://theprovidersystem.com/diagnostic",
+                        "name": "System Diagnostic — Free Automation Audit",
+                        "description": "An interactive 2-minute assessment that identifies operational bottlenecks, calculates financial leakage from manual processes, and generates a custom automation blueprint.",
+                        "isPartOf": { "@id": "https://theprovidersystem.com/#website" }
+                    },
+                    {
+                        "@type": "BreadcrumbList",
+                        "@id": "https://theprovidersystem.com/diagnostic#breadcrumbs",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://theprovidersystem.com/"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "System Diagnostic"
+                            }
+                        ]
+                    }
+                ]}
             />
             {/* Background */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
