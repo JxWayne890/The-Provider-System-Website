@@ -12,30 +12,35 @@ const premierProjects = [
         title: 'The Offer Hero',
         category: 'SaaS Application',
         image: 'https://www.theofferhero.com/og-image.png',
+        link: 'https://www.theofferhero.com/'
     },
     {
         id: 'mansfield',
         title: 'Mansfield Mining',
         category: 'Dynamic Corporate Site',
         image: 'https://i.imgur.com/lSxsj0X.png',
+        link: 'https://www.mansfieldmining.com/'
     },
     {
         id: 'adrian',
         title: "Adrian's Custom Services",
         category: 'Static Site',
         image: 'https://i.imgur.com/ocZW1Qc.png',
+        link: 'https://www.adrianscustomservices.org/'
     },
     {
         id: 'weathersbee',
         title: 'Weathersbee Electric Co.',
         category: 'Static Site',
         image: '/images/projects/weathersbee.png',
+        link: 'https://weathersbeeelectric.com/'
     },
     {
         id: 'billnest',
         title: 'BillNest Craft',
         category: 'Private Project',
-        image: null, // Private project uses text-only dark card fallback
+        image: null,
+        link: '#contact'
     }
 ];
 
@@ -101,9 +106,12 @@ export default function ProjectCarousel() {
             <div className="carousel-track-wrapper overflow-hidden pb-12 w-full select-none cursor-default">
                 <div className="flex gap-6 w-max animate-scroll hover:[animation-play-state:paused]">
                     {[...premierProjects, ...premierProjects].map((project, index) => (
-                        <div
+                        <a
                             key={`${project.id}-${index}`}
-                            className="carousel-item flex-none w-[85vw] sm:w-[500px] md:w-[700px] lg:w-[800px] aspect-[4/3] md:aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden bg-primary relative isolate group shadow-xl"
+                            href={project.link}
+                            target={project.link.startsWith('http') ? "_blank" : "_self"}
+                            rel="noopener noreferrer"
+                            className="carousel-item flex-none w-[85vw] sm:w-[500px] md:w-[700px] lg:w-[800px] aspect-[4/3] md:aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden bg-primary relative isolate group shadow-xl block"
                         >
                             {project.image ? (
                                 <div className="absolute inset-0 w-full h-full transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105">
@@ -123,7 +131,7 @@ export default function ProjectCarousel() {
                                 <span className="font-data text-accent uppercase tracking-widest text-xs font-bold block mb-1">{project.category}</span>
                                 <h3 className="font-heading text-white font-bold text-xl md:text-3xl leading-tight">{project.title}</h3>
                             </div>
-                        </div>
+                        </a>
                     ))}
                 </div>
             </div>
