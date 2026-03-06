@@ -7,7 +7,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function GetStarted() {
     const containerRef = useRef(null);
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        inquiryType: 'AI Workflow Automation',
+        message: ''
+    });
     const [status, setStatus] = useState('idle'); // idle | sending | success | error
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -35,6 +42,7 @@ export default function GetStarted() {
         e.preventDefault();
         setStatus('sending');
         setErrorMsg('');
+        console.log('Starting submission:', formData);
 
         try {
             const res = await fetch('/api/contact', {
@@ -56,11 +64,10 @@ export default function GetStarted() {
             }
 
             setStatus('success');
-            setFormData({ name: '', email: '', message: '' });
+            setFormData({ firstName: '', lastName: '', email: '', phone: '', inquiryType: 'AI Workflow Automation', message: '' });
 
-            // Reset after 5 seconds
-            setTimeout(() => setStatus('idle'), 5000);
         } catch (err) {
+            console.error('Submission error:', err);
             setStatus('error');
             setErrorMsg(err.message || 'Failed to send message. Please try again.');
         }
@@ -78,7 +85,7 @@ export default function GetStarted() {
                     Stop leaking revenue through manual chaos. Send us a message to start your system audit.
                 </p>
 
-                <div className="cta-elem w-full max-w-xl bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-muted/10 text-left">
+                <div className="cta-elem w-full max-w-2xl bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-muted/10 text-left">
                     {status === 'success' ? (
                         <div className="py-12 flex flex-col items-center text-center animate-in zoom-in duration-500">
                             <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-8">
@@ -86,7 +93,7 @@ export default function GetStarted() {
                             </div>
                             <h3 className="font-heading font-bold text-4xl text-primary mb-4">Message Sent</h3>
                             <p className="font-heading text-muted text-xl leading-relaxed max-w-sm">
-                                We've received your data. A strategist will contact you at <strong>{formData.email}</strong> within 24 hours.
+                                We've received your data. A strategist will contact you within 24 hours.
                             </p>
                             <button
                                 onClick={() => setStatus('idle')}
@@ -98,36 +105,90 @@ export default function GetStarted() {
                     ) : (
                         <form onSubmit={handleSubmit}>
                             <div className="space-y-6">
-                                <div>
-                                    <label htmlFor="contact-name" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">Full Name</label>
-                                    <input
-                                        id="contact-name"
-                                        name="name"
-                                        type="text"
-                                        required
-                                        disabled={status === 'sending'}
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        placeholder="John Doe"
-                                        className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
-                                    />
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label htmlFor="contact-firstName" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">First Name</label>
+                                        <input
+                                            id="contact-firstName"
+                                            name="firstName"
+                                            type="text"
+                                            required
+                                            disabled={status === 'sending'}
+                                            value={formData.firstName}
+                                            onChange={handleChange}
+                                            placeholder="John"
+                                            className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="contact-lastName" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">Last Name</label>
+                                        <input
+                                            id="contact-lastName"
+                                            name="lastName"
+                                            type="text"
+                                            required
+                                            disabled={status === 'sending'}
+                                            value={formData.lastName}
+                                            onChange={handleChange}
+                                            placeholder="Doe"
+                                            className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label htmlFor="contact-email" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">Email Address</label>
-                                    <input
-                                        id="contact-email"
-                                        name="email"
-                                        type="email"
-                                        required
-                                        disabled={status === 'sending'}
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        placeholder="john@business.com"
-                                        className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
-                                    />
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label htmlFor="contact-email" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">Email Address</label>
+                                        <input
+                                            id="contact-email"
+                                            name="email"
+                                            type="email"
+                                            required
+                                            disabled={status === 'sending'}
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            placeholder="john@business.com"
+                                            className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="contact-phone" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">Phone Number</label>
+                                        <input
+                                            id="contact-phone"
+                                            name="phone"
+                                            type="tel"
+                                            required
+                                            disabled={status === 'sending'}
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            placeholder="(555) 000-0000"
+                                            className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
+                                        />
+                                    </div>
                                 </div>
+
                                 <div>
-                                    <label htmlFor="contact-message" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">How can we help?</label>
+                                    <label htmlFor="contact-inquiryType" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">What do you need?</label>
+                                    <select
+                                        id="contact-inquiryType"
+                                        name="inquiryType"
+                                        disabled={status === 'sending'}
+                                        value={formData.inquiryType}
+                                        onChange={handleChange}
+                                        className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50 appearance-none cursor-pointer"
+                                        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%236b7280\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1.5rem center', backgroundSize: '1.25rem' }}
+                                    >
+                                        <option value="AI Workflow Automation">AI Workflow Automation</option>
+                                        <option value="Custom SaaS Development">Custom SaaS Development</option>
+                                        <option value="Website / Web App Build">Website / Web App Build</option>
+                                        <option value="Intelligent Lead Routing">Intelligent Lead Routing</option>
+                                        <option value="Operational Audit">Operational Audit</option>
+                                        <option value="Other / Idea Integration">Other / Idea Integration</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="contact-message" className="block font-data text-xs uppercase tracking-widest text-muted mb-2 ml-1">Details & Context</label>
                                     <textarea
                                         id="contact-message"
                                         name="message"
@@ -142,7 +203,7 @@ export default function GetStarted() {
                                 </div>
 
                                 {status === 'error' && (
-                                    <div className="flex items-start gap-3 bg-red-50 text-red-700 p-5 rounded-xl text-sm font-heading border border-red-200">
+                                    <div className="flex items-start gap-3 bg-red-50 text-red-700 p-5 rounded-xl text-sm font-heading border border-red-100">
                                         <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                                         <div>
                                             <p className="font-bold mb-1">Error Sending Message</p>
@@ -163,7 +224,7 @@ export default function GetStarted() {
                                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                 </svg>
-                                                Sending...
+                                                Initializing Workflow...
                                             </>
                                         ) : 'Send Message'}
                                     </span>

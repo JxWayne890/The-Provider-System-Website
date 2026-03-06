@@ -4,11 +4,11 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { name, email, message } = req.body;
+    const { firstName, lastName, email, phone, inquiryType, message } = req.body;
 
     // Basic validation
-    if (!name || !email || !message) {
-        return res.status(400).json({ error: 'All fields are required.' });
+    if (!firstName || !lastName || !email || !phone || !message) {
+        return res.status(400).json({ error: 'All primary fields are required.' });
     }
 
     try {
@@ -21,32 +21,48 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 from: 'The Provider\'s System <onboarding@resend.dev>',
                 to: 'theprovidersystem@gmail.com',
-                subject: `New Inquiry from ${name}`,
+                subject: `[INQUIRY] ${inquiryType} from ${firstName} ${lastName}`,
                 reply_to: email,
                 html: `
-                    <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f9fafb; border-radius: 12px; overflow: hidden;">
-                        <div style="background: #0B1020; padding: 32px 24px; text-align: center;">
-                            <h1 style="color: #ffffff; font-size: 22px; margin: 0;">New Contact Form Inquiry</h1>
-                            <p style="color: #FF9F1C; font-size: 13px; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase;">The Provider's System</p>
+                    <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f9fafb; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
+                        <div style="background: #0B1020; padding: 40px 24px; text-align: center;">
+                            <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 800; letter-spacing: -0.02em;">New System Inquiry</h1>
+                            <p style="color: #FF9F1C; font-size: 14px; margin-top: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;">The Provider's System</p>
                         </div>
-                        <div style="padding: 32px 24px;">
+                        <div style="padding: 40px 32px; background: #ffffff;">
+                            <div style="margin-bottom: 32px; padding: 20px; background: #fdf2f2; border-radius: 8px; border-left: 4px solid #FF9F1C;">
+                                <p style="margin: 0; color: #6b7280; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Service Requested</p>
+                                <p style="margin: 4px 0 0 0; color: #0B1020; font-size: 18px; font-weight: 700;">${inquiryType}</p>
+                            </div>
+
                             <table style="width: 100%; border-collapse: collapse;">
                                 <tr>
-                                    <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 100px;">Name</td>
-                                    <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827; font-size: 15px; font-weight: 600;">${name}</td>
+                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 140px;">First Name</td>
+                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #111827; font-size: 15px; font-weight: 600;">${firstName}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Email</td>
-                                    <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827; font-size: 15px;"><a href="mailto:${email}" style="color: #FF9F1C; text-decoration: none;">${email}</a></td>
+                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Last Name</td>
+                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #111827; font-size: 15px; font-weight: 600;">${lastName}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Email</td>
+                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #111827; font-size: 15px;">
+                                        <a href="mailto:${email}" style="color: #FF9F1C; text-decoration: none; font-weight: 600;">${email}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Phone</td>
+                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #111827; font-size: 15px; font-weight: 600;">${phone}</td>
                                 </tr>
                             </table>
-                            <div style="margin-top: 24px;">
-                                <p style="color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Message</p>
-                                <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; color: #111827; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${message}</div>
+
+                            <div style="margin-top: 40px;">
+                                <p style="color: #6b7280; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">Message Details</p>
+                                <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; color: #111827; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${message}</div>
                             </div>
                         </div>
-                        <div style="background: #0B1020; padding: 16px 24px; text-align: center;">
-                            <p style="color: #6b7280; font-size: 12px; margin: 0;">Reply directly to this email to respond to ${name}</p>
+                        <div style="background: #0B1020; padding: 24px 32px; text-align: center; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+                            <p style="color: #9ca3af; font-size: 13px; margin: 0;">Lead generated via <strong>The Provider's System</strong> website.</p>
                         </div>
                     </div>
                 `,
