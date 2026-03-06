@@ -26,6 +26,12 @@ const premierProjects = [
         image: 'https://i.imgur.com/ocZW1Qc.png',
     },
     {
+        id: 'weathersbee',
+        title: 'Weathersbee Electric Co.',
+        category: 'Static Site',
+        image: '/images/projects/weathersbee.png',
+    },
+    {
         id: 'billnest',
         title: 'BillNest Craft',
         category: 'Private Project',
