@@ -5,10 +5,12 @@ import Home from './pages/Home';
 import ProjectsArchive from './pages/ProjectsArchive';
 import DiagnosticPage from './pages/DiagnosticPage';
 import FAQPage from './pages/FAQPage';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="relative w-full min-h-screen bg-background text-dark overflow-x-hidden selection:bg-accent selection:text-white">
         <Navbar />
         <Routes>
