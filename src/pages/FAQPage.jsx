@@ -1,6 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import FAQ from '../components/FAQ';
 import SEO from '../components/SEO';
 import { homeFaqData } from './Home';
@@ -62,11 +60,9 @@ const FAQPage = () => {
                 canonicalUrl="https://theprovidersystem.com/faq"
                 schemas={schemas}
             />
-            <Navbar />
             <main className="pt-32 pb-24">
                 <FAQ faqs={homeFaqData} />
             </main>
-            <Footer />
         </div>
     );
 };
