@@ -49,6 +49,19 @@ export default async function handler(req, res) {
     }
 
     try {
+        const emailText = [
+            'New System Inquiry',
+            '',
+            `Inquiry Type: ${normalizedInquiryType}`,
+            `First Name: ${normalizedFirstName}`,
+            `Last Name: ${normalizedLastName}`,
+            `Email Address: ${normalizedEmail}`,
+            `Phone Number: ${normalizedPhone}`,
+            '',
+            'Message Details:',
+            normalizedMessage,
+        ].join('\n');
+
         const response = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
@@ -60,81 +73,7 @@ export default async function handler(req, res) {
                 to: 'theprovidersystem@gmail.com',
                 subject: `[INQUIRY] ${normalizedInquiryType} from ${normalizedFirstName} ${normalizedLastName}`,
                 reply_to: normalizedEmail,
-                html: `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inquiry Received</title>
-    <style>
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #F5F7FA; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-        .wrapper { width: 100%; table-layout: fixed; background-color: #F5F7FA; padding-bottom: 40px; }
-        .main { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; border-spacing: 0; font-family: sans-serif; color: #111827; border-radius: 20px; overflow: hidden; margin-top: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .header { background-color: #FF9F1C; padding: 40px 20px; text-align: center; }
-        .header h1 { color: #ffffff; margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.025em; text-transform: uppercase; }
-        .content { padding: 40px; }
-        .inquiry-badge { display: inline-block; background-color: #0B1020; color: #ffffff; padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 700; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.1em; }
-        .detail-row { margin-bottom: 20px; border-bottom: 1px solid #E5E7EB; padding-bottom: 10px; }
-        .label { font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-        .value { font-size: 16px; color: #0B1020; font-weight: 500; }
-        .message-box { background-color: #F8FAFC; border-radius: 12px; padding: 24px; border-left: 4px solid #FF9F1C; margin-top: 32px; }
-        .message-text { color: #334155; line-height: 1.6; font-size: 15px; white-space: pre-wrap; margin: 0; }
-        .footer { text-align: center; padding: 20px; font-size: 12px; color: #94A3B8; }
-    </style>
-</head>
-<body>
-    <div class="wrapper">
-        <table class="main" width="100%">
-            <tr>
-                <td class="header">
-                    <h1>New System Inquiry</h1>
-                </td>
-            </tr>
-            <tr>
-                <td class="content">
-                    <div class="inquiry-badge">${normalizedInquiryType}</div>
-                    
-                    <table width="100%">
-                        <tr>
-                            <td width="50%" class="detail-row" style="padding-right: 10px;">
-                                <div class="label">First Name</div>
-                                <div class="value">${normalizedFirstName}</div>
-                            </td>
-                            <td width="50%" class="detail-row">
-                                <div class="label">Last Name</div>
-                                <div class="value">${normalizedLastName}</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="detail-row">
-                                <div class="label">Email Address</div>
-                                <div class="value">${normalizedEmail}</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="detail-row">
-                                <div class="label">Phone Number</div>
-                                <div class="value">${normalizedPhone}</div>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div class="message-box">
-                        <div class="label" style="margin-bottom: 12px;">Message Details</div>
-                        <p class="message-text">${normalizedMessage}</p>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <div class="footer">
-            &copy; 2026 The Provider's System. All rights reserved.<br>
-            AI Architecture & Automation For Operations.
-        </div>
-    </div>
-</body>
-</html>
-                `,
+                text: emailText,
             }),
         });
 
