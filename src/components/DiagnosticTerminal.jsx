@@ -85,7 +85,7 @@ export default function DiagnosticTerminal() {
                             snap: { textContent: 1 },
                             stagger: 1,
                             onUpdate: function () {
-                                valueRef.current.innerHTML = "$" + Math.ceil(this.targets()[0].textContent).toLocaleString();
+                                valueRef.current.textContent = "$" + Math.ceil(Number(this.targets()[0].textContent)).toLocaleString();
                             }
                         }
                     );

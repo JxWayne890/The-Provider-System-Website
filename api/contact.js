@@ -1,3 +1,21 @@
+/* global process */
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const normalizeField = (value, maxLength = 500) => {
+    return String(value ?? '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, maxLength);
+};
+
+const normalizeMessage = (value, maxLength = 5000) => {
+    return String(value ?? '')
+        .replace(/\r\n/g, '\n')
+        .trim()
+        .slice(0, maxLength);
+};
+
 export default async function handler(req, res) {
     // Only allow POST
     if (req.method !== 'POST') {
@@ -6,9 +24,20 @@ export default async function handler(req, res) {
 
     const { firstName, lastName, email, phone, inquiryType, message } = req.body;
 
+    const normalizedFirstName = normalizeField(firstName, 100);
+    const normalizedLastName = normalizeField(lastName, 100);
+    const normalizedEmail = String(email ?? '').trim().toLowerCase().slice(0, 320);
+    const normalizedPhone = normalizeField(phone, 50);
+    const normalizedInquiryType = normalizeField(inquiryType || 'General Inquiry', 120);
+    const normalizedMessage = normalizeMessage(message, 5000);
+
     // Basic validation
-    if (!firstName || !lastName || !email || !phone || !message) {
+    if (!normalizedFirstName || !normalizedLastName || !normalizedEmail || !normalizedPhone || !normalizedMessage) {
         return res.status(400).json({ error: 'All primary fields are required.' });
+    }
+
+    if (!EMAIL_REGEX.test(normalizedEmail)) {
+        return res.status(400).json({ error: 'A valid email address is required.' });
     }
 
     try {
@@ -21,51 +50,20 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 from: 'The Provider\'s System <onboarding@resend.dev>',
                 to: 'theprovidersystem@gmail.com',
-                subject: `[INQUIRY] ${inquiryType} from ${firstName} ${lastName}`,
-                reply_to: email,
-                html: `
-                    <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f9fafb; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
-                        <div style="background: #0B1020; padding: 40px 24px; text-align: center;">
-                            <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 800; letter-spacing: -0.02em;">New System Inquiry</h1>
-                            <p style="color: #FF9F1C; font-size: 14px; margin-top: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;">The Provider's System</p>
-                        </div>
-                        <div style="padding: 40px 32px; background: #ffffff;">
-                            <div style="margin-bottom: 32px; padding: 20px; background: #fdf2f2; border-radius: 8px; border-left: 4px solid #FF9F1C;">
-                                <p style="margin: 0; color: #6b7280; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Service Requested</p>
-                                <p style="margin: 4px 0 0 0; color: #0B1020; font-size: 18px; font-weight: 700;">${inquiryType}</p>
-                            </div>
-
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <tr>
-                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 140px;">First Name</td>
-                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #111827; font-size: 15px; font-weight: 600;">${firstName}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Last Name</td>
-                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #111827; font-size: 15px; font-weight: 600;">${lastName}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Email</td>
-                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #111827; font-size: 15px;">
-                                        <a href="mailto:${email}" style="color: #FF9F1C; text-decoration: none; font-weight: 600;">${email}</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Phone</td>
-                                    <td style="padding: 16px 0; border-bottom: 1px solid #f3f4f6; color: #111827; font-size: 15px; font-weight: 600;">${phone}</td>
-                                </tr>
-                            </table>
-
-                            <div style="margin-top: 40px;">
-                                <p style="color: #6b7280; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">Message Details</p>
-                                <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; color: #111827; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${message}</div>
-                            </div>
-                        </div>
-                        <div style="background: #0B1020; padding: 24px 32px; text-align: center; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
-                            <p style="color: #9ca3af; font-size: 13px; margin: 0;">Lead generated via <strong>The Provider's System</strong> website.</p>
-                        </div>
-                    </div>
-                `,
+                subject: `[INQUIRY] ${normalizedInquiryType} from ${normalizedFirstName} ${normalizedLastName}`,
+                reply_to: normalizedEmail,
+                text: [
+                    'New System Inquiry',
+                    `Service Requested: ${normalizedInquiryType}`,
+                    '',
+                    `First Name: ${normalizedFirstName}`,
+                    `Last Name: ${normalizedLastName}`,
+                    `Email: ${normalizedEmail}`,
+                    `Phone: ${normalizedPhone}`,
+                    '',
+                    'Message Details:',
+                    normalizedMessage,
+                ].join('\n'),
             }),
         });
 
