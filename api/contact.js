@@ -128,7 +128,7 @@ export default async function handler(req, res) {
             </tr>
         </table>
         <div class="footer">
-            &copy; 2024 The Provider's System. All rights reserved.<br>
+            &copy; 2026 The Provider's System. All rights reserved.<br>
             AI Architecture & Automation For Operations.
         </div>
     </div>
