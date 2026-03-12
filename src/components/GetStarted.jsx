@@ -42,8 +42,7 @@ export default function GetStarted() {
         e.preventDefault();
         setStatus('sending');
         setErrorMsg('');
-        console.log('Starting submission:', formData);
-
+        
         try {
             const res = await fetch('/api/contact', {
                 method: 'POST',
@@ -51,25 +50,35 @@ export default function GetStarted() {
                 body: JSON.stringify(formData),
             });
 
-            // Check if response is actually JSON before parsing
-            const contentType = res.headers.get("content-type");
-            if (!contentType || !contentType.includes("application/json")) {
-                throw new Error("API route not found. If testing locally, use 'npx vercel dev'.");
+            // Check if request failed (e.g., 404, 500)
+            if (!res.ok) {
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    const errorData = await res.json();
+                    throw new Error(errorData.error || `Server responded with ${res.status}`);
+                }
+                
+                if (res.status === 404) {
+                    throw new Error("API route not found. Make sure you are running 'npx vercel dev' to enable backend functions.");
+                }
+                
+                throw new Error(`Server error: ${res.status} ${res.statusText}`);
             }
 
             const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.error || 'Something went wrong.');
-            }
-
             setStatus('success');
             setFormData({ firstName: '', lastName: '', email: '', phone: '', inquiryType: 'AI Workflow Automation', message: '' });
 
         } catch (err) {
             console.error('Submission error:', err);
             setStatus('error');
-            setErrorMsg(err.message || 'Failed to send message. Please try again.');
+            
+            // Helpful message for the "Failed to fetch" network error
+            if (err.message === 'Failed to fetch') {
+                setErrorMsg("Network error: Could not reach the server. If testing locally, please use 'npx vercel dev' instead of 'npm run dev'.");
+            } else {
+                setErrorMsg(err.message || 'An unexpected error occurred.');
+            }
         }
     };
 
