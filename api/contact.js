@@ -16,6 +16,14 @@ const normalizeMessage = (value, maxLength = 5000) => {
         .slice(0, maxLength);
 };
 
+const formatPhone = (value) => {
+    const raw = String(value ?? '').replace(/[^\d]/g, '');
+    if (raw.length === 10) {
+        return `(${raw.slice(0, 3)}) ${raw.slice(3, 6)}-${raw.slice(6, 10)}`;
+    }
+    return value; // Return as-is if it's not a standard 10-digit number
+};
+
 export default async function handler(req, res) {
     // Only allow POST
     if (req.method !== 'POST') {
@@ -27,7 +35,7 @@ export default async function handler(req, res) {
     const normalizedFirstName = normalizeField(firstName, 100);
     const normalizedLastName = normalizeField(lastName, 100);
     const normalizedEmail = String(email ?? '').trim().toLowerCase().slice(0, 320);
-    const normalizedPhone = normalizeField(phone, 50);
+    const normalizedPhone = formatPhone(normalizeField(phone, 50));
     const normalizedInquiryType = normalizeField(inquiryType || 'General Inquiry', 120);
     const normalizedMessage = normalizeMessage(message, 5000);
 
