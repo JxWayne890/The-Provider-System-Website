@@ -13,9 +13,38 @@ import { createServer } from 'http';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, extname, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import { platform } from 'os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Resolve Chromium: use @sparticuz/chromium on Linux (Vercel/CI),
+// local Chrome on macOS/Windows for development.
+async function getBrowserOptions() {
+  if (platform() === 'linux') {
+    const chromium = (await import('@sparticuz/chromium')).default;
+    return {
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    };
+  }
+  // Local dev — find Chrome
+  const paths = [
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+  ];
+  const found = paths.find((p) => existsSync(p));
+  if (!found) throw new Error('Chrome not found locally. Install Chrome or run on CI.');
+  return {
+    executablePath: found,
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  };
+}
 const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 const PORT = 4173;
@@ -144,10 +173,8 @@ async function main() {
 
   const server = await startServer();
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
+  const browserOpts = await getBrowserOptions();
+  const browser = await puppeteer.launch(browserOpts);
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 800 });
 
