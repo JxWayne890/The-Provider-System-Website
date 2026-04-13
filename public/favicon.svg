@@ -1,0 +1,8 @@
+<svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="transparent" />
+    <g transform="translate(250, 120)" text-anchor="middle">
+        <text y="-60" font-size="70" fill="#0B3060" font-style="italic" font-family="DM Serif Display, serif">The</text>
+        <text y="20" font-size="95" fill="#0B3060" font-weight="900" font-family="DM Serif Display, serif">PROVIDER</text>
+        <text y="95" font-size="75" fill="#FF9F1C" font-weight="900" letter-spacing="8" font-family="Space Grotesk, sans-serif">SYSTEM</text>
+    </g>
+</svg>

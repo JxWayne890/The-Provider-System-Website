@@ -1,0 +1,204 @@
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Link } from 'react-router-dom';
+import { GeoComparisonTable, GeoQuestionGrid } from './GeoBlocks';
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Only taking the FIRST project from each category for the home page carousel
+const premierProjects = [
+    {
+        id: 'offer-hero',
+        title: 'The Offer Hero',
+        category: 'SaaS Application',
+        image: 'https://www.theofferhero.com/og-image.png',
+        link: 'https://www.theofferhero.com/'
+    },
+    {
+        id: 'mansfield',
+        title: 'Mansfield Mining',
+        category: 'Dynamic Corporate Site',
+        image: 'https://i.imgur.com/lSxsj0X.png',
+        link: 'https://www.mansfieldmining.com/'
+    },
+    {
+        id: 'adrian',
+        title: "Adrian's Custom Services",
+        category: 'Static Site',
+        image: 'https://i.imgur.com/ocZW1Qc.png',
+        link: 'https://www.adrianscustomservices.org/'
+    },
+    {
+        id: 'weathersbee',
+        title: 'Weathersbee Electric Co.',
+        category: 'Static Site',
+        image: '/images/projects/weathersbee.png',
+        link: 'https://weathersbeeelectric.com/'
+    },
+    {
+        id: 'billnest',
+        title: 'BillNest Craft',
+        category: 'Private Project',
+        image: null,
+        link: '#contact'
+    }
+];
+
+const buildModelColumns = ['Factor', 'Custom Website', 'Monthly-Fee Website'];
+const buildModelRows = [
+    [
+        'Ownership',
+        'The business can retain direct control over its code, hosting, and content.',
+        'The business is often tied to a platform, template system, or ongoing vendor dependence.'
+    ],
+    [
+        'Performance',
+        'A lean build can be optimized around speed, structure, and the exact use case.',
+        'Bloated theme layers and bundled features often add weight that the business does not need.'
+    ],
+    [
+        'Flexibility',
+        'Features, integrations, SEO, AEO, and GEO layers can be shaped around the actual business model.',
+        'Changes are usually constrained by the builder, monthly plan, or third-party plugin limits.'
+    ],
+    [
+        'Long-term cost',
+        'Costs are usually more transparent because the business is paying for a build, hosting, and chosen tools.',
+        'Recurring platform fees, lock-in, and add-ons can become expensive over time.'
+    ]
+];
+
+const projectQuestions = [
+    {
+        question: 'What kinds of systems are shown here?',
+        answer: 'The featured work includes custom SaaS applications, dynamic company sites, static marketing sites, and private internal tools built around specific operating needs.'
+    },
+    {
+        question: 'Why does a lean build matter?',
+        answer: 'Cleaner architecture makes the site faster for visitors, easier to maintain for the owner, and easier for search engines and AI systems to parse correctly.'
+    }
+];
+
+export default function ProjectCarousel() {
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+            gsap.from('.carousel-header', {
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top 80%',
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+
+            // Animate the entire track fading in rather than individual items 
+            // since the track itself is horizontally animating constantly.
+            gsap.from('.carousel-track-wrapper', {
+                scrollTrigger: {
+                    trigger: '.carousel-track-wrapper',
+                    start: 'top 80%',
+                },
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        }, containerRef);
+
+        return () => ctx.revert();
+    }, []);
+
+    return (
+        <section id="projects" ref={containerRef} className="py-32 bg-white relative z-10 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-6 md:px-16 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div>
+                    <span className="carousel-header block font-data text-accent tracking-[0.2em] text-sm uppercase mb-4">Live Instruments</span>
+                    <h2 className="carousel-header font-heading font-bold text-4xl md:text-5xl text-primary tracking-tight">
+                        Featured Systems.
+                    </h2>
+                </div>
+                <div className="carousel-header">
+                    <Link
+                        to="/projects"
+                        className="group inline-flex items-center gap-3 text-primary font-heading font-bold hover:text-accent transition-colors"
+                    >
+                        <span>View All Projects</span>
+                        <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-accent/10 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 transition-transform">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </Link>
+                </div>
+            </div>
+
+            {/* Horizontal Auto-Scrolling Marquee Track */}
+            <div className="carousel-track-wrapper overflow-hidden pb-12 w-full select-none cursor-default">
+                <div className="flex gap-6 w-max animate-scroll hover:[animation-play-state:paused]">
+                    {[...premierProjects, ...premierProjects].map((project, index) => (
+                        <a
+                            key={`${project.id}-${index}`}
+                            href={project.link}
+                            target={project.link.startsWith('http') ? "_blank" : "_self"}
+                            rel="noopener noreferrer"
+                            className="carousel-item flex-none w-[85vw] sm:w-[500px] md:w-[700px] lg:w-[800px] aspect-[4/3] md:aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden bg-primary relative isolate group shadow-xl block"
+                        >
+                            {project.image ? (
+                                <div className="absolute inset-0 w-full h-full transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105">
+                                    <div className="absolute inset-0 bg-primary/30 mix-blend-multiply z-10 transition-opacity duration-500 group-hover:opacity-10"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent z-20"></div>
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover object-top opacity-70 transition-opacity duration-700 group-hover:opacity-100"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-primary to-[#050810] z-0"></div>
+                            )}
+
+                            <div className="relative z-30 mt-auto p-6 md:p-8 flex flex-col gap-2 transform transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] translate-y-2 group-hover:translate-y-0 h-full justify-end">
+                                <span className="font-data text-accent uppercase tracking-widest text-xs font-bold block mb-1">{project.category}</span>
+                                <h3 className="font-heading text-white font-bold text-xl md:text-3xl leading-tight">{project.title}</h3>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 xl:grid-cols-[1.25fr_0.75fr] gap-8 items-start">
+                <GeoComparisonTable
+                    eyebrow="Build Comparison"
+                    title="Custom websites vs bloated monthly-fee websites"
+                    intro="The right build depends on the business, but lean custom work usually gives owners more control, better speed, and fewer platform constraints."
+                    columns={buildModelColumns}
+                    rows={buildModelRows}
+                    note="Why this matters: websites are not just visual assets. They also affect speed, visibility, extractability, and how much control a business keeps over its digital infrastructure."
+                />
+                <GeoQuestionGrid
+                    eyebrow="Portfolio Context"
+                    title="What these projects show"
+                    items={projectQuestions}
+                />
+            </div>
+
+            {/* Global style for continuous loop animation */}
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @keyframes scroll {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(calc(-50% - 12px)); } /* 12px is half of the gap-6 (24px) */
+                }
+                .animate-scroll {
+                    animation: scroll 40s linear infinite;
+                }
+            `}} />
+        </section>
+    );
+}

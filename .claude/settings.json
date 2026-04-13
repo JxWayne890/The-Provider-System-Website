@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"Google ping: HTTP %{http_code}\\\\n\" \"https://www.google.com/ping?sitemap=https://theprovidersystem.com/sitemap.xml\")",
+      "Bash(curl -s -o /dev/null -w \"Bing ping: HTTP %{http_code}\\\\n\" \"https://www.bing.com/ping?sitemap=https://theprovidersystem.com/sitemap.xml\")"
+    ]
+  }
+}
