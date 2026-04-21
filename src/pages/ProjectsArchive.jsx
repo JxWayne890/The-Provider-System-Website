@@ -1,11 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { GeoCapsuleGrid, GeoComparisonTable } from '../components/GeoBlocks';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const projectCategories = [
     {
@@ -172,218 +168,200 @@ const ownershipRows = [
     ]
 ];
 
+const allCategories = ['All', ...projectCategories.map((g) => g.category)];
+
 export default function ProjectsArchive() {
-    const [activeCategory, setActiveCategory] = useState(projectCategories[0].category);
-    const scrollContainerRef = useRef(null);
+    const [activeFilter, setActiveFilter] = useState('All');
 
-    const scrollToCategory = (category) => {
-        setActiveCategory(category);
-        const element = document.getElementById(`cat-${category.replace(/\s+/g, '-').toLowerCase()}`);
-        if (element && scrollContainerRef.current) {
-            scrollContainerRef.current.scrollTo({
-                top: element.offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    };
-
-    useEffect(() => {
-        const observers = [];
-        const container = scrollContainerRef.current;
-
-        projectCategories.forEach((group) => {
-            const id = `cat-${group.category.replace(/\s+/g, '-').toLowerCase()}`;
-            const element = document.getElementById(id);
-            if (element && container) {
-                const observer = new IntersectionObserver(
-                    ([entry]) => {
-                        if (entry.isIntersecting) {
-                            setActiveCategory(group.category);
-                        }
-                    },
-                    {
-                        threshold: 0.1,
-                        root: container,
-                        rootMargin: '-5% 0px -80% 0px'
-                    }
-                );
-                observer.observe(element);
-                observers.push(observer);
-            }
-        });
-
-        return () => observers.forEach(obs => obs.disconnect());
-    }, []);
+    const visibleProjects =
+        activeFilter === 'All'
+            ? projectCategories.flatMap((g) =>
+                  g.projects.map((p) => ({ ...p, category: g.category }))
+              )
+            : (projectCategories.find((g) => g.category === activeFilter)?.projects || []).map(
+                  (p) => ({ ...p, category: activeFilter })
+              );
 
     return (
-        <div className="h-screen bg-background overflow-hidden flex flex-col pt-32">
+        <div className="min-h-screen bg-background pt-28 pb-20">
             <SEO
                 title="Project Archive | Deployed Systems"
                 description="Explore The Provider System portfolio of deployed AI architectures, high-performance SaaS applications, conversion-optimized static sites, and custom internal workflow tools."
                 url="/projects"
                 schemas={[
                     {
-                        "@type": "CollectionPage",
-                        "@id": "https://theprovidersystem.com/projects",
-                        "name": "Project Archive — The Provider System",
-                        "description": "Portfolio of deployed AI architectures, SaaS applications, and custom automation systems.",
-                        "isPartOf": { "@id": "https://theprovidersystem.com/#website" }
+                        '@type': 'CollectionPage',
+                        '@id': 'https://theprovidersystem.com/projects',
+                        name: 'Project Archive — The Provider System',
+                        description:
+                            'Portfolio of deployed AI architectures, SaaS applications, and custom automation systems.',
+                        isPartOf: { '@id': 'https://theprovidersystem.com/#website' }
                     },
                     {
-                        "@type": "BreadcrumbList",
-                        "@id": "https://theprovidersystem.com/projects#breadcrumbs",
-                        "itemListElement": [
+                        '@type': 'BreadcrumbList',
+                        '@id': 'https://theprovidersystem.com/projects#breadcrumbs',
+                        itemListElement: [
                             {
-                                "@type": "ListItem",
-                                "position": 1,
-                                "name": "Home",
-                                "item": "https://theprovidersystem.com/"
+                                '@type': 'ListItem',
+                                position: 1,
+                                name: 'Home',
+                                item: 'https://theprovidersystem.com/'
                             },
                             {
-                                "@type": "ListItem",
-                                "position": 2,
-                                "name": "Projects"
+                                '@type': 'ListItem',
+                                position: 2,
+                                name: 'Projects'
                             }
                         ]
                     }
                 ]}
             />
-            <div className="max-w-7xl w-full mx-auto px-6 md:px-16 flex flex-col h-full">
 
-                {/* Fixed Header */}
-                <header className="mb-12 flex-none">
-                    <Link to="/" className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors mb-6 font-heading text-sm font-semibold">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <div className="max-w-7xl w-full mx-auto px-6 md:px-12">
+                {/* Compact header */}
+                <header className="mb-8">
+                    <Link
+                        to="/"
+                        className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors mb-4 font-heading text-sm font-semibold"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
                         Back to Systems
                     </Link>
-                    <h1 className="font-heading font-bold text-5xl md:text-6xl text-primary tracking-tight mb-4">
-                        Project Archive.
-                    </h1>
-                    <p className="font-heading text-lg md:text-xl text-muted max-w-2xl leading-relaxed">
-                        What deployed systems has The Provider System built? Our archive catalogs a proven track record of high-performance SaaS applications, conversion-optimized static sites, and custom internal workflow tools designed to scale operations and eliminate manual bottlenecks for our partners.
-                    </p>
+                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                        <div>
+                            <h1 className="font-heading font-bold text-4xl md:text-5xl text-primary tracking-tight mb-2">
+                                Project Archive.
+                            </h1>
+                            <p className="font-heading text-base md:text-lg text-muted max-w-2xl leading-relaxed">
+                                A snapshot of deployed systems — SaaS products, dynamic sites, static
+                                builds, and private tools.
+                            </p>
+                        </div>
+                    </div>
                 </header>
 
-                <div className="flex flex-col md:flex-row gap-12 items-start flex-1 min-h-0 pb-12">
-                    {/* Left Column: Fixed Category Sidebar */}
-                    <aside className="md:w-64 flex-none hidden md:block">
-                        <nav className="flex flex-col gap-2">
-                            {projectCategories.map((group) => (
-                                <button
-                                    key={group.category}
-                                    onClick={() => scrollToCategory(group.category)}
-                                    className={`text-left px-5 py-3.5 rounded-2xl font-heading font-bold text-sm transition-all ${activeCategory === group.category
-                                        ? 'bg-primary text-white shadow-xl translate-x-1'
-                                        : 'text-muted hover:bg-primary/5 hover:translate-x-1'
-                                        }`}
-                                >
-                                    {group.category}
-                                </button>
-                            ))}
-                        </nav>
-                    </aside>
-
-                    {/* Right Column: Scrollable Project Pane */}
-                    <div
-                        ref={scrollContainerRef}
-                        className="flex-1 h-full overflow-y-auto space-y-24 pr-4 hide-scrollbar scroll-smooth"
-                    >
-                        <section className="space-y-8">
-                            <GeoCapsuleGrid
-                                eyebrow="Archive Summary"
-                                title="What this portfolio says about the work"
-                                intro="This GEO layer adds plain-language context around the portfolio so both people and AI systems can understand what The Provider System builds and why those build choices matter."
-                                capsules={archiveCapsules}
-                            />
-                            <GeoComparisonTable
-                                eyebrow="Architecture Comparison"
-                                title="Static websites vs overly complex platforms"
-                                columns={platformColumns}
-                                rows={platformRows}
-                                note="What this means: for many business websites, a simpler stack is easier to maintain, easier to optimize, and easier for answer engines to parse."
-                            />
-                            <GeoComparisonTable
-                                eyebrow="Ownership Comparison"
-                                title="Hiring a developer vs owning your code outright"
-                                intro="These are not opposites. The important distinction is whether the build leaves the business with control or with a closed dependency."
-                                columns={ownershipColumns}
-                                rows={ownershipRows}
-                                note="Why this matters: owning the delivered asset gives a business more freedom to change vendors, hosts, or growth strategy later."
-                            />
-                        </section>
-                        {projectCategories.map((group) => (
-                            <section
-                                key={group.category}
-                                id={`cat-${group.category.replace(/\s+/g, '-').toLowerCase()}`}
-                                className="first:pt-0"
+                {/* Category filter pills */}
+                <div className="mb-8 flex flex-wrap gap-2">
+                    {allCategories.map((cat) => {
+                        const isActive = activeFilter === cat;
+                        return (
+                            <button
+                                key={cat}
+                                onClick={() => setActiveFilter(cat)}
+                                className={`px-4 py-2 rounded-full font-heading font-semibold text-sm transition-all ${
+                                    isActive
+                                        ? 'bg-primary text-white shadow-md'
+                                        : 'bg-white text-muted border border-primary/10 hover:border-primary/30 hover:text-primary'
+                                }`}
                             >
-                                <div className="flex items-center gap-4 mb-8">
-                                    <h2 className="font-heading font-bold text-xl text-primary whitespace-nowrap uppercase tracking-widest">
-                                        {group.category}
-                                    </h2>
-                                    <div className="h-[1px] w-full bg-primary/10"></div>
-                                </div>
-                                <div className="flex flex-col gap-4 sm:gap-6">
-                                    {group.projects.map((project) => (
-                                        <div
-                                            key={project.id}
-                                            className="group flex flex-row sm:flex-row h-[120px] sm:h-auto md:h-[200px] rounded-2xl sm:rounded-3xl overflow-hidden bg-primary shadow-sm hover:shadow-xl transition-all duration-500 border border-primary/10"
-                                        >
-                                            {/* Left side: Image Thumbnail */}
-                                            {project.image ? (
-                                                <div className="relative w-[120px] sm:w-[200px] md:w-[280px] h-full flex-shrink-0 overflow-hidden bg-[#050810]">
-                                                    <div className="absolute inset-0 bg-primary/10 mix-blend-multiply z-10 transition-opacity group-hover:opacity-0 duration-500"></div>
-                                                    <img
-                                                        src={project.image}
-                                                        alt={project.title}
-                                                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                                                    />
-                                                </div>
-                                            ) : (
-                                                <div className="relative w-[120px] sm:w-[200px] md:w-[280px] h-full flex-shrink-0 bg-gradient-to-br from-primary/80 to-[#050810]"></div>
-                                            )}
+                                {cat}
+                            </button>
+                        );
+                    })}
+                </div>
 
-                                            {/* Right side: Content */}
-                                            <div className="flex-1 p-3 sm:p-5 md:p-8 flex flex-col justify-center bg-white min-w-0">
-                                                <h3 className="font-heading text-primary font-bold text-base sm:text-xl md:text-2xl leading-tight sm:mb-2 truncate sm:whitespace-normal">
-                                                    {project.title}
-                                                </h3>
-                                                <p className="font-heading text-muted text-xs sm:text-sm leading-relaxed mb-2 sm:mb-6 max-w-2xl hidden sm:block line-clamp-2 md:line-clamp-none">
-                                                    {project.description}
-                                                </p>
-                                                <div className="mt-auto">
-                                                    <a
-                                                        href={project.link}
-                                                        target={project.link === '#contact' ? '_self' : '_blank'}
-                                                        rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-1 sm:gap-2 text-accent font-heading font-bold text-[11px] sm:text-sm group/link hover:text-accent/80 transition-colors"
-                                                    >
-                                                        <span>{project.link === '#contact' ? 'Inquire for Details' : 'Explore System'}</span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover/link:translate-x-1 transition-transform sm:w-4 sm:h-4">
-                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                            <polyline points="12 5 19 12 12 19"></polyline>
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
+                {/* Project grid — visible immediately */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {visibleProjects.map((project) => (
+                        <a
+                            key={project.id}
+                            href={project.link}
+                            target={project.link === '#contact' ? '_self' : '_blank'}
+                            rel="noopener noreferrer"
+                            className="group relative flex flex-col rounded-2xl overflow-hidden bg-white border border-primary/10 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                        >
+                            {/* Image or gradient placeholder */}
+                            <div className="relative aspect-[16/10] w-full overflow-hidden bg-primary">
+                                {project.image ? (
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        loading="lazy"
+                                        className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-gradient-to-br from-primary via-primary/90 to-[#050810] flex items-center justify-center">
+                                        <span className="font-heading font-bold text-white/40 text-2xl uppercase tracking-widest">
+                                            {project.category}
+                                        </span>
+                                    </div>
+                                )}
+                                <span className="absolute top-3 left-3 bg-white/95 backdrop-blur text-primary px-3 py-1 rounded-full font-heading font-bold text-xs uppercase tracking-wider">
+                                    {project.category}
+                                </span>
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 p-5 flex flex-col">
+                                <h3 className="font-heading text-primary font-bold text-lg md:text-xl leading-tight mb-2">
+                                    {project.title}
+                                </h3>
+                                <p className="font-heading text-muted text-sm leading-relaxed mb-4 line-clamp-3">
+                                    {project.description}
+                                </p>
+                                <div className="mt-auto inline-flex items-center gap-2 text-accent font-heading font-bold text-sm">
+                                    <span>
+                                        {project.link === '#contact' ? 'Inquire for Details' : 'Explore System'}
+                                    </span>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="transform group-hover:translate-x-1 transition-transform"
+                                    >
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
                                 </div>
-                            </section>
-                        ))}
-                    </div>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+
+                {/* GEO content — now below the projects so it doesn't block the view */}
+                <div className="mt-24 space-y-12 pt-12 border-t border-primary/10">
+                    <GeoCapsuleGrid
+                        eyebrow="Archive Summary"
+                        title="What this portfolio says about the work"
+                        intro="Plain-language context around the portfolio so both people and AI systems can understand what The Provider System builds and why those build choices matter."
+                        capsules={archiveCapsules}
+                    />
+                    <GeoComparisonTable
+                        eyebrow="Architecture Comparison"
+                        title="Static websites vs overly complex platforms"
+                        columns={platformColumns}
+                        rows={platformRows}
+                        note="What this means: for many business websites, a simpler stack is easier to maintain, easier to optimize, and easier for answer engines to parse."
+                    />
+                    <GeoComparisonTable
+                        eyebrow="Ownership Comparison"
+                        title="Hiring a developer vs owning your code outright"
+                        intro="These are not opposites. The important distinction is whether the build leaves the business with control or with a closed dependency."
+                        columns={ownershipColumns}
+                        rows={ownershipRows}
+                        note="Why this matters: owning the delivered asset gives a business more freedom to change vendors, hosts, or growth strategy later."
+                    />
                 </div>
             </div>
-
-            <style dangerouslySetInnerHTML={{
-                __html: `
-                .hide-scrollbar::-webkit-scrollbar {
-                    display: none;
-                }
-                .scroll-smooth {
-                    scroll-behavior: smooth;
-                }
-            `}} />
         </div>
     );
 }
