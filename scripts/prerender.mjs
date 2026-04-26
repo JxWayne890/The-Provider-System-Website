@@ -72,6 +72,7 @@ async function getAllRoutes() {
     '/faq-hub',
     '/resources',
     '/reviews',
+    '/privacy-policy',
   ];
 
   // Dynamic imports of data files

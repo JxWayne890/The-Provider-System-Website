@@ -49,6 +49,7 @@ const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 const FAQHubPage = lazy(() => import('./pages/FAQHubPage'));
 const ResourcesPage = lazy(() => import('./pages/ResourcesPage'));
 const ReviewsPage = lazy(() => import('./pages/ReviewsPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 
 function LoadingFallback() {
   return (
@@ -113,6 +114,9 @@ function App() {
             <Route path="/faq-hub" element={<FAQHubPage />} />
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/reviews" element={<ReviewsPage />} />
+
+            {/* Legal */}
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           </Routes>
         </Suspense>
         <Footer />

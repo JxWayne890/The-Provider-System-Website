@@ -37,9 +37,7 @@ export default function Footer() {
 
                     <div className="col-span-1 flex flex-col gap-4">
                         <h4 className="font-heading font-semibold text-white/50 text-sm tracking-wider uppercase mb-2">Legal</h4>
-                        <a href="#" className="hover:text-accent transition-colors font-heading">Privacy Policy</a>
-                        <a href="#" className="hover:text-accent transition-colors font-heading">Terms of Service</a>
-                        <a href="#" className="hover:text-accent transition-colors font-heading">Data Processing</a>
+                        <Link to="/privacy-policy" className="hover:text-accent transition-colors font-heading">Privacy Policy</Link>
                     </div>
 
                 </div>

@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/automations",
+      "destination": "/services/ai-workflow-automation",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
