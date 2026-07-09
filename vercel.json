@@ -2,7 +2,82 @@
   "redirects": [
     {
       "source": "/automations",
-      "destination": "/services/ai-workflow-automation",
+      "destination": "/lead-crm-system",
+      "permanent": true
+    },
+    {
+      "source": "/services/website-development",
+      "destination": "/websites",
+      "permanent": true
+    },
+    {
+      "source": "/services/custom-saas-development",
+      "destination": "/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/services/:path*",
+      "destination": "/lead-crm-system",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/lead-crm-system",
+      "permanent": true
+    },
+    {
+      "source": "/industries/:path*",
+      "destination": "/blue-collar",
+      "permanent": true
+    },
+    {
+      "source": "/industries",
+      "destination": "/blue-collar",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/:path*",
+      "destination": "/lead-crm-system",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases",
+      "destination": "/lead-crm-system",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/:path*",
+      "destination": "/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/platforms",
+      "destination": "/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/guides/:path*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/guides",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/resources",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/reviews",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/faq-hub",
+      "destination": "/faq",
       "permanent": true
     }
   ],

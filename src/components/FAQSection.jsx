@@ -1,26 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '../lib/cn';
 import { buildFAQSchema } from './SchemaMarkup';
 
-gsap.registerPlugin(ScrollTrigger);
-
 function FAQAccordionItem({ question, answer, isOpen, onToggle, theme }) {
-    const contentRef = useRef(null);
     const isDark = theme === 'dark';
-
-    useEffect(() => {
-        if (contentRef.current) {
-            gsap.to(contentRef.current, {
-                height: isOpen ? contentRef.current.scrollHeight : 0,
-                opacity: isOpen ? 1 : 0,
-                duration: 0.4,
-                ease: "power2.out",
-            });
-        }
-    }, [isOpen]);
 
     return (
         <div
@@ -52,9 +36,10 @@ function FAQAccordionItem({ question, answer, isOpen, onToggle, theme }) {
                 />
             </button>
             <div
-                ref={contentRef}
-                className="overflow-hidden"
-                style={{ height: 0, opacity: 0 }}
+                className={cn(
+                    'overflow-hidden transition-all duration-300 ease-out',
+                    isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+                )}
             >
                 <p
                     className={cn(
@@ -77,32 +62,11 @@ function FAQAccordionItem({ question, answer, isOpen, onToggle, theme }) {
  * @param {"light" | "dark"} [theme="light"] - Color theme
  */
 export default function FAQSection({ faqs = [], title = 'Frequently Asked Questions', theme = 'light' }) {
-    const sectionRef = useRef(null);
     const [openIndex, setOpenIndex] = useState(0);
     const isDark = theme === 'dark';
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo('.faq-section-anim',
-                { y: 40, opacity: 0 },
-                {
-                    y: 0, opacity: 1,
-                    duration: 0.8,
-                    stagger: 0.08,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: "top 80%",
-                    },
-                }
-            );
-        }, sectionRef);
-        return () => ctx.revert();
-    }, []);
-
     return (
         <section
-            ref={sectionRef}
             className={cn(
                 'py-24 md:py-32 px-6 md:px-16 relative overflow-hidden',
                 isDark ? 'bg-primary' : 'bg-white'

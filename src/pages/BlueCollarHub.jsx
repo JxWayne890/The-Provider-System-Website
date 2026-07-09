@@ -6,14 +6,72 @@ import { buildBreadcrumbSchema, buildFAQSchema, buildOrganizationSchema } from '
 import { blueCollarTrades } from '../data/blueCollarTrades'
 import { Link } from 'react-router-dom'
 import { cn } from '../lib/cn'
-import * as LucideIcons from 'lucide-react'
+import {
+    Boxes,
+    Bug,
+    Calendar,
+    Car,
+    Database,
+    DoorOpen,
+    Droplets,
+    Fence,
+    Flower2,
+    Globe,
+    Hammer,
+    HardHat,
+    Home,
+    Mail,
+    Paintbrush,
+    Phone,
+    Sparkles,
+    SprayCan,
+    Star,
+    Sun,
+    Thermometer,
+    Trash2,
+    TreePine,
+    Truck,
+    Waves,
+    Wrench,
+    Zap,
+} from 'lucide-react'
+
+const iconMap = {
+    Boxes,
+    Bug,
+    Calendar,
+    Car,
+    Database,
+    DoorOpen,
+    Droplets,
+    Fence,
+    Flower2,
+    Globe,
+    Hammer,
+    HardHat,
+    Home,
+    Mail,
+    Paintbrush,
+    Phone,
+    Sparkles,
+    SprayCan,
+    Star,
+    Sun,
+    Thermometer,
+    Trash2,
+    TreePine,
+    Truck,
+    Waves,
+    Wrench,
+    Zap,
+}
 
 const features = [
     {
         icon: 'Globe',
-        title: '300+ Page SEO Websites',
+        title: 'Service-Area SEO Websites',
         description:
-            'Most contractor websites have 5-10 pages and rank for almost nothing. We build your site with hundreds of indexable pages by combining every service you offer with every city and area you serve. That means Google sees you as relevant everywhere you actually work.',
+            'Most contractor websites have a few generic pages and do not explain every service area clearly. We build service and location pages around the actual work you do and the areas you serve, so searchers have a better path to find and trust you.',
     },
     {
         icon: 'Database',
@@ -31,7 +89,7 @@ const features = [
         icon: 'Phone',
         title: 'AI Phone Agent & Receptionist',
         description:
-            'An AI-powered phone agent answers every call 24/7. It qualifies leads, asks the right questions, schedules appointments on your calendar, and even makes outbound follow-up calls. Your phone never goes to voicemail again.',
+            'AI-assisted phone intake can answer common calls, qualify leads, ask the right questions, schedule appointments, and escalate when a real person needs to step in.',
     },
     {
         icon: 'Calendar',
@@ -48,15 +106,15 @@ const features = [
 ]
 
 const comparisonRows = [
-    { aspect: 'Website Pages', without: '5-10 generic pages', with: '300+ targeted local pages' },
-    { aspect: 'Lead Response Time', without: 'Hours or next day', with: 'Instant — AI answers 24/7' },
-    { aspect: 'Missed Calls', without: '40-60% go to voicemail', with: '0% — AI answers every call' },
+    { aspect: 'Website Pages', without: '5-10 generic pages', with: 'Service and area pages built around what you actually offer' },
+    { aspect: 'Lead Response Time', without: 'Hours or next day', with: 'Fast notifications and assisted follow-up' },
+    { aspect: 'Missed Calls', without: 'Voicemail and callback gaps', with: 'AI-assisted intake and escalation options' },
     { aspect: 'Follow-Up', without: 'Manual, inconsistent', with: 'Automated sequences via text & email' },
-    { aspect: 'Google Visibility', without: '1-3 keywords', with: '300+ local keywords indexed' },
-    { aspect: 'Appointment Booking', without: 'Phone tag, back-and-forth', with: 'AI schedules based on availability' },
+    { aspect: 'Google Visibility', without: 'A few broad pages', with: 'More useful service-area coverage' },
+    { aspect: 'Appointment Booking', without: 'Phone tag, back-and-forth', with: 'Booking paths based on your availability rules' },
     { aspect: 'Customer Reviews', without: 'Manually ask (or forget)', with: 'Automated after every job' },
     { aspect: 'Lead Tracking', without: 'Spreadsheet or memory', with: 'Full CRM with pipeline view' },
-    { aspect: 'Revenue Impact', without: 'Losing $5K-$20K/mo in missed leads', with: 'Capturing every opportunity' },
+    { aspect: 'Revenue Impact', without: 'Hard to see what is slipping away', with: 'Cleaner visibility into leads, follow-up, and booked work' },
 ]
 
 const steps = [
@@ -68,7 +126,7 @@ const steps = [
     {
         title: 'Custom Website Build',
         description:
-            'We build you a 300+ page website structured around your exact services and service areas. Every page is written with real, locally-relevant content designed to rank in Google and convert visitors into leads.',
+            'We build a website structured around your exact services and service areas. Pages are written with real, locally relevant content designed to help customers understand what you do and where you work.',
     },
     {
         title: 'CRM & Lead Intake Setup',
@@ -78,7 +136,7 @@ const steps = [
     {
         title: 'AI Phone Agent Deployment',
         description:
-            'Your AI phone agent goes live — answering calls 24/7, qualifying leads, scheduling appointments, and making outbound follow-up calls. You stop losing jobs to voicemail.',
+            'Your AI-assisted phone intake can go live to answer common calls, qualify leads, schedule appointments, and make handoffs clearer when a human needs to step in.',
     },
     {
         title: 'Launch & Optimize',
@@ -126,8 +184,8 @@ export default function BlueCollarHub() {
     return (
         <>
             <SEO
-                title="AI Automation & Websites for Blue-Collar Businesses"
-                description="Custom 300+ page SEO websites, CRM, AI phone agents, and automated follow-up systems for blue-collar trades. Serving nationwide across the United States, Puerto Rico, and the United Kingdom."
+                title="Websites, CRMs & Follow-Up for Blue-Collar Businesses"
+                description="Websites, CRM, lead intake, AI-assisted phone support, and automated follow-up systems for blue-collar trades and service businesses."
                 url="/blue-collar"
                 schemas={[
                     buildOrganizationSchema(),
@@ -155,7 +213,7 @@ export default function BlueCollarHub() {
                     </h1>
 
                     <p className="text-gray-300 font-heading text-lg md:text-xl max-w-3xl mt-6 leading-relaxed">
-                        Custom websites with 300+ indexed pages, AI-powered lead intake, a CRM that follows up automatically, and an AI phone agent that answers every call. Built specifically for contractors and trade businesses that are tired of losing jobs to voicemail.
+                        Custom websites, lead intake, CRM follow-up, and AI-assisted phone support. Built specifically for contractors and trade businesses that are tired of losing opportunities between the website, phone, inbox, and text messages.
                     </p>
 
                     <p className="text-gray-500 font-data text-sm tracking-wide mt-4">
@@ -193,7 +251,7 @@ export default function BlueCollarHub() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {features.map((feature) => {
-                            const Icon = LucideIcons[feature.icon]
+                            const Icon = iconMap[feature.icon]
                             return (
                                 <div
                                     key={feature.title}
@@ -222,7 +280,7 @@ export default function BlueCollarHub() {
                         The SEO Strategy
                     </span>
                     <h2 className="font-drama text-3xl md:text-5xl text-primary tracking-tight mb-10 leading-tight">
-                        How We Get Blue-Collar Businesses 300+ Pages Indexed in Google
+                            How We Build Service-Area Pages for Blue-Collar Businesses
                     </h2>
 
                     <div className="space-y-6 font-heading text-gray-700 text-lg leading-relaxed">
@@ -230,16 +288,16 @@ export default function BlueCollarHub() {
                             Here's the problem with most contractor websites: they have a homepage, an about page, a services page, a contact page, and maybe a gallery. That's 5-10 pages total. Google looks at that and has no idea where you work or what specific services you provide in each area. You end up ranking for your business name and nothing else.
                         </p>
                         <p>
-                            Our approach is simple math. We take every service you offer — say you're an HVAC company that does AC repair, furnace installation, duct cleaning, and heat pump service — and we multiply that by every city and area you serve. If you cover 50 cities, that's 4 services times 50 cities = 200 pages, minimum. Add in FAQ combinations and supporting content and you're well past 300.
+                            Our approach is simple. We take every real service you offer and every city or area you serve, then build useful pages around those combinations where it makes sense. If you cover many services and many cities, that can become a large service-area library.
                         </p>
                         <p>
                             But we're not creating thin, copy-paste garbage. Every single page has unique, locally-relevant content. The page about AC repair in Dallas is different from the page about AC repair in Fort Worth. We write about the local climate, the common housing types, the specific problems homeowners in that area deal with. Google sees it as legitimate, helpful content — because it is.
                         </p>
                         <p>
-                            The result is that when someone in your service area searches "AC repair near me" or "plumber in [city name]," your website shows up. Not just for one keyword, but for hundreds of them across every city you serve. That's how you go from invisible to dominating your local market.
+                            The goal is to give your business more chances to show up for real local searches and give visitors a page that matches what they were looking for.
                         </p>
                         <p>
-                            Most SEO agencies will charge you monthly to write blog posts nobody reads. We build the pages that actually rank for the searches your customers are making right now. It's not a trick — it's just a system that most contractors don't know exists.
+                            Most owners do not need random blog posts first. They need clear service pages, location relevance, trust signals, calls to action, and a follow-up system behind the website.
                         </p>
                     </div>
                 </div>
@@ -312,7 +370,7 @@ export default function BlueCollarHub() {
 
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {blueCollarTrades.map((trade) => {
-                            const Icon = LucideIcons[trade.icon]
+                            const Icon = iconMap[trade.icon] || Wrench
                             return (
                                 <Link
                                     key={trade.slug}

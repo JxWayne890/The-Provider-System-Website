@@ -53,13 +53,10 @@ const PORT = 4173;
 
 async function getAllRoutes() {
   const routes = [
-    // Static pages
     '/',
-    '/services',
-    '/industries',
-    '/use-cases',
-    '/platforms',
-    '/guides',
+    '/websites',
+    '/lead-crm-system',
+    '/custom-systems',
     '/about',
     '/about/process',
     '/about/why-choose-us',
@@ -69,47 +66,14 @@ async function getAllRoutes() {
     '/projects',
     '/diagnostic',
     '/faq',
-    '/faq-hub',
-    '/resources',
-    '/reviews',
     '/privacy-policy',
   ];
 
-  // Dynamic imports of data files
-  const { services }          = await import(join(ROOT, 'src/data/services.js'));
-  const { industries }        = await import(join(ROOT, 'src/data/industries.js'));
-  const { useCases }           = await import(join(ROOT, 'src/data/useCases.js'));
-  const { toolsPlatforms }     = await import(join(ROOT, 'src/data/toolsPlatforms.js'));
-  const { costGuides }         = await import(join(ROOT, 'src/data/costGuides.js'));
   const { blueCollarTrades }   = await import(join(ROOT, 'src/data/blueCollarTrades.js'));
   const { blogPosts }          = await import(join(ROOT, 'src/data/blogPosts.js'));
 
-  // /services/:slug
-  for (const s of services) routes.push(`/services/${s.slug}`);
-
-  // /industries/:slug  +  /industries/:industrySlug/:serviceSlug
-  for (const ind of industries) {
-    routes.push(`/industries/${ind.slug}`);
-    if (ind.relatedServices) {
-      for (const svcSlug of ind.relatedServices) {
-        routes.push(`/industries/${ind.slug}/${svcSlug}`);
-      }
-    }
-  }
-
-  // /use-cases/:slug
-  for (const uc of useCases) routes.push(`/use-cases/${uc.slug}`);
-
-  // /platforms/:slug
-  for (const p of toolsPlatforms) routes.push(`/platforms/${p.slug}`);
-
-  // /guides/:slug
-  for (const g of costGuides) routes.push(`/guides/${g.slug}`);
-
-  // /blue-collar/:slug
   for (const t of blueCollarTrades) routes.push(`/blue-collar/${t.slug}`);
 
-  // /blog/:slug
   for (const bp of blogPosts) routes.push(`/blog/${bp.slug}`);
 
   return routes;

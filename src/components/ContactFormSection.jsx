@@ -3,23 +3,23 @@ import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { cn } from '../lib/cn';
 
 const inquiryOptions = [
-    'AI Workflow Automation',
-    'Custom SaaS Development',
-    'Website / Web App Build',
-    'Intelligent Lead Routing',
-    'Operational Audit',
-    'Other / Idea Integration',
+    'I need a better website',
+    'I need help capturing and following up with leads',
+    'I need a CRM or dashboard',
+    'I need booking, quotes, or scheduling',
+    'I need a custom internal system',
+    'I am not sure yet',
 ];
 
 /**
  * Reusable contact form section that can be dropped into any page.
  *
- * @param {string} [heading="Ready to Automate?"]
+ * @param {string} [heading="Ready to Build Your System?"]
  * @param {string} [subheading]
  * @param {"light" | "dark"} [theme="light"]
  */
 export default function ContactFormSection({
-    heading = 'Ready to Automate?',
+    heading = 'Ready to Build Your System?',
     subheading,
     theme = 'light',
 }) {
@@ -30,7 +30,7 @@ export default function ContactFormSection({
         lastName: '',
         email: '',
         phone: '',
-        inquiryType: 'AI Workflow Automation',
+        inquiryType: 'I need a better website',
         message: '',
     });
     const [status, setStatus] = useState('idle'); // idle | sending | success | error
@@ -82,7 +82,7 @@ export default function ContactFormSection({
 
             await res.json();
             setStatus('success');
-            setFormData({ firstName: '', lastName: '', email: '', phone: '', inquiryType: 'AI Workflow Automation', message: '' });
+            setFormData({ firstName: '', lastName: '', email: '', phone: '', inquiryType: 'I need a better website', message: '' });
         } catch (err) {
             console.error('Submission error:', err);
             setStatus('error');
@@ -162,7 +162,7 @@ export default function ContactFormSection({
                                     isDark ? 'text-white/60' : 'text-muted'
                                 )}
                             >
-                                We&apos;ve received your data. A strategist will contact you within 24 hours.
+                                We&apos;ve received your message. John will review it and follow up with the next practical step.
                             </p>
                             <button
                                 onClick={() => setStatus('idle')}
@@ -268,7 +268,7 @@ export default function ContactFormSection({
                                         disabled={status === 'sending'}
                                         value={formData.message}
                                         onChange={handleChange}
-                                        placeholder="Tell us about your current bottlenecks..."
+                                        placeholder="Tell us what business you run, what you need fixed, and what is happening today..."
                                         className={cn(inputClass, 'resize-none')}
                                     />
                                 </div>
@@ -302,7 +302,7 @@ export default function ContactFormSection({
                                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                                                 </svg>
-                                                Initializing Workflow...
+                                                Sending Message...
                                             </>
                                         ) : (
                                             'Send Message'

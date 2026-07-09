@@ -1,14 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState, useRef } from 'react';
 import { Bot, Terminal, TrendingDown, ArrowRight, Activity } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function DiagnosticTerminal() {
-    const containerRef = useRef(null);
     const terminalRef = useRef(null);
-    const valueRef = useRef(null);
 
     // State
     const [teamSize, setTeamSize] = useState(5);
@@ -25,25 +19,6 @@ export default function DiagnosticTerminal() {
     // Derived calculation
     // (Team Size) * (Hours) * (Rate) * (52 Weeks)
     const annualLoss = Math.round(teamSize * hoursPerWeek * avgHourlyRate * 52);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo(containerRef.current,
-                { opacity: 0, y: 50 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: "top 75%",
-                    }
-                }
-            );
-        });
-        return () => ctx.revert();
-    }, []);
 
     const runDiagnostic = () => {
         setIsCalculating(true);
@@ -72,30 +47,12 @@ export default function DiagnosticTerminal() {
                 clearInterval(interval);
                 setIsCalculating(false);
                 setCalculatedLoss(annualLoss);
-
-                // Animate the big number
-                if (valueRef.current) {
-                    gsap.fromTo(valueRef.current,
-                        { textContent: 0, color: "#fff" },
-                        {
-                            textContent: annualLoss,
-                            color: "#FF9F1C",
-                            duration: 2,
-                            ease: "power2.out",
-                            snap: { textContent: 1 },
-                            stagger: 1,
-                            onUpdate: function () {
-                                valueRef.current.textContent = "$" + Math.ceil(Number(this.targets()[0].textContent)).toLocaleString();
-                            }
-                        }
-                    );
-                }
             }
         }, 500); // 500ms between logs
     };
 
     return (
-        <section ref={containerRef} className="py-32 px-6 md:px-16 bg-[#05162D] text-white overflow-hidden relative border-y border-white/5">
+        <section className="py-32 px-6 md:px-16 bg-[#05162D] text-white overflow-hidden relative border-y border-white/5">
             {/* Background Grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
 
@@ -197,8 +154,8 @@ export default function DiagnosticTerminal() {
                             {calculatedLoss === 0 && !isCalculating ? (
                                 <span className="font-heading text-6xl md:text-8xl font-black text-white/10">AWAITING</span>
                             ) : (
-                                <span ref={valueRef} className="font-heading text-6xl md:text-[7rem] leading-none font-black tracking-tighter text-accent">
-                                    ${(0).toLocaleString()}
+                                <span className="font-heading text-6xl md:text-[7rem] leading-none font-black tracking-tighter text-accent">
+                                    ${calculatedLoss.toLocaleString()}
                                 </span>
                             )}
                         </div>

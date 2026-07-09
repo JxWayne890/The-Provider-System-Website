@@ -1,1 +1,17 @@
+/services/website-development /websites 301
+/services/custom-saas-development /custom-systems 301
+/services/* /lead-crm-system 301
+/services /lead-crm-system 301
+/industries/* /blue-collar 301
+/industries /blue-collar 301
+/use-cases/* /lead-crm-system 301
+/use-cases /lead-crm-system 301
+/platforms/* /custom-systems 301
+/platforms /custom-systems 301
+/guides/* /blog 301
+/guides /blog 301
+/resources /blog 301
+/reviews /projects 301
+/faq-hub /faq 301
+
 /* /index.html 200

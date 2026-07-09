@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import { useState, useRef } from 'react';
 import { ArrowRight, Terminal, Activity, CheckCircle2 } from 'lucide-react';
 import SEO from '../components/SEO';
 
 export default function DiagnosticPage() {
     // Current step in the flow
     const [step, setStep] = useState(1);
-    const containerRef = useRef(null);
     const terminalRef = useRef(null);
 
     // State for Phase 1
@@ -26,16 +24,6 @@ export default function DiagnosticPage() {
     const [email, setEmail] = useState('');
     const [isCalculating, setIsCalculating] = useState(false);
     const [logs, setLogs] = useState([]);
-
-    // Animation for step transitions
-    useEffect(() => {
-        if (containerRef.current) {
-            gsap.fromTo(containerRef.current,
-                { opacity: 0, y: 30 },
-                { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }
-            );
-        }
-    }, [step]);
 
     const handleNext = () => {
         setStep(prev => prev + 1);
@@ -138,7 +126,7 @@ export default function DiagnosticPage() {
                     </div>
                 )}
 
-                <div ref={containerRef} className="flex-1">
+                <div className="flex-1">
                     {/* Phase 1: Baseline */}
                     {step === 1 && (
                         <div className="space-y-10">

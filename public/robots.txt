@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Specifically allow major AI crawlers for AEO
+# Specifically allow major AI crawlers
 User-agent: GPTBot
 Allow: /
 

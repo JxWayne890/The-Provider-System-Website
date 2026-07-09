@@ -47,8 +47,8 @@ export default function AboutPage() {
     return (
         <div className="bg-dark min-h-screen font-body text-white selection:bg-accent selection:text-dark">
             <SEO
-                title="About The Provider System | AI Automation Agency"
-                description="The Provider System is a digital architecture group that designs and deploys AI-powered automation, custom SaaS applications, and internal workflow tools for founders and operators."
+                title="About The Provider System"
+                description="The Provider System builds websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses and select serious operators."
                 url="/about"
                 schemas={schemas}
             />
@@ -71,7 +71,7 @@ export default function AboutPage() {
                             The Provider System
                         </h1>
                         <p className="font-drama text-2xl md:text-3xl text-accent/90 italic mb-8">
-                            AI Architecture &amp; Automation
+                            Websites, CRMs &amp; Operating Systems
                         </p>
                     </div>
                 </section>
@@ -80,13 +80,13 @@ export default function AboutPage() {
                 <section className="px-6 md:px-16 mb-24">
                     <div className="max-w-4xl mx-auto space-y-6">
                         <p className="font-heading text-white/80 text-lg leading-relaxed">
-                            The Provider System is a digital architecture group that designs and deploys AI-powered automation, custom SaaS applications, and internal workflow tools. We work with founders, operators, and lean teams who need reliable systems that perform without enterprise-level complexity or overhead.
+                            The Provider System builds websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses. The main focus is contractors, trades, and local service operators that need more leads and less operational chaos.
                         </p>
                         <p className="font-heading text-white/80 text-lg leading-relaxed">
-                            Founded by John W Johnson, the company was built on a single observation: most businesses do not have a technology problem — they have an implementation problem. Off-the-shelf tools pile up, manual workarounds become permanent, and operators spend more time managing systems than running their business. We exist to fix that.
+                            Founded by John W Johnson, the company was built on a single observation: most businesses do not have a technology problem. They have an implementation problem. Leads land in too many places, follow-up depends on memory, and owners end up stitching the business together by hand.
                         </p>
                         <p className="font-heading text-white/80 text-lg leading-relaxed">
-                            Our mission is to help founders and operators eliminate manual bottlenecks so they can reclaim their time without sacrificing operational control or revenue. Every engagement starts with understanding the problem before proposing any technology. We map your workflows, identify the highest-impact automation opportunities, and build systems that run reliably in the background.
+                            Our mission is to help blue-collar businesses get found, capture leads, follow up faster, and run cleaner systems without giving up ownership of the important parts of the business.
                         </p>
                         <p className="font-heading text-white/80 text-lg leading-relaxed">
                             We deliver full code ownership, transparent pricing, and systems built for longevity. No proprietary lock-in, no black boxes, no surprise invoices. When we hand off a project, you own every line of code, every workflow, and every asset.
@@ -139,7 +139,7 @@ export default function AboutPage() {
                                 Founder &amp; Principal Architect
                             </p>
                             <p className="font-heading text-white/70 text-base leading-relaxed mb-4">
-                                John W Johnson founded The Provider System to bridge the gap between what modern automation technology can do and what most businesses actually have in place. With hands-on experience across workflow automation, AI integration, SaaS development, and operational systems design, he leads every engagement from architecture through deployment.
+                                John W Johnson founded The Provider System to bridge the gap between what local service businesses need and what most web vendors actually deliver. With hands-on experience across websites, CRMs, booking systems, SaaS products, and operational systems design, he leads every engagement from architecture through deployment.
                             </p>
                             <p className="font-heading text-white/70 text-base leading-relaxed">
                                 The company is intentionally lean and practitioner-led. When you work with The Provider System, you work directly with the person designing and building your systems — not a sales team that hands you off to junior developers.
@@ -182,7 +182,7 @@ export default function AboutPage() {
                 {/* Contact */}
                 <ContactFormSection
                     heading="Let's Talk About Your Project"
-                    subheading="Tell us about the bottlenecks slowing your business down. We will map the fastest path to automation."
+                    subheading="Tell us where leads, follow-up, booking, or operations are getting messy. We will map the simplest path forward."
                     theme="dark"
                 />
             </main>

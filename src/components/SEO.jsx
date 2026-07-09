@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 export default function SEO({ title, description, url, image, schema, schemas }) {
     // Base configuration
     const siteTitle = 'The Provider System';
-    const defaultDescription = 'The Provider System builds high-performance AI automation, SaaS applications, and internal workflow tools that help founders and operators reclaim their time without sacrificing operational control.';
+    const defaultDescription = 'The Provider System builds websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses and select high-value operators.';
     const defaultUrl = 'https://theprovidersystem.com';
     const defaultImage = `${defaultUrl}/og-fallback.png`;
 

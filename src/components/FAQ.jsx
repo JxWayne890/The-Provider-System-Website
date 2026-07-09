@@ -1,24 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 function FAQItem({ question, answer, isOpen, onToggle }) {
-    const contentRef = useRef(null);
-
-    useEffect(() => {
-        if (contentRef.current) {
-            gsap.to(contentRef.current, {
-                height: isOpen ? contentRef.current.scrollHeight : 0,
-                opacity: isOpen ? 1 : 0,
-                duration: 0.4,
-                ease: "power2.out"
-            });
-        }
-    }, [isOpen]);
-
     return (
         <div className="border-b border-white/10 last:border-b-0">
             <button
@@ -34,9 +17,7 @@ function FAQItem({ question, answer, isOpen, onToggle }) {
                 />
             </button>
             <div
-                ref={contentRef}
-                className="overflow-hidden"
-                style={{ height: 0, opacity: 0 }}
+                className={`overflow-hidden transition-all duration-300 ease-out ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}
             >
                 <p className="font-heading text-white/70 text-base leading-relaxed pb-6 md:pb-8 max-w-3xl">
                     {answer}
@@ -47,32 +28,11 @@ function FAQItem({ question, answer, isOpen, onToggle }) {
 }
 
 export default function FAQ({ faqs = [] }) {
-    const sectionRef = useRef(null);
     const [openIndex, setOpenIndex] = useState(0); // First item open by default
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo('.faq-anim',
-                { y: 40, opacity: 0 },
-                {
-                    y: 0, opacity: 1,
-                    duration: 0.8,
-                    stagger: 0.08,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: "top 80%",
-                    }
-                }
-            );
-        }, sectionRef);
-        return () => ctx.revert();
-    }, []);
 
     return (
         <section
             id="faq"
-            ref={sectionRef}
             className="py-24 md:py-32 px-6 md:px-16 bg-primary relative overflow-hidden"
         >
             {/* Background grid */}

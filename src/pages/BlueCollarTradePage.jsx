@@ -1,9 +1,28 @@
-import { useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
-import * as LucideIcons from 'lucide-react';
+import {
+    ArrowRight,
+    Boxes,
+    Bug,
+    Car,
+    DoorOpen,
+    Droplets,
+    Fence,
+    Flower2,
+    Hammer,
+    HardHat,
+    Home,
+    Paintbrush,
+    Sparkles,
+    SprayCan,
+    Sun,
+    Thermometer,
+    Trash2,
+    TreePine,
+    Truck,
+    Waves,
+    Wrench,
+    Zap,
+} from 'lucide-react';
 import SEO from '../components/SEO';
 import Breadcrumbs from '../components/Breadcrumbs';
 import FAQSection from '../components/FAQSection';
@@ -12,35 +31,33 @@ import { buildBreadcrumbSchema, buildFAQSchema } from '../components/SchemaMarku
 import { blueCollarTrades } from '../data/blueCollarTrades';
 import { cn } from '../lib/cn';
 
-gsap.registerPlugin(ScrollTrigger);
+const iconMap = {
+    Boxes,
+    Bug,
+    Car,
+    DoorOpen,
+    Droplets,
+    Fence,
+    Flower2,
+    Hammer,
+    HardHat,
+    Home,
+    Paintbrush,
+    Sparkles,
+    SprayCan,
+    Sun,
+    Thermometer,
+    Trash2,
+    TreePine,
+    Truck,
+    Waves,
+    Wrench,
+    Zap,
+};
 
 export default function BlueCollarTradePage() {
     const { slug } = useParams();
     const trade = blueCollarTrades.find((t) => t.slug === slug);
-    const contentRef = useRef(null);
-
-    useEffect(() => {
-        if (!trade) return;
-
-        const ctx = gsap.context(() => {
-            gsap.fromTo(
-                '.bct-anim',
-                { y: 50, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.7,
-                    stagger: 0.06,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: contentRef.current,
-                        start: 'top 85%',
-                    },
-                }
-            );
-        }, contentRef);
-        return () => ctx.revert();
-    }, [trade]);
 
     if (!trade) {
         return (
@@ -54,28 +71,29 @@ export default function BlueCollarTradePage() {
                         to="/blue-collar"
                         className="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-full font-heading font-bold hover:scale-105 transition-transform"
                     >
-                        <ArrowRight className="w-4 h-4 rotate-180" /> Back to all trades
+                        Back to all trades
                     </Link>
                 </div>
             </main>
         );
     }
 
-    const Icon = LucideIcons[trade.icon] || LucideIcons.Wrench;
-
+    const Icon = iconMap[trade.icon] || Wrench;
     const relatedTradeObjects = (trade.relatedTrades || [])
         .map((rs) => blueCollarTrades.find((t) => t.slug === rs))
         .filter(Boolean)
         .slice(0, 3);
 
+    const comparisonHeaders = trade.comparisonTable?.headers || ['Area', 'Without Us', 'With The Provider System'];
+
     const schemas = [
         {
             '@type': 'WebPage',
-            'name': trade.metaTitle,
-            'description': trade.metaDescription,
-            'url': `https://theprovidersystem.com/blue-collar/${trade.slug}`,
+            name: trade.metaTitle,
+            description: trade.metaDescription,
+            url: `https://theprovidersystem.com/blue-collar/${trade.slug}`,
         },
-        buildFAQSchema(trade.faqs),
+        buildFAQSchema(trade.faqs || []),
         buildBreadcrumbSchema([
             { name: 'Home', url: '/' },
             { name: 'Blue-Collar', url: '/blue-collar' },
@@ -92,7 +110,6 @@ export default function BlueCollarTradePage() {
                 schemas={schemas}
             />
 
-            {/* Hero */}
             <section className="pt-32 pb-16 px-6 md:px-16 bg-primary text-white relative overflow-hidden">
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
                 <div className="max-w-5xl mx-auto relative z-10">
@@ -118,8 +135,7 @@ export default function BlueCollarTradePage() {
                 </div>
             </section>
 
-            <div ref={contentRef}>
-                {/* Description */}
+            <div>
                 <section className="py-20 px-6 md:px-16 bg-background">
                     <div className="max-w-4xl mx-auto space-y-6">
                         {trade.description.map((paragraph, i) => (
@@ -133,8 +149,7 @@ export default function BlueCollarTradePage() {
                     </div>
                 </section>
 
-                {/* System Features */}
-                {trade.features && trade.features.length > 0 && (
+                {trade.systemFeatures && trade.systemFeatures.length > 0 && (
                     <section className="py-20 px-6 md:px-16 bg-white">
                         <div className="max-w-6xl mx-auto">
                             <span className="bct-anim font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
@@ -144,7 +159,7 @@ export default function BlueCollarTradePage() {
                                 What We Build for {trade.fullName}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {trade.features.map((feature, i) => (
+                                {trade.systemFeatures.map((feature, i) => (
                                     <div
                                         key={i}
                                         className="bct-anim bg-background rounded-xl p-8 border border-muted/10"
@@ -162,7 +177,6 @@ export default function BlueCollarTradePage() {
                     </section>
                 )}
 
-                {/* Pain Points */}
                 {trade.painPoints && trade.painPoints.length > 0 && (
                     <section className="py-20 px-6 md:px-16 bg-primary text-white relative overflow-hidden">
                         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
@@ -171,7 +185,7 @@ export default function BlueCollarTradePage() {
                                 Problems &amp; Solutions
                             </span>
                             <h2 className="bct-anim font-heading font-bold text-3xl md:text-5xl tracking-tight mb-12">
-                                Problems {trade.name} Face Every Day — And How We Solve Them
+                                Problems {trade.name} Face Every Day and How We Solve Them
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {trade.painPoints.map((pp, i) => (
@@ -203,8 +217,7 @@ export default function BlueCollarTradePage() {
                     </section>
                 )}
 
-                {/* Comparison Table */}
-                {trade.comparisonTable && trade.comparisonTable.length > 0 && (
+                {trade.comparisonTable?.rows && trade.comparisonTable.rows.length > 0 && (
                     <section className="py-20 px-6 md:px-16 bg-background">
                         <div className="max-w-5xl mx-auto">
                             <span className="bct-anim font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
@@ -217,33 +230,30 @@ export default function BlueCollarTradePage() {
                                 <table className="w-full text-left">
                                     <thead>
                                         <tr className="bg-primary text-white">
-                                            <th className="px-6 py-4 font-heading font-bold text-sm tracking-wide first:rounded-tl-2xl">
-                                                Area
-                                            </th>
-                                            <th className="px-6 py-4 font-heading font-bold text-sm tracking-wide">
-                                                Without Us
-                                            </th>
-                                            <th className="px-6 py-4 font-heading font-bold text-sm tracking-wide last:rounded-tr-2xl">
-                                                With The Provider System
-                                            </th>
+                                            {comparisonHeaders.map((header) => (
+                                                <th
+                                                    key={header}
+                                                    className="px-6 py-4 font-heading font-bold text-sm tracking-wide first:rounded-tl-2xl last:rounded-tr-2xl"
+                                                >
+                                                    {header}
+                                                </th>
+                                            ))}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {trade.comparisonTable.map((row, i) => (
+                                        {trade.comparisonTable.rows.map((row, i) => (
                                             <tr
-                                                key={i}
-                                                className={cn(
-                                                    i % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                                                )}
+                                                key={`${row[0]}-${i}`}
+                                                className={cn(i % 2 === 0 ? 'bg-white' : 'bg-gray-50')}
                                             >
                                                 <td className="px-6 py-4 font-heading font-bold text-sm text-primary">
-                                                    {row.area}
+                                                    {row[0]}
                                                 </td>
                                                 <td className="px-6 py-4 font-heading text-sm text-muted">
-                                                    {row.without}
+                                                    {row[1]}
                                                 </td>
                                                 <td className="px-6 py-4 font-heading text-sm text-accent font-medium">
-                                                    {row.with}
+                                                    {row[2]}
                                                 </td>
                                             </tr>
                                         ))}
@@ -254,7 +264,6 @@ export default function BlueCollarTradePage() {
                     </section>
                 )}
 
-                {/* Service Types */}
                 {trade.serviceTypes && trade.serviceTypes.length > 0 && (
                     <section className="py-20 px-6 md:px-16 bg-white">
                         <div className="max-w-5xl mx-auto">
@@ -275,24 +284,18 @@ export default function BlueCollarTradePage() {
                                 ))}
                             </div>
                             <p className="bct-anim font-heading text-base text-muted leading-relaxed max-w-3xl">
-                                Each of these services gets its own optimized page for every city
-                                and area you serve. If you offer {trade.serviceTypes.length}{' '}
-                                services across 20 cities, that&apos;s{' '}
-                                {trade.serviceTypes.length * 20}+ pages ranking in Google.
+                                Each of these services can get its own optimized page for each city and area you serve.
+                                If you offer {trade.serviceTypes.length} services across 20 cities, that creates{' '}
+                                {trade.serviceTypes.length * 20}+ targeted service-area pages.
                             </p>
                         </div>
                     </section>
                 )}
 
-                {/* FAQ */}
                 {trade.faqs && trade.faqs.length > 0 && (
-                    <FAQSection
-                        faqs={trade.faqs}
-                        title={`${trade.name} FAQ`}
-                    />
+                    <FAQSection faqs={trade.faqs} title={`${trade.name} FAQ`} />
                 )}
 
-                {/* Related Trades */}
                 {relatedTradeObjects.length > 0 && (
                     <section className="py-16 px-6 md:px-16 bg-background">
                         <div className="max-w-6xl mx-auto">
@@ -304,8 +307,7 @@ export default function BlueCollarTradePage() {
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
                                 {relatedTradeObjects.map((related) => {
-                                    const RelatedIcon =
-                                        LucideIcons[related.icon] || LucideIcons.Wrench;
+                                    const RelatedIcon = iconMap[related.icon] || Wrench;
                                     return (
                                         <Link
                                             key={related.slug}
@@ -333,7 +335,7 @@ export default function BlueCollarTradePage() {
                                     to="/blue-collar"
                                     className="inline-flex items-center gap-2 font-heading font-bold text-accent hover:text-accent/80 transition-colors"
                                 >
-                                    See all 20+ trades we serve <ArrowRight className="w-4 h-4" />
+                                    See all trades we serve <ArrowRight className="w-4 h-4" />
                                 </Link>
                             </div>
                         </div>
@@ -343,7 +345,7 @@ export default function BlueCollarTradePage() {
 
             <ContactFormSection
                 heading={`Get a Website System for Your ${trade.name} Business`}
-                subheading={`Tell us about your ${trade.name.toLowerCase()} business and we will build a custom system that brings in leads on autopilot.`}
+                subheading={`Tell us about your ${trade.name.toLowerCase()} business and we will map the website, lead capture, and follow-up system that fits your service area.`}
             />
         </main>
     );

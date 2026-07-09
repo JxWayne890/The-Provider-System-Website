@@ -1,509 +1,101 @@
 # The Provider System
 
-> AI Architecture & Automation Agency — Founded by John W Johnson
+> Websites, lead CRMs, follow-up systems, and custom operating tools for blue-collar businesses.
 
-The Provider System is a digital architecture group founded by John W Johnson that designs and deploys AI-powered automation, custom SaaS applications, and internal workflow tools. We help founders and operators eliminate manual bottlenecks so they can reclaim their time without sacrificing operational control or revenue. Based at theprovidersystem.com, we serve businesses across 20+ industries with end-to-end automation solutions.
+The Provider System is owned by John W Johnson. The company builds practical digital systems for contractors, trades, local service companies, and selected operators who need more than a brochure website. The core promise is simple: help business owners get found, capture leads, follow up faster, and keep ownership of the website or system that runs the work.
 
-## Blue-Collar Specialization (Primary Focus)
+## Primary Positioning
 
-Blue-collar trades and contractors are The Provider System's primary specialty. We build complete digital systems for trade businesses — not just websites, but full business automation ecosystems.
+The Provider System is focused on blue-collar and local service businesses first. Ideal clients include plumbers, electricians, HVAC companies, roofers, general contractors, landscapers, painters, pest control companies, towing companies, auto detailers, junk removal companies, pressure washing companies, garage door companies, window cleaners, and similar trade businesses.
 
-### The Complete Blue-Collar System
-- **300+ Page SEO Website**: Massive, keyword-rich websites with dedicated pages for every service, city, and service-area combination. Designed to dominate local search results and generate organic leads 24/7.
-- **CRM & Lead Management**: Centralized customer relationship management with automated lead capture, qualification, and pipeline tracking.
-- **AI Phone Agent**: An AI-powered receptionist that answers calls, books jobs, qualifies leads, and routes emergencies — so no call goes unanswered, even after hours.
-- **Automated Follow-Ups**: Email and SMS sequences for estimates, job completions, review requests, and re-engagement campaigns that run on autopilot.
-- **Job Scheduling & Dispatch**: Automated scheduling, crew assignment, and dispatch coordination integrated with your calendar and CRM.
-- **Review Generation**: Automated post-job review requests via SMS and email to build a 5-star reputation on Google, Yelp, and industry directories.
+The company also accepts selected custom system builds when the scope is operationally meaningful, such as CRMs, dashboards, intake portals, booking tools, quote workflows, and internal operating systems.
 
-### 20 Trades Served
-Electricians, Plumbers, HVAC, Roofers, Tree Service, Auto Detailing, Solar Installers, Painters, Landscapers, General Contractors, Concrete & Masonry, Fencing, Pest Control, Pressure Washing, Garage Doors, Carpet Cleaning, Towing, Junk Removal, Window Cleaning, and Handyman services.
+## Core Offers
 
-### Service Areas
-Nationwide across the United States, Puerto Rico, and the United Kingdom.
+### Website Foundation
+- Route: /websites
+- Best for: blue-collar businesses that need a credible, fast, conversion-focused website.
+- Typical starting point: $2,500+ or managed monthly plans from $299/month.
+- Includes: service pages, mobile-first design, click-to-call actions, contact/quote forms, local search foundations, Google Business Profile support, trust sections, ownership-minded setup, and hosting/deployment configuration.
 
-### Blue-Collar Hub
-- /blue-collar — Full overview of blue-collar automation services and all 20 trade pages
+### Lead & CRM System
+- Route: /lead-crm-system
+- Best for: businesses losing leads through scattered forms, phone calls, spreadsheets, inboxes, or missed follow-up.
+- Typical starting point: $6,500+ or managed monthly plans from $750/month.
+- Includes: lead capture, CRM pipeline, status tracking, internal notifications, follow-up workflows, quote/request forms, booking or scheduling support when needed, dashboard views, and owner handoff.
 
-## Services
+### Custom Operating System
+- Route: /custom-systems
+- Best for: operators who need a custom app, client portal, internal dashboard, workflow system, or purpose-built software tool.
+- Typical starting point: custom quote after audit, often $12k+ depending on scope.
+- Includes: discovery, architecture, app design, database planning, dashboard/admin views, workflow logic, deployment, and handoff.
 
-- AI Workflow Automation: Custom AI-powered workflows using n8n, Make, Zapier, and other platforms to automate repetitive tasks, data processing, and multi-step business operations. We design intelligent pipelines that connect your tools and eliminate manual handoffs.
-- AI Chatbot Development: Custom-built AI chatbots and conversational agents using Voiceflow, Vapi, OpenAI, and Anthropic Claude. Deployed on websites, SMS, WhatsApp, and voice channels for 24/7 lead capture, customer support, and appointment booking.
-- Lead Generation & Routing: Automated lead capture, qualification, scoring, and routing systems that ensure every prospect is engaged instantly and routed to the right team member. Integrates with CRMs, email, SMS, and marketing platforms.
-- Custom SaaS Development: Full-stack custom software applications built to your exact specifications. Client portals, internal dashboards, booking systems, and proprietary tools designed for scale.
-- Website & Web App Development: Modern, high-performance websites and web applications built with React, Next.js, and other modern frameworks. Optimized for SEO, speed, and conversion.
-- Business Process Automation: End-to-end digitization and automation of core business processes including onboarding, invoicing, document processing, reporting, and internal communications. We map your workflows and eliminate bottlenecks.
-- AI Consulting & Strategy: Strategic AI readiness assessments, automation roadmaps, and technology advisory services. We help you identify the highest-ROI automation opportunities and build a phased implementation plan.
-- Integration & API Development: Custom API integrations connecting your existing tools, databases, and platforms into a unified ecosystem. REST APIs, webhooks, middleware, and data synchronization solutions.
+## Blue-Collar Hub
 
-## Industries We Serve
+- /blue-collar — overview of The Provider System's blue-collar website and lead system work.
 
-- Healthcare: HIPAA-compliant automation for patient intake, scheduling, follow-ups, and clinical workflows.
-- Legal: AI automation for client intake, document management, case tracking, and billing for law firms.
-- Real Estate: Lead routing, transaction management, client communication, and marketing automation for agents and brokerages.
-- Ecommerce: Order processing, inventory management, customer support automation, and marketing workflows for online stores.
-- Restaurants & Hospitality: Reservation management, review monitoring, staff scheduling, and customer engagement automation.
-- Financial Services: Compliance-aware automation for client onboarding, reporting, portfolio management, and communications.
-- Insurance: Policy management, claims processing, lead routing, and client communication automation.
-- Marketing Agencies: Proposal generation, client reporting, campaign management, and internal workflow automation.
-- Construction: Project management, bid tracking, subcontractor coordination, and document automation.
-- Automotive: Lead management, service scheduling, inventory tracking, and customer follow-up automation.
-- Education: Enrollment automation, student communication, administrative workflows, and learning management integration.
-- Nonprofits: Donor management, volunteer coordination, grant tracking, and communication automation.
-- SaaS Companies: User onboarding, churn prevention, support automation, and internal operations workflows.
-- Manufacturing & Logistics: Supply chain automation, inventory alerts, shipping coordination, and quality tracking.
-- Dental & Optometry: Patient communication, appointment reminders, insurance verification, and review management.
-- Fitness & Wellness: Member management, class scheduling, billing automation, and engagement campaigns.
-- Home Services: Lead routing, dispatch automation, invoicing, and customer follow-up for HVAC, plumbing, electrical, and more.
-- Recruiting & Staffing: Candidate sourcing, screening automation, interview scheduling, and placement tracking.
-- Accounting: Client onboarding, document collection, workflow automation, and reporting for accounting firms.
-- Professional Services: Client management, project tracking, billing, and communication automation for consultancies and agencies.
+Trade pages:
+- /blue-collar/electricians
+- /blue-collar/plumbers
+- /blue-collar/hvac
+- /blue-collar/roofers
+- /blue-collar/tree-service
+- /blue-collar/auto-detailing
+- /blue-collar/solar-installers
+- /blue-collar/painters
+- /blue-collar/landscapers
+- /blue-collar/general-contractors
+- /blue-collar/concrete-masonry
+- /blue-collar/fencing
+- /blue-collar/pest-control
+- /blue-collar/pressure-washing
+- /blue-collar/garage-doors
+- /blue-collar/carpet-cleaning
+- /blue-collar/towing
+- /blue-collar/junk-removal
+- /blue-collar/window-cleaning
+- /blue-collar/handyman
 
-## Use Cases
+## Selected Work
 
-- Lead Capture & Qualification: Automatically capture leads from forms, ads, and chat, then score and qualify them with AI.
-- Appointment Scheduling: Automated booking, confirmations, reminders, and rescheduling across calendars and platforms.
-- Customer Onboarding: Guided onboarding sequences with automated document collection, account setup, and welcome communications.
-- Invoice & Payment Automation: Automated invoice generation, payment reminders, reconciliation, and financial reporting.
-- Email Marketing Automation: Triggered email sequences, segmentation, A/B testing, and performance tracking.
-- Social Media Scheduling: Automated content scheduling, cross-posting, and engagement monitoring across platforms.
-- Review & Reputation Management: Automated review requests, monitoring, response drafting, and reputation tracking.
-- CRM Data Enrichment: Automatic contact and company data enrichment from multiple sources directly into your CRM.
-- Document Processing: AI-powered document extraction, classification, routing, and storage automation.
-- Employee Onboarding: Automated new hire workflows including document collection, account provisioning, and training assignment.
-- Inventory Alerts: Real-time inventory monitoring with automated alerts, reorder triggers, and reporting.
-- Customer Support Chatbots: AI chatbots handling FAQs, troubleshooting, ticket creation, and escalation 24/7.
-- Sales Pipeline Automation: Automated deal tracking, follow-up sequences, task assignment, and pipeline reporting.
-- Reporting & Analytics: Automated data aggregation, dashboard generation, and scheduled reporting across tools.
-- Data Migration & Sync: Automated data migration between platforms and ongoing bidirectional synchronization.
-- AI Content Generation: AI-powered content creation for blogs, social media, emails, proposals, and documentation.
-- Voice AI Agents: Conversational voice AI for phone-based customer service, appointment booking, and lead qualification.
-- SMS & WhatsApp Automation: Automated text and WhatsApp messaging for notifications, marketing, and two-way conversations.
-- Proposal & Quote Generation: Automated proposal and quote creation from templates with dynamic data population.
-- Client Portal Automation: Custom client portals with automated updates, document sharing, and communication.
-- Webhook & API Integration: Custom webhook endpoints and API integrations connecting any tools in your stack.
-- Workflow Error Monitoring: Automated monitoring, alerting, and recovery for workflow failures and errors.
-- Multi-Channel Communication: Unified communication automation across email, SMS, chat, voice, and social channels.
-- AI Training Data Pipelines: Automated data collection, cleaning, labeling, and pipeline management for AI model training.
+- Total Quality Plumbing: local service website and lead path.
+- FlowOS: custom operating system for barbers.
+- The Offer Hero: custom system for lenders.
+- Roller Rink USA: venue-focused website.
+- Weathersbee Electric Co.: blue-collar trade website.
 
-## Technology & Platforms
+## Public Site Structure
 
-### Automation Platforms
-- n8n: Open-source workflow automation platform for complex, self-hosted automation.
-- Make (formerly Integromat): Visual automation platform for connecting apps and designing workflows.
-- Zapier: No-code automation platform for connecting 5,000+ apps.
+- / — homepage focused on blue-collar websites, lead CRMs, and custom systems.
+- /websites — website foundation offer.
+- /lead-crm-system — lead capture, CRM, and follow-up system offer.
+- /custom-systems — custom app and operating system offer.
+- /blue-collar — blue-collar industry hub.
+- /projects — selected project archive.
+- /blog — blue-collar website and lead system articles.
+- /about — company story and positioning.
+- /about/process — how projects move from audit to build to handoff.
+- /about/why-choose-us — ownership, practical systems, and focused execution.
+- /about/technology — tools and stack notes.
+- /diagnostic — contact/audit entry point.
+- /faq — common questions.
+- /privacy-policy — privacy policy.
 
-### AI & Language Models
-- OpenAI (GPT-4, GPT-4o): Advanced language models for content generation, analysis, and conversational AI.
-- Anthropic Claude: AI assistant for complex reasoning, analysis, and content tasks.
-- Google Gemini: Multimodal AI for text, image, and data processing tasks.
+## Redirect Policy
 
-### Chatbot & Voice AI
-- Voiceflow: Enterprise-grade conversational AI design and deployment platform.
-- Vapi: Voice AI platform for building phone-based AI agents.
+Older broad-positioning routes now redirect into the focused structure:
 
-### CRM & Business Tools
-- Airtable: Flexible database and project management platform.
-- Notion: All-in-one workspace for docs, databases, and project management.
-- HubSpot: CRM, marketing, sales, and service automation platform.
-- GoHighLevel: All-in-one marketing and CRM platform for agencies.
-- Salesforce: Enterprise CRM and business automation platform.
-
-### Communication
-- Slack: Team communication and workflow automation.
-- Twilio: Programmable SMS, voice, and messaging APIs.
-- SendGrid: Email delivery and marketing automation.
-
-### Commerce & Payments
-- Stripe: Payment processing and billing automation.
-- Shopify: Ecommerce platform integration and automation.
-
-### Web & Data
-- WordPress: Website and content management automation.
-- Google Sheets: Spreadsheet-based data automation and reporting.
-
-## Blog & Resources
-
-The Provider System blog features 50+ in-depth articles covering AI automation guides, platform comparisons, industry trends, use case deep-dives, ROI analysis, and strategic insights. Topics include:
-
-- Step-by-step automation guides for specific business functions
-- Platform comparisons (n8n vs Make vs Zapier, ChatGPT vs Claude vs Gemini, etc.)
-- Industry-specific automation strategies (healthcare, legal, real estate, ecommerce, etc.)
-- AI automation trends and predictions for 2025-2026
-- ROI calculators and cost analysis for automation investments
-- Common automation mistakes and how to avoid them
-- Case studies and real-world implementation examples
+- /services and /services/* redirect to /lead-crm-system, except website and custom SaaS pages.
+- /services/website-development redirects to /websites.
+- /services/custom-saas-development redirects to /custom-systems.
+- /industries and /industries/* redirect to /blue-collar.
+- /use-cases and /use-cases/* redirect to /lead-crm-system.
+- /platforms and /platforms/* redirect to /custom-systems.
+- /guides and /guides/* redirect to /blog.
 
 ## Contact
 
 - Website: https://theprovidersystem.com
 - Email: theprovidersystem@gmail.com
 - Owner: John W Johnson
-- Book a Consultation: https://theprovidersystem.com/#contact
-
-## Page Structure
-
-### Homepage
-- / — Main landing page with services overview, industries, use cases, and contact form
-
-### Services
-- /services — All services overview
-- /services/ai-workflow-automation — AI Workflow Automation service page
-- /services/chatbot-development — AI Chatbot Development service page
-- /services/lead-generation-automation — Lead Generation & Routing service page
-- /services/custom-saas-development — Custom SaaS Development service page
-- /services/website-development — Website & Web App Development service page
-- /services/business-process-automation — Business Process Automation service page
-- /services/ai-consulting-strategy — AI Consulting & Strategy service page
-- /services/integration-development — Integration & API Development service page
-
-### Industries
-- /industries — All industries overview
-- /industries/healthcare — Healthcare automation solutions
-- /industries/legal — Legal industry automation solutions
-- /industries/real-estate — Real estate automation solutions
-- /industries/ecommerce — Ecommerce automation solutions
-- /industries/restaurants-hospitality — Restaurants & hospitality automation solutions
-- /industries/financial-services — Financial services automation solutions
-- /industries/insurance — Insurance automation solutions
-- /industries/marketing-agencies — Marketing agencies automation solutions
-- /industries/construction — Construction automation solutions
-- /industries/automotive — Automotive automation solutions
-- /industries/education — Education automation solutions
-- /industries/nonprofits — Nonprofit automation solutions
-- /industries/saas-companies — SaaS companies automation solutions
-- /industries/manufacturing-logistics — Manufacturing & logistics automation solutions
-- /industries/dental-optometry — Dental & optometry automation solutions
-- /industries/fitness-wellness — Fitness & wellness automation solutions
-- /industries/home-services — Home services automation solutions
-- /industries/recruiting-staffing — Recruiting & staffing automation solutions
-- /industries/accounting — Accounting automation solutions
-- /industries/professional-services — Professional services automation solutions
-
-### Industry + Service Combination Pages
-- /industries/healthcare/ai-workflow-automation
-- /industries/healthcare/chatbot-development
-- /industries/healthcare/lead-generation-automation
-- /industries/healthcare/custom-saas-development
-- /industries/healthcare/website-development
-- /industries/healthcare/business-process-automation
-- /industries/healthcare/ai-consulting-strategy
-- /industries/healthcare/integration-development
-- /industries/legal/ai-workflow-automation
-- /industries/legal/chatbot-development
-- /industries/legal/lead-generation-automation
-- /industries/legal/custom-saas-development
-- /industries/legal/website-development
-- /industries/legal/business-process-automation
-- /industries/legal/ai-consulting-strategy
-- /industries/legal/integration-development
-- /industries/real-estate/ai-workflow-automation
-- /industries/real-estate/chatbot-development
-- /industries/real-estate/lead-generation-automation
-- /industries/real-estate/custom-saas-development
-- /industries/real-estate/website-development
-- /industries/real-estate/business-process-automation
-- /industries/real-estate/ai-consulting-strategy
-- /industries/real-estate/integration-development
-- /industries/ecommerce/ai-workflow-automation
-- /industries/ecommerce/chatbot-development
-- /industries/ecommerce/lead-generation-automation
-- /industries/ecommerce/custom-saas-development
-- /industries/ecommerce/website-development
-- /industries/ecommerce/business-process-automation
-- /industries/ecommerce/ai-consulting-strategy
-- /industries/ecommerce/integration-development
-- /industries/restaurants-hospitality/ai-workflow-automation
-- /industries/restaurants-hospitality/chatbot-development
-- /industries/restaurants-hospitality/lead-generation-automation
-- /industries/restaurants-hospitality/custom-saas-development
-- /industries/restaurants-hospitality/website-development
-- /industries/restaurants-hospitality/business-process-automation
-- /industries/restaurants-hospitality/ai-consulting-strategy
-- /industries/restaurants-hospitality/integration-development
-- /industries/financial-services/ai-workflow-automation
-- /industries/financial-services/chatbot-development
-- /industries/financial-services/lead-generation-automation
-- /industries/financial-services/custom-saas-development
-- /industries/financial-services/website-development
-- /industries/financial-services/business-process-automation
-- /industries/financial-services/ai-consulting-strategy
-- /industries/financial-services/integration-development
-- /industries/insurance/ai-workflow-automation
-- /industries/insurance/chatbot-development
-- /industries/insurance/lead-generation-automation
-- /industries/insurance/custom-saas-development
-- /industries/insurance/website-development
-- /industries/insurance/business-process-automation
-- /industries/insurance/ai-consulting-strategy
-- /industries/insurance/integration-development
-- /industries/marketing-agencies/ai-workflow-automation
-- /industries/marketing-agencies/chatbot-development
-- /industries/marketing-agencies/lead-generation-automation
-- /industries/marketing-agencies/custom-saas-development
-- /industries/marketing-agencies/website-development
-- /industries/marketing-agencies/business-process-automation
-- /industries/marketing-agencies/ai-consulting-strategy
-- /industries/marketing-agencies/integration-development
-- /industries/construction/ai-workflow-automation
-- /industries/construction/chatbot-development
-- /industries/construction/lead-generation-automation
-- /industries/construction/custom-saas-development
-- /industries/construction/website-development
-- /industries/construction/business-process-automation
-- /industries/construction/ai-consulting-strategy
-- /industries/construction/integration-development
-- /industries/automotive/ai-workflow-automation
-- /industries/automotive/chatbot-development
-- /industries/automotive/lead-generation-automation
-- /industries/automotive/custom-saas-development
-- /industries/automotive/website-development
-- /industries/automotive/business-process-automation
-- /industries/automotive/ai-consulting-strategy
-- /industries/automotive/integration-development
-- /industries/education/ai-workflow-automation
-- /industries/education/chatbot-development
-- /industries/education/lead-generation-automation
-- /industries/education/custom-saas-development
-- /industries/education/website-development
-- /industries/education/business-process-automation
-- /industries/education/ai-consulting-strategy
-- /industries/education/integration-development
-- /industries/nonprofits/ai-workflow-automation
-- /industries/nonprofits/chatbot-development
-- /industries/nonprofits/lead-generation-automation
-- /industries/nonprofits/custom-saas-development
-- /industries/nonprofits/website-development
-- /industries/nonprofits/business-process-automation
-- /industries/nonprofits/ai-consulting-strategy
-- /industries/nonprofits/integration-development
-- /industries/saas-companies/ai-workflow-automation
-- /industries/saas-companies/chatbot-development
-- /industries/saas-companies/lead-generation-automation
-- /industries/saas-companies/custom-saas-development
-- /industries/saas-companies/website-development
-- /industries/saas-companies/business-process-automation
-- /industries/saas-companies/ai-consulting-strategy
-- /industries/saas-companies/integration-development
-- /industries/manufacturing-logistics/ai-workflow-automation
-- /industries/manufacturing-logistics/chatbot-development
-- /industries/manufacturing-logistics/lead-generation-automation
-- /industries/manufacturing-logistics/custom-saas-development
-- /industries/manufacturing-logistics/website-development
-- /industries/manufacturing-logistics/business-process-automation
-- /industries/manufacturing-logistics/ai-consulting-strategy
-- /industries/manufacturing-logistics/integration-development
-- /industries/dental-optometry/ai-workflow-automation
-- /industries/dental-optometry/chatbot-development
-- /industries/dental-optometry/lead-generation-automation
-- /industries/dental-optometry/custom-saas-development
-- /industries/dental-optometry/website-development
-- /industries/dental-optometry/business-process-automation
-- /industries/dental-optometry/ai-consulting-strategy
-- /industries/dental-optometry/integration-development
-- /industries/fitness-wellness/ai-workflow-automation
-- /industries/fitness-wellness/chatbot-development
-- /industries/fitness-wellness/lead-generation-automation
-- /industries/fitness-wellness/custom-saas-development
-- /industries/fitness-wellness/website-development
-- /industries/fitness-wellness/business-process-automation
-- /industries/fitness-wellness/ai-consulting-strategy
-- /industries/fitness-wellness/integration-development
-- /industries/home-services/ai-workflow-automation
-- /industries/home-services/chatbot-development
-- /industries/home-services/lead-generation-automation
-- /industries/home-services/custom-saas-development
-- /industries/home-services/website-development
-- /industries/home-services/business-process-automation
-- /industries/home-services/ai-consulting-strategy
-- /industries/home-services/integration-development
-- /industries/recruiting-staffing/ai-workflow-automation
-- /industries/recruiting-staffing/chatbot-development
-- /industries/recruiting-staffing/lead-generation-automation
-- /industries/recruiting-staffing/custom-saas-development
-- /industries/recruiting-staffing/website-development
-- /industries/recruiting-staffing/business-process-automation
-- /industries/recruiting-staffing/ai-consulting-strategy
-- /industries/recruiting-staffing/integration-development
-- /industries/accounting/ai-workflow-automation
-- /industries/accounting/chatbot-development
-- /industries/accounting/lead-generation-automation
-- /industries/accounting/custom-saas-development
-- /industries/accounting/website-development
-- /industries/accounting/business-process-automation
-- /industries/accounting/ai-consulting-strategy
-- /industries/accounting/integration-development
-- /industries/professional-services/ai-workflow-automation
-- /industries/professional-services/chatbot-development
-- /industries/professional-services/lead-generation-automation
-- /industries/professional-services/custom-saas-development
-- /industries/professional-services/website-development
-- /industries/professional-services/business-process-automation
-- /industries/professional-services/ai-consulting-strategy
-- /industries/professional-services/integration-development
-
-### Use Cases
-- /use-cases — All use cases overview
-- /use-cases/lead-capture-qualification
-- /use-cases/appointment-scheduling
-- /use-cases/customer-onboarding
-- /use-cases/invoice-payment-automation
-- /use-cases/email-marketing-automation
-- /use-cases/social-media-scheduling
-- /use-cases/review-reputation-management
-- /use-cases/crm-data-enrichment
-- /use-cases/document-processing
-- /use-cases/employee-onboarding
-- /use-cases/inventory-alerts
-- /use-cases/customer-support-chatbots
-- /use-cases/sales-pipeline-automation
-- /use-cases/reporting-analytics
-- /use-cases/data-migration-sync
-- /use-cases/ai-content-generation
-- /use-cases/voice-ai-agents
-- /use-cases/sms-whatsapp-automation
-- /use-cases/proposal-quote-generation
-- /use-cases/client-portal-automation
-- /use-cases/webhook-api-integration
-- /use-cases/workflow-error-monitoring
-- /use-cases/multi-channel-communication
-- /use-cases/ai-training-data-pipelines
-
-### Platforms
-- /platforms — All platforms overview
-- /platforms/n8n
-- /platforms/make
-- /platforms/zapier
-- /platforms/openai
-- /platforms/anthropic-claude
-- /platforms/google-gemini
-- /platforms/voiceflow
-- /platforms/vapi
-- /platforms/airtable
-- /platforms/notion
-- /platforms/hubspot
-- /platforms/gohighlevel
-- /platforms/salesforce
-- /platforms/slack
-- /platforms/twilio
-- /platforms/sendgrid
-- /platforms/stripe
-- /platforms/shopify
-- /platforms/wordpress
-- /platforms/google-sheets
-
-### Cost Guides
-- /guides — All guides overview
-- /guides/ai-workflow-automation-cost
-- /guides/chatbot-development-cost
-- /guides/lead-generation-automation-cost
-- /guides/custom-saas-development-cost
-- /guides/website-development-cost
-- /guides/business-process-automation-cost
-- /guides/ai-consulting-strategy-cost
-- /guides/integration-development-cost
-
-### About
-- /about — About The Provider System
-- /about/process — Our process and methodology
-- /about/why-choose-us — Why choose The Provider System
-- /about/technology — Our technology stack
-
-### Blog
-- /blog — Blog index with 50+ articles
-- /blog/how-to-automate-your-business
-- /blog/complete-guide-ai-chatbots-small-business
-- /blog/how-to-build-first-n8n-workflow
-- /blog/getting-started-ai-automation
-- /blog/automate-sales-pipeline
-- /blog/customer-onboarding-automation-guide
-- /blog/automate-bookkeeping-invoicing
-- /blog/building-ai-customer-support
-- /blog/n8n-vs-make-vs-zapier
-- /blog/ai-chatbots-vs-live-chat
-- /blog/custom-automation-vs-off-the-shelf
-- /blog/chatgpt-vs-claude-vs-gemini-business
-- /blog/in-house-vs-agency-automation
-- /blog/voiceflow-vs-vapi
-- /blog/hubspot-vs-gohighlevel
-- /blog/state-of-ai-automation-2025
-- /blog/ai-agents-replacing-workflows
-- /blog/rise-of-voice-ai
-- /blog/ai-automation-trends-2026
-- /blog/small-business-ai-competing
-- /blog/future-of-work-ai-automation
-- /blog/signs-business-needs-ai-automation
-- /blog/automation-mistakes-waste-time-money
-- /blog/questions-before-hiring-automation-agency
-- /blog/calculate-roi-business-automation
-- /blog/workflows-every-small-business-should-automate
-- /blog/red-flags-evaluating-automation-tools
-- /blog/ai-automation-healthcare-hipaa
-- /blog/law-firms-ai-automation
-- /blog/ai-automation-real-estate
-- /blog/restaurant-automation-operations
-- /blog/ecommerce-ai-scale-without-hiring
-- /blog/ai-automation-financial-services
-- /blog/law-firm-automated-client-intake
-- /blog/marketing-agency-proposal-automation
-- /blog/ecommerce-store-customer-support-automation
-- /blog/hvac-company-lead-routing
-- /blog/dental-practice-patient-communication
-- /blog/roi-of-ai-automation
-- /blog/ai-adoption-statistics-2025
-- /blog/time-wasted-manual-tasks
-- /blog/cost-of-not-automating
-- /blog/ai-automation-benchmark-report
-- /blog/customer-experience-automation-statistics
-- /blog/why-ai-automation-projects-fail
-- /blog/myth-set-it-forget-it-automation
-- /blog/ai-is-not-magic
-- /blog/automation-strategy-not-just-tools
-- /blog/hidden-costs-manual-processes
-- /blog/building-automation-first-culture
-- /blog/why-every-contractor-needs-website-2025
-- /blog/plumber-lead-generation-automation
-- /blog/ai-receptionist-for-contractors
-- /blog/electrician-website-seo-strategy
-- /blog/hvac-business-automation-guide
-- /blog/roofing-company-crm-lead-management
-- /blog/contractor-website-vs-thumbtack-homeadvisor
-- /blog/blue-collar-business-automation-roi
-- /blog/solar-company-lead-automation
-- /blog/automated-review-requests-contractors
-- /blog/landscaping-business-scheduling-automation
-- /blog/pest-control-marketing-automation
-- /blog/300-page-website-strategy-contractors
-- /blog/general-contractor-missed-leads-cost
-- /blog/ai-phone-agent-trade-business
-
-### Blue-Collar
-- /blue-collar — Blue-collar trades hub with all 20 trade specializations
-- /blue-collar/electricians — Electricians automation & website solutions
-- /blue-collar/plumbers — Plumbers automation & website solutions
-- /blue-collar/hvac — HVAC automation & website solutions
-- /blue-collar/roofers — Roofers automation & website solutions
-- /blue-collar/tree-service — Tree service automation & website solutions
-- /blue-collar/auto-detailing — Auto detailing automation & website solutions
-- /blue-collar/solar-installers — Solar installers automation & website solutions
-- /blue-collar/painters — Painters automation & website solutions
-- /blue-collar/landscapers — Landscapers automation & website solutions
-- /blue-collar/general-contractors — General contractors automation & website solutions
-- /blue-collar/concrete-masonry — Concrete & masonry automation & website solutions
-- /blue-collar/fencing — Fencing automation & website solutions
-- /blue-collar/pest-control — Pest control automation & website solutions
-- /blue-collar/pressure-washing — Pressure washing automation & website solutions
-- /blue-collar/garage-doors — Garage doors automation & website solutions
-- /blue-collar/carpet-cleaning — Carpet cleaning automation & website solutions
-- /blue-collar/towing — Towing automation & website solutions
-- /blue-collar/junk-removal — Junk removal automation & website solutions
-- /blue-collar/window-cleaning — Window cleaning automation & website solutions
-- /blue-collar/handyman — Handyman automation & website solutions
-
-### Other Pages
-- /faq — Frequently asked questions
-- /faq-hub — FAQ hub page
-- /resources — Resources and tools
-- /diagnostic — Business automation diagnostic assessment
-- /projects — Project portfolio and case studies
-- /reviews — Client reviews and testimonials
+- Primary CTA: book a system audit through the contact form.

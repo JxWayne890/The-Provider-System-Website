@@ -1,26 +1,26 @@
 export const homeFaqData = [
     {
-        question: "What does The Provider System do?",
-        answer: "The Provider System is a digital architecture group that designs and deploys AI-powered automation, custom SaaS applications, and internal workflow tools. We help founders and operators eliminate manual bottlenecks so they can reclaim their time without sacrificing operational control or revenue."
+        question: 'What does The Provider System do?',
+        answer: 'The Provider System builds websites, CRMs, follow-up systems, booking flows, dashboards, and custom operating tools for blue-collar service businesses and select high-value operators.',
     },
     {
-        question: "How much does business process automation cost?",
-        answer: "Costs vary based on complexity and scope. A single-workflow automation (like lead routing or data syncing) typically starts at a few thousand dollars, while full-stack custom SaaS builds range higher. We provide transparent, upfront pricing after a free system audit — no surprise add-ons."
+        question: 'What businesses are the best fit?',
+        answer: 'The main fit is blue-collar and service businesses: contractors, trades, home services, construction-related companies, auto service businesses, cleaning, towing, landscaping, and similar operators that rely on calls, quotes, bookings, and follow-up.',
     },
     {
-        question: "What types of businesses do you work with?",
-        answer: "We work with small to mid-size businesses, solo founders, and operations teams across industries including professional services, real estate, e-commerce, and home services. If your team wastes hours on repetitive manual processes, our systems are built for you."
+        question: 'Do you only work with blue-collar businesses?',
+        answer: 'Blue-collar is the primary lane. Select custom app or operating system builds can still be a fit when the project has serious operational value, like FlowOS or The Offer Hero.',
     },
     {
-        question: "How long does it take to build and deploy an automation system?",
-        answer: "Most single-workflow automations are live within 1–2 weeks. Custom SaaS applications and complex multi-system integrations typically take 4–8 weeks from kickoff to deployment. Every project follows our three-phase protocol: Audit & Map, Build & Route, Protect & Run."
+        question: 'Do you publish pricing?',
+        answer: 'We publish starting points so bad-fit calls are reduced. Website projects usually start around $2,500 or $299 per month. Lead and CRM systems usually start around $6,500 or $750 per month. Custom systems are quoted after a workflow audit.',
     },
     {
-        question: "Do I need technical knowledge to use your systems?",
-        answer: "No. Every system we build is designed for non-technical operators. You get a clean dashboard or interface, clear documentation, and ongoing support. Our goal is to make the technology invisible — it runs silently in the background while you focus on your business."
+        question: 'Do clients own what you build?',
+        answer: 'Yes. The goal is to build with ownership and transparency. Clients should control their domain, content, Google profile, customer data, accounts, and code when the project terms are complete.',
     },
     {
-        question: "What is the difference between AI automation and traditional software?",
-        answer: "Traditional software follows rigid, pre-programmed rules. AI automation uses machine learning and natural language processing to handle unstructured tasks — like classifying emails, generating reports, or routing leads based on context — that previously required human judgment."
-    }
+        question: 'What is the difference between a website and a lead system?',
+        answer: 'A website is the front door customers see. A lead system connects that front door to a CRM, notifications, follow-up, status tracking, reviews, booking, or other workflows so leads do not disappear after the form or call.',
+    },
 ];

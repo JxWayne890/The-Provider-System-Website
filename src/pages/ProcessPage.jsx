@@ -10,7 +10,7 @@ const steps = [
         icon: Search,
         number: '01',
         title: 'Discovery',
-        description: 'We start by listening. In a focused discovery call, we map your current workflows, identify bottlenecks, and understand the business context behind every manual process. No proposals until we understand the problem.',
+        description: 'We start by listening. In a focused discovery call, we map your website, lead flow, follow-up, tools, and operational bottlenecks. No proposal until we understand the problem.',
     },
     {
         icon: Target,
@@ -52,7 +52,7 @@ export default function ProcessPage() {
             { name: 'Our Process' },
         ]),
         buildHowToSchema(
-            'How The Provider System Builds AI Automations',
+            'How The Provider System Builds Websites and Lead Systems',
             steps.map((s) => `${s.title}: ${s.description}`)
         ),
     ];
@@ -60,8 +60,8 @@ export default function ProcessPage() {
     return (
         <div className="bg-dark min-h-screen font-body text-white selection:bg-accent selection:text-dark">
             <SEO
-                title="Our Process | How We Build AI Automations"
-                description="Learn how The Provider System takes projects from discovery through deployment. A six-step process built on transparency, testing, and long-term reliability."
+                title="Our Process | The Provider System"
+                description="Learn how The Provider System takes blue-collar website, CRM, and custom system projects from discovery through deployment."
                 url="/about/process"
                 schemas={schemas}
             />
@@ -85,7 +85,7 @@ export default function ProcessPage() {
                             Our Process
                         </h1>
                         <p className="font-heading text-white/60 text-lg md:text-xl leading-relaxed max-w-3xl">
-                            Every engagement follows a proven six-step protocol designed to eliminate guesswork, reduce risk, and deliver systems that work reliably from day one.
+                            Every engagement follows a practical process designed to clarify the bottleneck, reduce guesswork, and deliver a system your business can actually use.
                         </p>
                     </div>
                 </section>
@@ -127,7 +127,7 @@ export default function ProcessPage() {
                 {/* Contact */}
                 <ContactFormSection
                     heading="Ready to Start the Process?"
-                    subheading="Book a free discovery call and we will map out the fastest path to automating your operations."
+                    subheading="Book a discovery call and we will map the fastest path to a better website, lead system, or custom operating tool."
                     theme="dark"
                 />
             </main>

@@ -23,13 +23,13 @@ const differentiators = [
     },
     {
         icon: Brain,
-        title: 'AI-First Approach',
-        description: 'We integrate AI where it delivers real value — classification, extraction, routing, and generation — not as a buzzword. Every AI component is tested against real data and validated for accuracy before deployment.',
+        title: 'Practical Systems First',
+        description: 'We use automation and AI where they create real value, but the goal is not novelty. The goal is better lead capture, cleaner follow-up, and simpler operations.',
     },
     {
         icon: Globe,
-        title: 'GEO Optimization',
-        description: 'Every page and piece of content is structured so AI systems can understand, compare, and cite your business accurately. We build for the generative search era, not just traditional SEO.',
+        title: 'Search and Trust Structure',
+        description: 'Websites are built so customers, search engines, and answer tools can understand what you do, where you work, and why people should contact you.',
     },
     {
         icon: LifeBuoy,
@@ -44,7 +44,7 @@ const differentiators = [
     {
         icon: FolderKanban,
         title: 'Proven Portfolio',
-        description: 'A track record of deployed systems across multiple industries — automation workflows, SaaS applications, chatbots, and internal tools that are running in production and delivering results today.',
+        description: 'A track record of deployed service websites, booking flows, SaaS applications, dashboards, and internal tools that are running in production today.',
     },
 ];
 
@@ -60,8 +60,8 @@ export default function WhyChooseUsPage() {
     return (
         <div className="bg-dark min-h-screen font-body text-white selection:bg-accent selection:text-dark">
             <SEO
-                title="Why Choose The Provider System | AI Automation Partner"
-                description="Custom-built solutions, full code ownership, transparent pricing, and practitioner-led engagements. Discover what makes The Provider System different."
+                title="Why Choose The Provider System"
+                description="Owned websites, CRMs, follow-up systems, and custom operating tools for blue-collar businesses and serious operators."
                 url="/about/why-choose-us"
                 schemas={schemas}
             />
@@ -85,7 +85,7 @@ export default function WhyChooseUsPage() {
                             Why Choose The Provider System
                         </h1>
                         <p className="font-heading text-white/60 text-lg md:text-xl leading-relaxed max-w-3xl">
-                            Not every agency is built the same. Here is what sets us apart from freelancers, offshore teams, and traditional development shops.
+                            Not every web or software vendor is built the same. Here is what sets us apart for service businesses that need practical systems and ownership.
                         </p>
                     </div>
                 </section>
@@ -113,7 +113,7 @@ export default function WhyChooseUsPage() {
                 {/* Contact */}
                 <ContactFormSection
                     heading="See the Difference Firsthand"
-                    subheading="Book a free consultation and experience a practitioner-led approach to automation."
+                    subheading="Book a call and see what a practical, owner-led website or system build can look like."
                     theme="dark"
                 />
             </main>

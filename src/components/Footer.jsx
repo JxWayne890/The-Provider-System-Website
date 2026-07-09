@@ -11,7 +11,7 @@ export default function Footer() {
                     <div className="col-span-1 md:col-span-2">
                         <Logo className="h-24 w-auto mb-6 filter brightness-0 invert" />
                         <p className="font-heading text-white/50 max-w-sm mb-6">
-                            AI-powered automation and SaaS systems that give business owners their time back without sacrificing operational control.
+                            Websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses.
                         </p>
                         <p className="font-heading text-white/40 text-sm mb-8">
                             <a href="mailto:theprovidersystem@gmail.com" className="hover:text-accent transition-colors">
@@ -27,10 +27,11 @@ export default function Footer() {
 
                     <div className="col-span-1 flex flex-col gap-4">
                         <h4 className="font-heading font-semibold text-white/50 text-sm tracking-wider uppercase mb-2">Navigation</h4>
-                        <Link to="/#features" className="hover:text-accent transition-colors font-heading">Systems</Link>
-                        <Link to="/#protocol" className="hover:text-accent transition-colors font-heading">Protocol</Link>
-                        <Link to="/projects" className="hover:text-accent transition-colors font-heading">Projects</Link>
-                        <Link to="/diagnostic" className="hover:text-accent transition-colors font-heading">System Diagnostic</Link>
+                        <Link to="/blue-collar" className="hover:text-accent transition-colors font-heading">Blue-Collar</Link>
+                        <Link to="/websites" className="hover:text-accent transition-colors font-heading">Websites</Link>
+                        <Link to="/lead-crm-system" className="hover:text-accent transition-colors font-heading">Lead & CRM</Link>
+                        <Link to="/custom-systems" className="hover:text-accent transition-colors font-heading">Custom Systems</Link>
+                        <Link to="/projects" className="hover:text-accent transition-colors font-heading">Work</Link>
                         <Link to="/faq" className="hover:text-accent transition-colors font-heading">FAQ</Link>
                         <Link to="/#contact" className="hover:text-accent transition-colors font-heading">Contact</Link>
                     </div>
@@ -51,4 +52,3 @@ export default function Footer() {
         </footer>
     );
 }
-

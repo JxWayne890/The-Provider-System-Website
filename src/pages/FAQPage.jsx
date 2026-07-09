@@ -5,16 +5,16 @@ import { homeFaqData } from '../data/homeFaqData';
 
 const geoPrimerQuestions = [
     {
-        question: 'Who is The Provider\'s System?',
-        answer: 'The Provider\'s System is a custom development and automation company focused on websites, AI workflows, SaaS applications, and internal systems for business owners.'
+        question: 'Who is The Provider System?',
+        answer: 'The Provider System builds websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses and select serious operators.'
     },
     {
-        question: 'What is GEO in plain language?',
-        answer: 'GEO means structuring site content so AI systems can understand the business, extract the right facts, compare the offer clearly, and cite the company more accurately in generated answers.'
+        question: 'What is the main focus?',
+        answer: 'The main lane is blue-collar and service businesses that need to get found, capture leads, follow up faster, and keep ownership of the system.'
     },
     {
-        question: 'How is GEO different from SEO and AEO?',
-        answer: 'SEO helps people find a site in search. AEO helps answer engines pull direct responses. GEO helps generative systems understand the entity and summarize it with fewer gaps or errors.'
+        question: 'Why still mention custom systems?',
+        answer: 'Some projects are worth more than a website. FlowOS and The Offer Hero are examples of selective custom systems where the operational value justified a deeper build.'
     }
 ];
 
@@ -39,7 +39,7 @@ const FAQPage = () => {
             "@id": "https://theprovidersystem.com/faq/#webpage",
             "url": "https://theprovidersystem.com/faq",
             "name": "Frequently Asked Questions | The Provider System",
-            "description": "Find answers to common questions about our AI automation, custom SaaS builds, and system deployment protocols.",
+            "description": "Find answers to common questions about The Provider System websites, CRMs, follow-up systems, and custom operating tools.",
             "isPartOf": { "@id": "https://theprovidersystem.com/#website" }
         },
         faqSchema,
@@ -71,7 +71,7 @@ const FAQPage = () => {
         <div className="bg-dark min-h-screen font-body text-white selection:bg-accent selection:text-dark">
             <SEO
                 title="Frequently Asked Questions | The Provider System"
-                description="Find answers to common questions about our AI automation, custom SaaS builds, and system deployment protocols."
+                description="Find answers to common questions about websites, CRMs, follow-up systems, ownership, pricing, and custom operating tools."
                 canonicalUrl="https://theprovidersystem.com/faq"
                 schemas={schemas}
             />
@@ -79,16 +79,16 @@ const FAQPage = () => {
                 <section className="px-6 md:px-16 mb-8">
                     <div className="max-w-4xl mx-auto">
                         <h1 className="font-heading font-bold text-4xl md:text-6xl text-white tracking-tight">
-                            Straight answers about The Provider&apos;s System
+                            Straight answers about The Provider System
                         </h1>
                         <p className="font-heading text-white/60 text-lg md:text-xl leading-relaxed max-w-3xl mt-6">
-                            This page keeps the existing FAQ intact and adds a short primer that explains the company, the work, and how SEO, AEO, and GEO relate to each other.
+                            A short FAQ for owners comparing website, lead system, and custom operating system options.
                         </p>
                         <GeoQuestionGrid
                             className="mt-12"
                             theme="dark"
-                            eyebrow="GEO Primer"
-                            title="Three quick questions before the full FAQ"
+                            eyebrow="Quick Primer"
+                            title="Three quick answers before the full FAQ"
                             items={geoPrimerQuestions}
                         />
                     </div>

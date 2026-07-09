@@ -1,54 +1,33 @@
-import { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { GeoQuestionGrid } from './GeoBlocks';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const contactQuestions = [
     {
-        question: 'Who should contact The Provider\'s System?',
-        answer: 'Business owners and operators who need a better website, cleaner lead handling, AI and automation support, or a simpler system for running day-to-day operations.'
+        question: 'Who should reach out?',
+        answer: 'Blue-collar business owners who need a better website, cleaner lead handling, follow-up, CRM visibility, booking, quoting, or a custom system that reduces operational mess.'
     },
     {
         question: 'What should a finished system improve?',
-        answer: 'A strong result should save time, improve visibility, reduce manual work, and leave the owner with clear access to the website, code, content, and connected tools.'
+        answer: 'A strong result should make leads easier to capture, easier to track, easier to follow up with, and easier to turn into booked work.'
     },
     {
         question: 'What happens after you submit the form?',
-        answer: 'The team reviews the request, identifies the main bottleneck or build need, and follows up with the next practical step instead of sending generic sales copy.'
+        answer: 'John reviews the request, identifies the main bottleneck or build need, and follows up with the next practical step instead of generic sales copy.'
     }
 ];
 
 export default function GetStarted() {
-    const containerRef = useRef(null);
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
-        inquiryType: 'AI Workflow Automation',
+        inquiryType: 'I need a better website',
         message: ''
     });
     const [status, setStatus] = useState('idle'); // idle | sending | success | error
     const [errorMsg, setErrorMsg] = useState('');
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo('.cta-elem',
-                { y: 50, opacity: 0 },
-                {
-                    y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: "top 80%",
-                    }
-                }
-            );
-        }, containerRef);
-        return () => ctx.revert();
-    }, []);
 
     const formatPhoneNumber = (value) => {
         if (!value) return value;
@@ -99,7 +78,7 @@ export default function GetStarted() {
 
             await res.json();
             setStatus('success');
-            setFormData({ firstName: '', lastName: '', email: '', phone: '', inquiryType: 'AI Workflow Automation', message: '' });
+            setFormData({ firstName: '', lastName: '', email: '', phone: '', inquiryType: 'I need a better website', message: '' });
 
         } catch (err) {
             console.error('Submission error:', err);
@@ -115,15 +94,15 @@ export default function GetStarted() {
     };
 
     return (
-        <section id="contact" ref={containerRef} className="py-32 px-6 md:px-16 bg-background flex flex-col items-center text-center">
+        <section id="contact" className="py-32 px-6 md:px-16 bg-background flex flex-col items-center text-center">
             <div className="max-w-4xl mx-auto flex flex-col items-center w-full">
 
                 <h2 className="cta-elem font-heading font-bold text-4xl md:text-6xl text-primary mb-6">
-                    Ready to reclaim your time?
+                    Want to know what your business actually needs?
                 </h2>
 
                 <p className="cta-elem font-heading text-lg md:text-xl text-muted max-w-2xl mb-12">
-                    Stop leaking revenue through manual chaos. Send us a message to start your system audit.
+                    Tell us about your website, lead flow, and current tools. We will look for the simplest path forward.
                 </p>
 
                 <GeoQuestionGrid
@@ -141,7 +120,7 @@ export default function GetStarted() {
                             </div>
                             <h3 className="font-heading font-bold text-4xl text-primary mb-4">Message Sent</h3>
                             <p className="font-heading text-muted text-xl leading-relaxed max-w-sm">
-                                We've received your data. A strategist will contact you within 24 hours.
+                                We've received your message. John will review it and follow up with the next practical step.
                             </p>
                             <button
                                 onClick={() => setStatus('idle')}
@@ -226,12 +205,12 @@ export default function GetStarted() {
                                         className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors disabled:opacity-50 appearance-none cursor-pointer"
                                         style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%236b7280\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1.5rem center', backgroundSize: '1.25rem' }}
                                     >
-                                        <option value="AI Workflow Automation">AI Workflow Automation</option>
-                                        <option value="Custom SaaS Development">Custom SaaS Development</option>
-                                        <option value="Website / Web App Build">Website / Web App Build</option>
-                                        <option value="Intelligent Lead Routing">Intelligent Lead Routing</option>
-                                        <option value="Operational Audit">Operational Audit</option>
-                                        <option value="Other / Idea Integration">Other / Idea Integration</option>
+                                        <option value="I need a better website">I need a better website</option>
+                                        <option value="I need help capturing and following up with leads">I need help capturing and following up with leads</option>
+                                        <option value="I need a CRM or dashboard">I need a CRM or dashboard</option>
+                                        <option value="I need booking, quotes, or scheduling">I need booking, quotes, or scheduling</option>
+                                        <option value="I need a custom internal system">I need a custom internal system</option>
+                                        <option value="I am not sure yet">I am not sure yet</option>
                                     </select>
                                 </div>
 
@@ -245,7 +224,7 @@ export default function GetStarted() {
                                         disabled={status === 'sending'}
                                         value={formData.message}
                                         onChange={handleChange}
-                                        placeholder="Tell us about your current bottlenecks..."
+                                        placeholder="Tell us what business you run, what you need fixed, and what is happening today..."
                                         className="w-full bg-background border border-muted/10 rounded-2xl px-6 py-4 font-heading focus:outline-none focus:border-accent transition-colors resize-none disabled:opacity-50"
                                     ></textarea>
                                 </div>
@@ -272,7 +251,7 @@ export default function GetStarted() {
                                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                 </svg>
-                                                Initializing Workflow...
+                                                Sending Message...
                                             </>
                                         ) : 'Send Message'}
                                     </span>

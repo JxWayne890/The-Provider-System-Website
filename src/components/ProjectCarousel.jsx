@@ -1,125 +1,88 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
 import { GeoComparisonTable, GeoQuestionGrid } from './GeoBlocks';
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Only taking the FIRST project from each category for the home page carousel
 const premierProjects = [
     {
+        id: 'total-quality-plumbing',
+        title: 'Total Quality Plumbing',
+        category: 'Local Service Website',
+        image: 'https://www.totalqualityplumbingtx.com/og-image.png',
+        link: 'https://totalqualityplumbingtx.com/'
+    },
+    {
+        id: 'flowos',
+        title: 'FlowOS',
+        category: 'Custom Operating System',
+        image: 'https://www.flowosapp.com/flowos-og.png',
+        link: 'https://www.flowosapp.com/'
+    },
+    {
         id: 'offer-hero',
         title: 'The Offer Hero',
-        category: 'SaaS Application',
+        category: 'Custom App',
         image: 'https://www.theofferhero.com/og-image.png',
         link: 'https://www.theofferhero.com/'
     },
     {
-        id: 'mansfield',
-        title: 'Mansfield Mining',
-        category: 'Dynamic Corporate Site',
-        image: 'https://i.imgur.com/lSxsj0X.png',
-        link: 'https://www.mansfieldmining.com/'
-    },
-    {
-        id: 'adrian',
-        title: "Adrian's Custom Services",
-        category: 'Static Site',
-        image: 'https://i.imgur.com/ocZW1Qc.png',
-        link: 'https://www.adrianscustomservices.org/'
+        id: 'roller-rink-usa',
+        title: 'Roller Rink USA',
+        category: 'Booking System',
+        image: 'https://www.rollerrinkusa.com/assets/roller-rink-hero.png',
+        link: 'https://rollerrinkusa.com/'
     },
     {
         id: 'weathersbee',
         title: 'Weathersbee Electric Co.',
-        category: 'Static Site',
+        category: 'Industrial Service Website',
         image: '/images/projects/weathersbee.png',
         link: 'https://weathersbeeelectric.com/'
-    },
-    {
-        id: 'billnest',
-        title: 'BillNest Craft',
-        category: 'Private Project',
-        image: null,
-        link: '#contact'
     }
 ];
 
-const buildModelColumns = ['Factor', 'Custom Website', 'Monthly-Fee Website'];
+const buildModelColumns = ['Factor', 'Owned Provider System', 'Scattered Tools'];
 const buildModelRows = [
     [
+        'Lead capture',
+        'Calls, forms, bookings, and quote requests move into one defined path.',
+        'Leads sit across voicemail, inboxes, texts, DMs, and memory.'
+    ],
+    [
+        'Follow-up',
+        'The next step is visible and can be automated where it makes sense.',
+        'Follow-up depends on whoever remembers to check back.'
+    ],
+    [
         'Ownership',
-        'The business can retain direct control over its code, hosting, and content.',
-        'The business is often tied to a platform, template system, or ongoing vendor dependence.'
+        'The business keeps control of its domain, data, content, accounts, and delivered system terms.',
+        'The business becomes dependent on disconnected subscriptions or a vendor black box.'
     ],
     [
-        'Performance',
-        'A lean build can be optimized around speed, structure, and the exact use case.',
-        'Bloated theme layers and bundled features often add weight that the business does not need.'
-    ],
-    [
-        'Flexibility',
-        'Features, integrations, SEO, AEO, and GEO layers can be shaped around the actual business model.',
-        'Changes are usually constrained by the builder, monthly plan, or third-party plugin limits.'
-    ],
-    [
-        'Long-term cost',
-        'Costs are usually more transparent because the business is paying for a build, hosting, and chosen tools.',
-        'Recurring platform fees, lock-in, and add-ons can become expensive over time.'
+        'Best fit',
+        'Blue-collar businesses and serious operators with repeatable lead or workflow problems.',
+        'Owners who just need another generic page or another generic app subscription.'
     ]
 ];
 
 const projectQuestions = [
     {
         question: 'What kinds of systems are shown here?',
-        answer: 'The featured work includes custom SaaS applications, dynamic company sites, static marketing sites, and private internal tools built around specific operating needs.'
+        answer: 'The featured work includes local service websites, booking flows, lead-oriented sites, and custom internal systems built around real operating needs.'
     },
     {
-        question: 'Why does a lean build matter?',
-        answer: 'Cleaner architecture makes the site faster for visitors, easier to maintain for the owner, and easier for search engines and AI systems to parse correctly.'
+        question: 'Why keep the custom app examples?',
+        answer: 'Blue-collar is the main lane, but custom systems like FlowOS and The Offer Hero prove the deeper capability when a workflow is valuable enough to build.'
     }
 ];
 
 export default function ProjectCarousel() {
-    const containerRef = useRef(null);
-
-    useEffect(() => {
-        let ctx = gsap.context(() => {
-            gsap.from('.carousel-header', {
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: 'top 80%',
-                },
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                ease: 'power3.out'
-            });
-
-            // Animate the entire track fading in rather than individual items 
-            // since the track itself is horizontally animating constantly.
-            gsap.from('.carousel-track-wrapper', {
-                scrollTrigger: {
-                    trigger: '.carousel-track-wrapper',
-                    start: 'top 80%',
-                },
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                ease: 'power3.out'
-            });
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
-
     return (
-        <section id="projects" ref={containerRef} className="py-32 bg-white relative z-10 overflow-hidden">
+        <section id="projects" className="py-32 bg-white relative z-10 overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 md:px-16 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
                 <div>
-                    <span className="carousel-header block font-data text-accent tracking-[0.2em] text-sm uppercase mb-4">Live Instruments</span>
+                    <span className="carousel-header block font-data text-accent tracking-[0.2em] text-sm uppercase mb-4">Recent Work</span>
                     <h2 className="carousel-header font-heading font-bold text-4xl md:text-5xl text-primary tracking-tight">
-                        Featured Systems.
+                        Websites and systems already shipped.
                     </h2>
                 </div>
                 <div className="carousel-header">
@@ -174,12 +137,12 @@ export default function ProjectCarousel() {
 
             <div className="max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 xl:grid-cols-[1.25fr_0.75fr] gap-8 items-start">
                 <GeoComparisonTable
-                    eyebrow="Build Comparison"
-                    title="Custom websites vs bloated monthly-fee websites"
-                    intro="The right build depends on the business, but lean custom work usually gives owners more control, better speed, and fewer platform constraints."
+                    eyebrow="System Comparison"
+                    title="Owned systems vs scattered tools"
+                    intro="The point is not more technology. The point is a clearer path from first contact to booked work, tracked status, and reliable follow-up."
                     columns={buildModelColumns}
                     rows={buildModelRows}
-                    note="Why this matters: websites are not just visual assets. They also affect speed, visibility, extractability, and how much control a business keeps over its digital infrastructure."
+                    note="Why this matters: the website, CRM, follow-up, and operating workflow should support the same business path instead of creating more places for work to disappear."
                 />
                 <GeoQuestionGrid
                     eyebrow="Portfolio Context"

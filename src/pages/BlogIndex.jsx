@@ -28,8 +28,8 @@ export default function BlogIndex() {
     return (
         <div className="bg-dark min-h-screen font-body text-white selection:bg-accent selection:text-dark">
             <SEO
-                title="AI Automation Blog | The Provider System"
-                description="Practical guides, industry insights, platform comparisons, and data-driven research on AI automation, workflow optimization, and custom SaaS development."
+                title="Blue-Collar Website & Lead System Blog"
+                description="Practical articles on websites, lead capture, CRM, follow-up, and automation for contractors, trades, and blue-collar service businesses."
                 url="/blog"
                 schemas={schemas}
             />
@@ -49,10 +49,10 @@ export default function BlogIndex() {
                             Blog
                         </span>
                         <h1 className="font-heading font-bold text-4xl md:text-6xl text-white tracking-tight mb-6">
-                            AI Automation Blog
+                            Blue-Collar Website &amp; Lead System Blog
                         </h1>
                         <p className="font-heading text-white/60 text-lg md:text-xl leading-relaxed max-w-3xl">
-                            Practical knowledge on automation strategy, platform selection, AI integration, and building systems that scale.
+                            Practical knowledge on contractor websites, lead capture, CRM, follow-up, reviews, and business systems for the trades.
                         </p>
                     </div>
                 </section>
@@ -140,7 +140,7 @@ export default function BlogIndex() {
                 {/* Contact */}
                 <ContactFormSection
                     heading="Have a Project in Mind?"
-                    subheading="Turn these insights into action. Book a free consultation to discuss your automation goals."
+                    subheading="Turn these insights into a website, CRM, follow-up system, or custom operating tool for your business."
                     theme="dark"
                 />
             </main>
