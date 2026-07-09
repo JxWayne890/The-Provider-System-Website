@@ -1,198 +1,572 @@
-import { ExternalLink } from 'lucide-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import ContactFormSection from '../components/ContactFormSection';
-import { buildBreadcrumbSchema } from '../components/SchemaMarkup';
+import { GeoCapsuleGrid, GeoComparisonTable } from '../components/GeoBlocks';
 
-const projects = [
+const projectCategories = [
     {
-        title: 'Total Quality Plumbing',
-        category: 'Blue-Collar Website',
-        description:
-            'A local plumbing website built around trust, services, service-area relevance, reviews, and fast contact paths.',
-        outcome:
-            'Shows the core website lane: clear positioning for a service business, local search structure, and a simple path from visitor to lead.',
-        image: 'https://www.totalqualityplumbingtx.com/og-image.png',
-        link: 'https://totalqualityplumbingtx.com/',
-        tags: ['Service pages', 'Local SEO', 'Trust sections', 'Lead capture'],
+        category: 'SaaS & Apps',
+        projects: [
+            {
+                id: 'offer-hero',
+                title: 'The Offer Hero',
+                type: 'DSCR Broker Command Platform',
+                description: 'A full-scale SaaS command center for real estate finance producers.',
+                business:
+                    'The Offer Hero supports DSCR brokers and high-output producers who need a tighter way to control borrower intake, deal flow, quote generation, follow-up, and pipeline visibility.',
+                built:
+                    'Built a React/Vite application experience for pipeline command, high-touch outreach, deal tracking, document-oriented workflows, and conversion-focused producer operations.',
+                features: ['Deal pipeline', 'Producer dashboard', 'Quote workflow', 'Outreach support', 'Payment-ready SaaS'],
+                stack: ['React', 'Vite', 'TypeScript', 'Supabase', 'Stripe', 'Resend'],
+                image: 'https://www.theofferhero.com/og-image.png',
+                link: 'https://www.theofferhero.com/'
+            },
+            {
+                id: 'flowos',
+                title: 'FlowOS',
+                type: 'Barbershop Operations SaaS',
+                description: 'A live operating system for barbershops and walk-in service businesses.',
+                business:
+                    'FlowOS helps modern shops manage walk-ins, booking, barber load, client records, analytics, websites, and SMS follow-up from one connected product.',
+                built:
+                    'Built the Next.js product surface, public landing page, owner dashboard, kiosk check-in flow, booking workflow, analytics views, pricing/sign-up path, and retention campaign foundation.',
+                features: ['Kiosk check-in', 'Live queue', 'Online booking', 'Client CRM', 'Shop analytics', 'SMS campaigns'],
+                stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Supabase', 'Stripe', 'Twilio'],
+                image: 'https://www.flowosapp.com/flowos-og.png',
+                link: 'https://www.flowosapp.com/'
+            }
+        ]
     },
     {
-        title: 'FlowOS',
-        category: 'Custom Operating System',
-        description:
-            'A custom operating system for barbershops with check-in, booking, client records, analytics, and shop workflows.',
-        outcome:
-            'Shows the deeper system lane: when a business workflow is valuable enough, The Provider System can build the app behind it.',
-        image: 'https://www.flowosapp.com/flowos-og.png',
-        link: 'https://www.flowosapp.com/',
-        tags: ['Booking', 'CRM', 'Dashboard', 'Operations'],
+        category: 'Booking Systems',
+        projects: [
+            {
+                id: 'roller-rink-usa',
+                title: 'Roller Rink USA',
+                type: 'Venue Booking System',
+                description: 'A party and event booking website for a San Angelo roller skating rink.',
+                business:
+                    'Roller Rink USA offers birthday parties, private rink rentals, group skate events, and open skate visits from its San Angelo, Texas location.',
+                built:
+                    'Built a booking-focused public site with clear party packages, date and time selection, guest counts, add-ons, contact capture, deposit-oriented booking flow, staff entry, and local business schema.',
+                features: ['Party packages', 'Booking funnel', 'Schedule sections', 'Staff entry', 'Local SEO schema'],
+                stack: ['HTML', 'CSS', 'JavaScript', 'Vercel', 'JSON-LD'],
+                image: 'https://www.rollerrinkusa.com/assets/roller-rink-hero.png',
+                link: 'https://rollerrinkusa.com/'
+            }
+        ]
     },
     {
-        title: 'The Offer Hero',
-        category: 'Custom App',
-        description:
-            'A command platform for real estate finance producers with borrower intake, pipeline visibility, quote workflows, and outreach support.',
-        outcome:
-            'Shows how a custom system can organize a complex sales process and give operators one place to see what needs attention.',
-        image: 'https://www.theofferhero.com/og-image.png',
-        link: 'https://www.theofferhero.com/',
-        tags: ['Pipeline', 'Intake', 'Outreach', 'SaaS'],
+        category: 'Dynamic Sites',
+        projects: [
+            {
+                id: 'mansfield',
+                title: 'Mansfield Mining',
+                type: 'Industrial Operations Website',
+                description: 'A responsive web presence for West Texas frac sand mining operations.',
+                business:
+                    'Mansfield Mining serves industrial and commercial operators with sand mining, excavation, hauling, and site operations for Permian Basin production needs.',
+                built:
+                    'Built a heavy-duty industrial website that positions the company around production capacity, reliability, field operations, recruiting credibility, and fast contact for business inquiries.',
+                features: ['Industrial positioning', 'Service messaging', 'Recruiting signal', 'Fast contact path', 'OG/social preview'],
+                stack: ['React', 'Vite', 'Tailwind', 'Responsive UI'],
+                image: 'https://i.imgur.com/lSxsj0X.png',
+                link: 'https://www.mansfieldmining.com/'
+            },
+            {
+                id: 'charged-up',
+                title: 'Charged Up Nutrition',
+                type: 'Supplement Brand Website',
+                description: 'A high-energy storefront-style website for a performance nutrition brand.',
+                business:
+                    'Charged Up Nutrition sells premium supplements for fitness customers, including protein powders, pre-workouts, weight loss support, and daily wellness essentials.',
+                built:
+                    'Built a bold brand experience that presents product categories, performance-driven messaging, sales-oriented calls to action, and a polished visual system for customer trust.',
+                features: ['Product categories', 'Sales messaging', 'Brand-forward UI', 'Mobile storefront', 'Social preview'],
+                stack: ['React', 'Vite', 'Tailwind', 'Responsive UI'],
+                image: 'https://chargedupnutrition.biz/og-image.png',
+                link: 'https://chargedupnutrition.biz/'
+            },
+            {
+                id: 'abilene',
+                title: 'Abilene Commercial',
+                type: 'Commercial Real Estate Lead Platform',
+                description: 'A localized commercial real estate platform for lead capture and market authority.',
+                business:
+                    'Abilene Commercial helps buyers, tenants, sellers, and investors evaluate commercial property opportunities around Abilene and nearby West Texas markets.',
+                built:
+                    'Built a high-conversion property and local SEO platform with listings, property detail pages, buyer/seller paths, valuation flows, service pages, blog content, and inquiry routes.',
+                features: ['Property listings', 'Local SEO pages', 'Lead forms', 'Market content', 'Valuation path'],
+                stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Shadcn UI'],
+                image: 'https://abilenecommercial.com/og-image.png',
+                link: 'https://abilenecommercial.com/'
+            },
+            {
+                id: 'texas',
+                title: 'Texas Commercial',
+                type: 'Regional Real Estate Website',
+                description: 'A regional commercial real estate website built for search and inquiries.',
+                business:
+                    'Texas Commercial presents commercial property opportunities and broker contact paths for Abilene and surrounding areas.',
+                built:
+                    'Built a fast regional website with clear property navigation, trusted contact information, real estate positioning, and a simple path from browsing to broker inquiry.',
+                features: ['Property browsing', 'Broker contact', 'Regional positioning', 'Fast pages', 'SEO metadata'],
+                stack: ['React', 'Vite', 'Tailwind', 'Responsive UI'],
+                image: 'https://texas-commercial.com/og-image.png',
+                link: 'https://texas-commercial.com/'
+            }
+        ]
     },
     {
-        title: 'Roller Rink USA',
-        category: 'Booking Website',
-        description:
-            'A venue website structured around parties, private events, packages, contact capture, and booking intent.',
-        outcome:
-            'Shows a practical booking path for a local business where the website needs to move people toward a scheduled event.',
-        image: 'https://www.rollerrinkusa.com/assets/roller-rink-hero.png',
-        link: 'https://rollerrinkusa.com/',
-        tags: ['Packages', 'Booking path', 'Local venue', 'Forms'],
+        category: 'Local SEO Sites',
+        projects: [
+            {
+                id: 'total-quality-plumbing',
+                title: 'Total Quality Plumbing',
+                type: 'Local Service SEO Website',
+                description: 'A full local SEO website for a licensed plumbing company in Abilene, Texas.',
+                business:
+                    'Total Quality Plumbing provides drain cleaning, water heaters, gas line repair, leak detection, backflow testing, remodels, and plumbing services across Abilene and the Big Country.',
+                built:
+                    'Built an SEO-heavy service business website with service pages, city pages, blog content, reviews, gallery, careers, contact routing, structured data, and a polished local trust system.',
+                features: ['Service pages', 'City SEO pages', 'Reviews', 'Gallery', 'Careers flow', 'Contact email'],
+                stack: ['React', 'Vite', 'React Router', 'SSR/Prerender', 'Resend', 'JSON-LD'],
+                image: 'https://www.totalqualityplumbingtx.com/og-image.png',
+                link: 'https://totalqualityplumbingtx.com/'
+            },
+            {
+                id: 'master-clean-hq',
+                title: 'Master Commercial Clean',
+                type: 'Commercial Cleaning Website',
+                description: 'A commercial cleaning site built for West Texas service area growth.',
+                business:
+                    'Master Commercial Clean provides commercial cleaning, post-construction cleaning, specialized cleaning, quotes, and service coverage across San Angelo, Abilene, Lubbock, Midland, Odessa, and surrounding West Texas communities.',
+                built:
+                    'Built a credible service website with SEO structure, service-area messaging, quote-oriented pages, FAQ support, trust content, and clear contact paths for commercial cleaning inquiries.',
+                features: ['Service pages', 'Service areas', 'Quote support', 'FAQ content', 'SEO schema'],
+                stack: ['React', 'Vite', 'React Router', 'React Helmet', 'Framer Motion', 'JSON-LD'],
+                image: 'https://www.mastercleanhq.com/img/logo.png',
+                link: 'https://www.mastercleanhq.com/'
+            },
+            {
+                id: 'adrian',
+                title: "Adrian's Custom Services",
+                type: 'General Contractor Website',
+                description: 'A contractor website for veteran-owned construction and repair services.',
+                business:
+                    'Adrian\'s Custom Services is a veteran-owned general contractor serving Anson, Abilene, and the Big Country with remodeling, painting, drywall, framing, carpentry, tile, decks, demolition, and repairs.',
+                built:
+                    'Built a trust-focused local website with service pages, service-area content, project gallery, review filtering, veteran-owned story, FAQ content, and a quote request path.',
+                features: ['Service pages', 'Reviews', 'Gallery', 'Quote form', 'Service areas', 'FAQ'],
+                stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Shadcn UI'],
+                image: 'https://i.imgur.com/ocZW1Qc.png',
+                link: 'https://www.adrianscustomservices.org/'
+            },
+            {
+                id: 'weathersbee',
+                title: 'Weathersbee Electric Co.',
+                type: 'Industrial Service Website',
+                description: 'A rugged static site for San Angelo industrial electrical rebuild experts.',
+                business:
+                    'Weathersbee Electric Co. is a San Angelo electrical rebuilder specializing in new and rebuilt starters, alternators, and heavy industrial electrical systems, with roots going back to 1934.',
+                built:
+                    'Built a focused industrial website with legacy positioning, service clarity, durable visual direction, mobile-ready sections, and direct contact for rebuild and parts inquiries.',
+                features: ['Legacy positioning', 'Industrial services', 'Direct contact', 'Mobile site', 'Brand visuals'],
+                stack: ['React', 'Vite', 'Tailwind', 'Static Hosting'],
+                image: '/images/projects/weathersbee.png',
+                link: 'https://weathersbeeelectric.com/'
+            }
+        ]
     },
     {
-        title: 'Weathersbee Electric Co.',
-        category: 'Industrial Website',
-        description:
-            'A focused website for an industrial electrical rebuilder with legacy positioning, service clarity, and direct contact paths.',
-        outcome:
-            'Shows the blue-collar credibility lane: make a serious trade business look established, clear, and easy to contact.',
-        image: '/images/projects/weathersbee.png',
-        link: 'https://weathersbeeelectric.com/',
-        tags: ['Industrial', 'Service clarity', 'Legacy trust', 'Mobile site'],
-    },
+        category: 'Static Sites',
+        projects: [
+            {
+                id: 'arki',
+                title: 'Arki Design Studio',
+                type: 'Architecture Portfolio Website',
+                description: 'A polished architecture and design website for luxury residential and commercial work.',
+                business:
+                    'ARKI Design Studio offers custom home design, architectural planning, floor plans, portfolio presentation, and construction support for high-end modern spaces.',
+                built:
+                    'Built a visually refined static site with luxury positioning, architectural service messaging, portfolio entry points, contact paths, and fast-loading marketing pages.',
+                features: ['Luxury positioning', 'Portfolio flow', 'Service messaging', 'Contact CTA', 'OG/social preview'],
+                stack: ['React', 'Vite', 'Tailwind', 'Static Hosting'],
+                image: 'https://i.imgur.com/W9aTjyL.png',
+                link: 'https://landing.arkidesignstudio.com/'
+            },
+            {
+                id: 'scalifying',
+                title: 'Scalifying AI',
+                type: 'AI Growth Consulting Website',
+                description: 'A B2B AI growth website for automation and client acquisition systems.',
+                business:
+                    'Scalifying AI helps B2B companies engineer growth systems, automated lead generation, workflow optimization, and custom AI tooling for business operations.',
+                built:
+                    'Built a fast AI consulting site with clear positioning, systemized service messaging, technical credibility, and conversion paths for business owners evaluating automation.',
+                features: ['AI positioning', 'Lead-gen messaging', 'Consulting offer', 'Fast static pages', 'Social preview'],
+                stack: ['React', 'Vite', 'Tailwind', 'Static Hosting'],
+                image: 'https://i.imgur.com/4LpuspF.png',
+                link: 'https://scalifyingai.com/'
+            }
+        ]
+    }
 ];
 
-const proofPoints = [
+const archiveCapsules = [
     {
-        label: 'Main lane',
-        value: 'Blue-collar websites and lead systems for contractors, trades, and service businesses.',
+        label: 'What This Archive Is',
+        value: 'This archive is a working snapshot of public websites, SaaS products, booking systems, and local business platforms built by The Provider System for real operating use cases.'
     },
     {
-        label: 'Selective lane',
-        value: 'Custom CRMs, dashboards, booking tools, and operating systems when the workflow is worth building.',
+        label: 'What Kinds Of Builds Are Included',
+        value: 'The work includes local SEO sites, dynamic business sites, conversion-focused static builds, public booking funnels, and SaaS products with real operational workflows.'
     },
     {
-        label: 'Ownership stance',
-        value: 'Projects are structured so the client understands accounts, assets, handoff, and the system they are using.',
+        label: 'Who These Builds Serve',
+        value: 'Most projects are built for owners and teams that want simpler digital infrastructure, better visibility, and stronger control over how the business runs online.'
     },
+    {
+        label: 'What Outcomes They Target',
+        value: 'Common outcomes include faster sites, cleaner positioning, better lead capture, less technical sprawl, and digital assets the client can keep using without platform lock-in.'
+    }
 ];
+
+const platformColumns = ['Factor', 'Static Website', 'Overly Complex Platform'];
+const platformRows = [
+    [
+        'Performance',
+        'Static architecture is usually lighter, faster, and easier to optimize for search and AI readability.',
+        'Heavy themes, plugins, and server-side layers can add latency and technical overhead.'
+    ],
+    [
+        'Maintenance',
+        'There are fewer moving parts to patch, monitor, and troubleshoot.',
+        'More integrations and dependencies usually mean more updates, conflicts, and failure points.'
+    ],
+    [
+        'Security surface',
+        'A smaller stack generally exposes fewer unnecessary attack vectors.',
+        'A large plugin or platform stack often creates more entry points and more upkeep.'
+    ],
+    [
+        'Best fit',
+        'Works well for service businesses, portfolios, local lead generation, and clear information delivery.',
+        'Makes more sense only when the business truly needs advanced application behavior or dense editorial tooling.'
+    ]
+];
+
+const ownershipColumns = ['Factor', 'Closed Vendor Setup', 'Own-Your-Code Build'];
+const ownershipRows = [
+    [
+        'Source access',
+        'The owner may not receive the actual codebase or may only control content inside a platform account.',
+        'The owner can retain the delivered code, content, and supporting assets.'
+    ],
+    [
+        'Hosting choice',
+        'Hosting is often tied to the vendor or approved platform stack.',
+        'The business can usually choose where the project is hosted and how it is managed.'
+    ],
+    [
+        'Portability',
+        'Moving the project can be difficult if templates, data, or features depend on the vendor ecosystem.',
+        'A portable build is easier to move, extend, or hand to another developer later.'
+    ],
+    [
+        'Long-term leverage',
+        'The vendor relationship can become the product itself, which reduces flexibility.',
+        'Hiring a developer does not have to reduce ownership if the delivered system is built for client control.'
+    ]
+];
+
+const allCategories = ['All', ...projectCategories.map((g) => g.category)];
 
 export default function ProjectsArchive() {
+    const [activeFilter, setActiveFilter] = useState('All');
+
+    const visibleProjects =
+        activeFilter === 'All'
+            ? projectCategories.flatMap((g) =>
+                  g.projects.map((p) => ({ ...p, category: g.category }))
+              )
+            : (projectCategories.find((g) => g.category === activeFilter)?.projects || []).map(
+                  (p) => ({ ...p, category: activeFilter })
+              );
+
     return (
-        <main className="min-h-screen bg-background pt-28">
+        <div className="min-h-screen bg-background pt-28 pb-20">
             <SEO
-                title="Selected Work | The Provider System"
-                description="Selected websites, lead systems, and custom operating tools built by The Provider System for blue-collar businesses and serious operators."
+                title="Project Archive | Deployed Systems"
+                description="Explore The Provider System portfolio of deployed SaaS products, booking systems, local SEO websites, dynamic business sites, and public-facing digital infrastructure."
                 url="/projects"
                 schemas={[
                     {
                         '@type': 'CollectionPage',
                         '@id': 'https://theprovidersystem.com/projects',
-                        name: 'Selected Work - The Provider System',
+                        name: 'Project Archive — The Provider System',
                         description:
-                            'Selected websites, lead systems, and custom operating tools built for blue-collar businesses and serious operators.',
-                        isPartOf: { '@id': 'https://theprovidersystem.com/#website' },
+                            'Portfolio of deployed SaaS products, booking systems, local SEO websites, and public-facing business systems.',
+                        isPartOf: { '@id': 'https://theprovidersystem.com/#website' }
                     },
-                    buildBreadcrumbSchema([
-                        { name: 'Home', url: '/' },
-                        { name: 'Projects' },
-                    ]),
+                    {
+                        '@type': 'BreadcrumbList',
+                        '@id': 'https://theprovidersystem.com/projects#breadcrumbs',
+                        itemListElement: [
+                            {
+                                '@type': 'ListItem',
+                                position: 1,
+                                name: 'Home',
+                                item: 'https://theprovidersystem.com/'
+                            },
+                            {
+                                '@type': 'ListItem',
+                                position: 2,
+                                name: 'Projects'
+                            }
+                        ]
+                    }
                 ]}
             />
 
-            <section className="px-6 md:px-16 pb-16">
-                <div className="max-w-6xl mx-auto">
+            <div className="max-w-7xl w-full mx-auto px-6 md:px-12">
+                {/* Compact header */}
+                <header className="mb-8">
                     <Link
                         to="/"
-                        className="font-heading text-sm font-semibold text-muted hover:text-accent transition-colors"
+                        className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors mb-4 font-heading text-sm font-semibold"
                     >
-                        &larr; Back to home
+                        <svg
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <line x1="19" y1="12" x2="5" y2="12" />
+                            <polyline points="12 19 5 12 12 5" />
+                        </svg>
+                        Back to Systems
                     </Link>
-                    <div className="mt-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-end">
+                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                         <div>
-                            <span className="font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
-                                Selected Work
-                            </span>
-                            <h1 className="font-heading font-bold text-4xl md:text-6xl text-primary tracking-tight leading-tight">
-                                Websites and systems already shipped.
+                            <h1 className="font-heading font-bold text-4xl md:text-5xl text-primary tracking-tight mb-2">
+                                Project Archive.
                             </h1>
+                            <p className="font-heading text-base md:text-lg text-muted max-w-2xl leading-relaxed">
+                                Public SaaS products, booking systems, local SEO websites, and business
+                                platforms built for real operators.
+                            </p>
                         </div>
-                        <p className="font-heading text-lg text-muted leading-relaxed">
-                            The work below is intentionally focused: blue-collar websites, lead paths, booking
-                            experiences, and custom systems that prove we can build the front end customers see and
-                            the back end the business actually uses.
-                        </p>
+                        <div className="font-data text-xs uppercase tracking-[0.18em] text-muted">
+                            {visibleProjects.length} public projects shown
+                        </div>
                     </div>
-                </div>
-            </section>
+                </header>
 
-            <section className="px-6 md:px-16 pb-24">
-                <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-5">
-                    {proofPoints.map((point) => (
-                        <div key={point.label} className="bg-white border border-primary/10 rounded-lg p-6">
-                            <div className="font-data text-xs uppercase tracking-[0.18em] text-accent mb-3">
-                                {point.label}
-                            </div>
-                            <p className="font-heading text-primary/75 leading-relaxed">{point.value}</p>
-                        </div>
-                    ))}
+                {/* Category filter pills */}
+                <div className="mb-8 flex flex-wrap gap-2">
+                    {allCategories.map((cat) => {
+                        const isActive = activeFilter === cat;
+                        return (
+                            <button
+                                key={cat}
+                                onClick={() => setActiveFilter(cat)}
+                                className={`px-4 py-2 rounded-full font-heading font-semibold text-sm transition-all ${
+                                    isActive
+                                        ? 'bg-primary text-white shadow-md'
+                                        : 'bg-white text-muted border border-primary/10 hover:border-primary/30 hover:text-primary'
+                                }`}
+                            >
+                                {cat}
+                            </button>
+                        );
+                    })}
                 </div>
-            </section>
 
-            <section className="px-6 md:px-16 pb-24">
-                <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6">
-                    {projects.map((project) => (
+                {/* Project grid — visible immediately */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {visibleProjects.map((project) => (
                         <a
-                            key={project.title}
+                            key={project.id}
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group bg-white rounded-lg overflow-hidden border border-primary/10 shadow-sm hover:shadow-xl transition-all"
+                            className="group relative flex flex-col rounded-lg overflow-hidden bg-white border border-primary/10 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                         >
-                            <div className="aspect-[16/9] bg-primary overflow-hidden">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    loading="lazy"
-                                    className="w-full h-full object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500"
-                                />
-                            </div>
-                            <div className="p-6 md:p-8">
-                                <div className="flex items-center justify-between gap-4 mb-4">
-                                    <span className="font-data text-xs uppercase tracking-[0.18em] text-accent">
-                                        {project.category}
-                                    </span>
-                                    <ExternalLink className="w-4 h-4 text-muted group-hover:text-accent transition-colors" />
-                                </div>
-                                <h2 className="font-heading font-bold text-2xl text-primary mb-3">
-                                    {project.title}
-                                </h2>
-                                <p className="font-heading text-muted leading-relaxed mb-5">
-                                    {project.description}
-                                </p>
-                                <p className="font-heading text-sm text-primary/70 leading-relaxed mb-6">
-                                    {project.outcome}
-                                </p>
-                                <div className="flex flex-wrap gap-2">
-                                    {project.tags.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="rounded-full bg-background border border-primary/10 px-3 py-1 font-data text-[11px] uppercase tracking-[0.08em] text-primary/70"
-                                        >
-                                            {tag}
+                            {/* Image or gradient placeholder */}
+                            <div className="relative aspect-[16/10] w-full overflow-hidden bg-primary">
+                                {project.image ? (
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        loading="lazy"
+                                        className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-primary flex items-center justify-center">
+                                        <span className="font-heading font-bold text-white/40 text-2xl uppercase tracking-widest">
+                                            {project.category}
                                         </span>
-                                    ))}
+                                    </div>
+                                )}
+                                <span className="absolute top-3 left-3 bg-white/95 backdrop-blur text-primary px-3 py-1 rounded-full font-heading font-bold text-xs uppercase tracking-wider">
+                                    {project.category}
+                                </span>
+                                <span className="absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-primary/90 text-white shadow-sm">
+                                    <svg
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <path d="M15 3h6v6" />
+                                        <path d="M10 14 21 3" />
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                    </svg>
+                                </span>
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 p-5 flex flex-col gap-4">
+                                <div>
+                                    <div className="font-data text-[11px] uppercase tracking-[0.18em] text-accent mb-2">
+                                        {project.type}
+                                    </div>
+                                    <h3 className="font-heading text-primary font-bold text-xl leading-tight mb-2">
+                                        {project.title}
+                                    </h3>
+                                    <p className="font-heading text-muted text-sm leading-relaxed">
+                                        {project.description}
+                                    </p>
+                                </div>
+
+                                <dl className="space-y-3">
+                                    <div>
+                                        <dt className="font-data text-[10px] uppercase tracking-[0.18em] text-primary/50 mb-1">
+                                            Business
+                                        </dt>
+                                        <dd className="font-heading text-sm leading-relaxed text-muted">
+                                            {project.business}
+                                        </dd>
+                                    </div>
+                                    <div>
+                                        <dt className="font-data text-[10px] uppercase tracking-[0.18em] text-primary/50 mb-1">
+                                            What Was Built
+                                        </dt>
+                                        <dd className="font-heading text-sm leading-relaxed text-muted">
+                                            {project.built}
+                                        </dd>
+                                    </div>
+                                </dl>
+
+                                <div>
+                                    <div className="font-data text-[10px] uppercase tracking-[0.18em] text-primary/50 mb-2">
+                                        Key Pieces
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.features.map((feature) => (
+                                            <span
+                                                key={feature}
+                                                className="rounded-full border border-primary/10 bg-primary/[0.03] px-3 py-1 font-heading text-xs font-semibold text-primary/80"
+                                            >
+                                                {feature}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="font-data text-[10px] uppercase tracking-[0.18em] text-primary/50 mb-2 flex items-center gap-2">
+                                        <svg
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="13"
+                                            height="13"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <polyline points="16 18 22 12 16 6" />
+                                            <polyline points="8 6 2 12 8 18" />
+                                        </svg>
+                                        Stack
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.stack.map((item) => (
+                                            <span
+                                                key={item}
+                                                className="rounded-full bg-dark px-3 py-1 font-data text-[11px] uppercase tracking-[0.08em] text-white/80"
+                                            >
+                                                {item}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="mt-auto inline-flex items-center gap-2 text-accent font-heading font-bold text-sm pt-2">
+                                    <span>Explore System</span>
+                                    <svg
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="transform group-hover:translate-x-1 transition-transform"
+                                    >
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                        <polyline points="12 5 19 12 12 19" />
+                                    </svg>
                                 </div>
                             </div>
                         </a>
                     ))}
                 </div>
-            </section>
 
-            <ContactFormSection
-                heading="Have a project like this?"
-                subheading="Tell us whether you need the website, the lead system, or the custom operating tool behind it."
-            />
-        </main>
+                {/* GEO content — now below the projects so it doesn't block the view */}
+                <div className="mt-24 space-y-12 pt-12 border-t border-primary/10">
+                    <GeoCapsuleGrid
+                        eyebrow="Archive Summary"
+                        title="What this portfolio says about the work"
+                        intro="Plain-language context around the portfolio so both people and AI systems can understand what The Provider System builds and why those build choices matter."
+                        capsules={archiveCapsules}
+                    />
+                    <GeoComparisonTable
+                        eyebrow="Architecture Comparison"
+                        title="Static websites vs overly complex platforms"
+                        columns={platformColumns}
+                        rows={platformRows}
+                        note="What this means: for many business websites, a simpler stack is easier to maintain, easier to optimize, and easier for answer engines to parse."
+                    />
+                    <GeoComparisonTable
+                        eyebrow="Ownership Comparison"
+                        title="Hiring a developer vs owning your code outright"
+                        intro="These are not opposites. The important distinction is whether the build leaves the business with control or with a closed dependency."
+                        columns={ownershipColumns}
+                        rows={ownershipRows}
+                        note="Why this matters: owning the delivered asset gives a business more freedom to change vendors, hosts, or growth strategy later."
+                    />
+                </div>
+            </div>
+        </div>
     );
 }
