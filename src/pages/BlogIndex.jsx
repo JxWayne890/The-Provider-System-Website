@@ -28,8 +28,8 @@ export default function BlogIndex() {
     return (
         <div className="bg-dark min-h-screen font-body text-white selection:bg-accent selection:text-dark">
             <SEO
-                title="Blue-Collar Website & Lead System Blog"
-                description="Practical articles on websites, lead capture, CRM, follow-up, and automation for contractors, trades, and blue-collar service businesses."
+                title="Website, CRM & Systems Blog"
+                description="Practical articles on websites, lead capture, CRM, follow-up, ownership, tools, and custom systems for blue-collar businesses and serious operators."
                 url="/blog"
                 schemas={schemas}
             />
@@ -49,10 +49,10 @@ export default function BlogIndex() {
                             Blog
                         </span>
                         <h1 className="font-heading font-bold text-4xl md:text-6xl text-white tracking-tight mb-6">
-                            Blue-Collar Website &amp; Lead System Blog
+                            Website, CRM &amp; Systems Blog
                         </h1>
                         <p className="font-heading text-white/60 text-lg md:text-xl leading-relaxed max-w-3xl">
-                            Practical knowledge on contractor websites, lead capture, CRM, follow-up, reviews, and business systems for the trades.
+                            Practical knowledge on contractor websites, lead capture, CRM, follow-up, reviews, ownership, tools, and custom operating systems.
                         </p>
                     </div>
                 </section>
