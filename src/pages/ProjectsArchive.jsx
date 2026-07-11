@@ -149,6 +149,20 @@ const projectCategories = [
                 link: 'https://www.mastercleanhq.com/'
             },
             {
+                id: 'heart-of-texas-outfitters',
+                title: 'Heart of Texas Outfitters',
+                type: 'Outfitter SEO Website',
+                description: 'A Texas-rooted hunting outfitter and worldwide hunt planning website.',
+                business:
+                    'Heart of Texas Outfitters helps hunters compare Texas ranch hunts, whitetail, exotics, wingshooting, hogs, predators, and international trophy hunting destinations before starting a trip conversation.',
+                built:
+                    'Built a static marketing and SEO site with hunt-type pages, destination pages, species guides, responsive hunt filtering, FAQ support, sitemap and robots files, structured data, and a Vercel inquiry flow backed by Resend notifications.',
+                features: ['Hunt filters', 'Destination guides', 'Species SEO pages', 'Inquiry form', 'Sitemap/robots', 'Local schema'],
+                stack: ['HTML', 'CSS', 'JavaScript', 'Python Generator', 'Vercel', 'Resend'],
+                image: 'https://www.heartoftexasoutfitters.com/assets/heart-of-texas-og.png',
+                link: 'https://www.heartoftexasoutfitters.com/'
+            },
+            {
                 id: 'adrian',
                 title: "Adrian's Custom Services",
                 type: 'General Contractor Website',
