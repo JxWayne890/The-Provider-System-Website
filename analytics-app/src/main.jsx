@@ -137,6 +137,12 @@ function DashboardShell({ range, setRange, state, onRefresh, onLock }) {
   const google = data?.google;
   const bing = data?.bing;
   const combined = data?.combined;
+  const googleReady = Boolean(google?.configured && !google?.error);
+  const bingReady = Boolean(bing?.configured && !bing?.error);
+  const allProvidersReady = googleReady && bingReady;
+  const queryEmptyCopy = allProvidersReady
+    ? 'No search queries yet. Google and Bing are connected; new verified properties can take 24 to 48 hours before search data appears.'
+    : 'No search queries yet. Connect Google/Bing credentials or wait for search data.';
 
   return (
     <main className="dashboard">
@@ -236,7 +242,7 @@ function DashboardShell({ range, setRange, state, onRefresh, onLock }) {
                 eyebrow="Combined Google + Bing"
                 rows={combined.queries}
                 primaryLabel="Search query"
-                empty="No search queries yet. Connect Google/Bing credentials or wait for search data."
+                empty={queryEmptyCopy}
               />
               <DataTable
                 id="pages"
@@ -267,18 +273,29 @@ function DashboardShell({ range, setRange, state, onRefresh, onLock }) {
 
             <section className="setup-panel">
               <div>
-                <span className="eyebrow">connection checklist</span>
-                <h2>What still needs credentials</h2>
+                <span className="eyebrow">connection status</span>
+                <h2>{allProvidersReady ? 'Data sources connected' : 'What still needs credentials'}</h2>
                 <p>
-                  This app is ready for real data, but the APIs need private credentials
-                  stored in the Vercel project for the analytics subdomain.
+                  {allProvidersReady
+                    ? 'Google Search Console and Bing Webmaster Tools are connected. New verified properties can take 24 to 48 hours before queries, pages, and trend rows appear.'
+                    : 'This app is ready for real data, but the APIs need private credentials stored in the Vercel project for the analytics subdomain.'}
                 </p>
               </div>
               <ul>
-                <li><code>ANALYTICS_ACCESS_TOKEN</code> protects the dashboard.</li>
-                <li><code>GOOGLE_CLIENT_EMAIL</code> and <code>GOOGLE_PRIVATE_KEY</code> power Search Console.</li>
-                <li><code>BING_API_KEY</code> powers Bing Webmaster Tools.</li>
-                <li><code>GSC_SITE_URL</code> and <code>BING_SITE_URL</code> must match verified properties.</li>
+                {allProvidersReady ? (
+                  <>
+                    <li><code>Google Search Console</code> is connected through the service account.</li>
+                    <li><code>Bing Webmaster Tools</code> is verified and connected through the API key.</li>
+                    <li>Current reporting window: {data.range.startDate} to {data.range.endDate}.</li>
+                  </>
+                ) : (
+                  <>
+                    <li><code>ANALYTICS_ACCESS_TOKEN</code> protects the dashboard.</li>
+                    <li><code>GOOGLE_CLIENT_EMAIL</code> and <code>GOOGLE_PRIVATE_KEY</code> power Search Console.</li>
+                    <li><code>BING_API_KEY</code> powers Bing Webmaster Tools.</li>
+                    <li><code>GSC_SITE_URL</code> and <code>BING_SITE_URL</code> must match verified properties.</li>
+                  </>
+                )}
               </ul>
             </section>
           </>
