@@ -7,6 +7,7 @@ export default function ProjectPreviewModal({ project, onClose }) {
     const dialogRef = useRef(null);
     const closeRef = useRef(null);
     const previousFocusRef = useRef(null);
+    const previewViewportRef = useRef(null);
 
     useEffect(() => {
         previousFocusRef.current = document.activeElement;
@@ -47,6 +48,10 @@ export default function ProjectPreviewModal({ project, onClose }) {
 
     const preview = project.preview?.[device];
 
+    useEffect(() => {
+        if (previewViewportRef.current) previewViewportRef.current.scrollTop = 0;
+    }, [device, project.slug]);
+
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6">
             <button
@@ -66,7 +71,7 @@ export default function ProjectPreviewModal({ project, onClose }) {
                     <div>
                         <div className="mb-1 flex items-center gap-2 font-data text-[0.58rem] font-bold uppercase tracking-[0.16em] text-teal">
                             <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-                            Static, safety-first preview
+                            Static, full-page portfolio record
                         </div>
                         <h2 id={`preview-title-${project.slug}`} className="text-xl font-bold text-primary sm:text-2xl">
                             {project.client}
@@ -93,40 +98,45 @@ export default function ProjectPreviewModal({ project, onClose }) {
                             >
                                 <button
                                     type="button"
+                                    title="Desktop preview"
                                     onClick={() => setDevice('desktop')}
+                                    aria-label="Show desktop preview"
                                     aria-pressed={device === 'desktop'}
                                     className={cn(
-                                        'flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-bold transition',
+                                        'grid h-10 w-10 place-items-center rounded-full transition',
                                         device === 'desktop' ? 'bg-primary text-white' : 'text-muted hover:text-primary'
                                     )}
                                 >
                                     <Monitor className="h-4 w-4" aria-hidden="true" />
-                                    Desktop
                                 </button>
                                 <button
                                     type="button"
+                                    title="Mobile preview"
                                     onClick={() => setDevice('mobile')}
+                                    aria-label="Show mobile preview"
                                     aria-pressed={device === 'mobile'}
                                     className={cn(
-                                        'flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-bold transition',
+                                        'grid h-10 w-10 place-items-center rounded-full transition',
                                         device === 'mobile' ? 'bg-primary text-white' : 'text-muted hover:text-primary'
                                     )}
                                 >
                                     <Smartphone className="h-4 w-4" aria-hidden="true" />
-                                    Mobile
                                 </button>
                             </div>
                             <p className="text-xs leading-5 text-muted">
-                                Screenshots are portfolio records. The live site may have changed.
+                                Scroll the full-page record. The live site may have changed.
                             </p>
                         </div>
 
                         <div
+                            ref={previewViewportRef}
+                            tabIndex={0}
+                            aria-label={`Scrollable ${device} preview of ${project.client}`}
                             className={cn(
-                                'mx-auto overflow-hidden border-[0.55rem] border-primary bg-white shadow-lift',
+                                'project-preview-scroll mx-auto h-[62dvh] overflow-y-auto overscroll-contain border-primary bg-white shadow-lift',
                                 device === 'desktop'
-                                    ? 'aspect-[16/10] w-full rounded-2xl'
-                                    : 'aspect-[9/16] w-full max-w-[22rem] rounded-[2.25rem]'
+                                    ? 'w-full rounded-2xl border-[0.45rem]'
+                                    : 'w-full max-w-[22rem] rounded-[2.25rem] border-[0.55rem]'
                             )}
                         >
                             <PreviewImage key={`${project.slug}-${device}`} project={project} preview={preview} />
@@ -142,7 +152,7 @@ export default function ProjectPreviewModal({ project, onClose }) {
                         </p>
                         <div className="mt-6 border-t border-primary/10 pt-6">
                             <p className="text-xs leading-5 text-muted">
-                                Client sites are not loaded inside this page. That avoids frame-policy failures,
+                                This scrollable record is stored locally. It avoids frame-policy failures,
                                 unwanted third-party scripts, and confusing form or analytics behavior.
                             </p>
                         </div>
@@ -167,7 +177,7 @@ function PreviewImage({ project, preview }) {
 
     if (!preview?.src || failed) {
         return (
-            <div className="flex h-full w-full flex-col items-center justify-center bg-primary p-8 text-center text-white">
+            <div className="flex min-h-[62dvh] w-full flex-col items-center justify-center bg-primary p-8 text-center text-white">
                 <ShieldCheck className="h-8 w-8 text-sun" aria-hidden="true" />
                 <p className="mt-4 max-w-sm text-sm leading-6 text-white/65">
                     {project.fallback}
@@ -188,7 +198,7 @@ function PreviewImage({ project, preview }) {
         <img
             src={preview.src}
             alt={preview.alt || `${project.client} ${project.previewMode} preview`}
-            className="h-full w-full object-cover object-top"
+            className="block h-auto w-full"
             onError={() => setFailed(true)}
         />
     );

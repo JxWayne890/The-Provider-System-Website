@@ -69,7 +69,7 @@ These are service and project markets, not claimed Provider System office locati
 - FlowOS — booking, queue, CRM, and operations product
 - The Offer Hero — producer pipeline and workflow product
 
-Project previews are static screenshots by default. Live client sites open separately so client frame-security policies and third-party scripts are not bypassed.
+Project previews are scrollable, full-page static portfolio records by default. Live client sites open separately so client frame-security policies and third-party scripts are not bypassed.
 
 ## Contact
 

@@ -225,7 +225,6 @@
 
   .command-deck {
     @apply absolute left-0 right-7 top-10 overflow-hidden rounded-[1.35rem] border border-[#90caff]/20 bg-[#06172b]/95 shadow-[0_38px_100px_rgba(0,0,0,0.48),0_0_0_1px_rgba(255,255,255,0.03),0_0_70px_rgba(31,105,174,0.12)] backdrop-blur-xl sm:right-12 sm:top-12;
-    animation: command-deck-float 8s ease-in-out infinite;
     transform: rotateY(-2deg) rotateX(1deg);
     transform-style: preserve-3d;
   }
@@ -235,15 +234,15 @@
   }
 
   .command-deck-body {
-    @apply flex h-[20.5rem] sm:h-[23rem];
+    @apply flex h-[20.5rem] min-h-0 flex-col sm:h-[23rem] sm:flex-row;
   }
 
   .command-rail {
-    @apply hidden w-11 flex-none flex-col items-center gap-2 border-r border-white/[0.06] bg-black/10 py-4 sm:flex sm:w-12;
+    @apply flex h-10 w-full flex-none items-center justify-center gap-1 border-b border-white/[0.06] bg-black/10 px-2 sm:h-auto sm:w-12 sm:flex-col sm:justify-start sm:gap-2 sm:border-b-0 sm:border-r sm:px-0 sm:py-4;
   }
 
   .command-rail-icon {
-    @apply grid h-7 w-7 place-items-center rounded-lg text-white/25;
+    @apply grid h-7 w-7 place-items-center rounded-lg text-white/25 transition hover:bg-white/[0.05] hover:text-white/60;
   }
 
   .command-rail-icon-active {
@@ -251,8 +250,31 @@
     box-shadow: inset 0 0 0 1px rgba(255, 159, 28, 0.12);
   }
 
+  .command-main {
+    @apply min-h-0 flex-1 overflow-hidden p-3 sm:p-4;
+  }
+
+  .command-brand-logo {
+    @apply relative h-9 w-[5.35rem] flex-none overflow-hidden;
+  }
+
+  .command-brand-logo > span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: scale(0.58);
+    transform-origin: top left;
+  }
+
+  .command-stage-list {
+    max-height: 11.9rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 0.2rem;
+  }
+
   .workflow-step {
-    @apply relative flex min-h-8 items-center gap-2 overflow-hidden rounded-lg border border-white/[0.055] bg-white/[0.026] px-2 sm:min-h-9 sm:px-2.5;
+    @apply relative flex min-h-8 w-full items-center gap-2 overflow-hidden rounded-lg border border-white/[0.055] bg-white/[0.026] px-2 transition hover:border-white/15 hover:bg-white/[0.05] sm:min-h-9 sm:px-2.5;
   }
 
   .workflow-step::after {
@@ -263,6 +285,7 @@
     background: linear-gradient(90deg, transparent, rgba(255, 159, 28, 0.08), transparent);
     animation: workflow-scan 4.2s ease-in-out infinite;
     animation-delay: var(--step-delay);
+    pointer-events: none;
   }
 
   .workflow-step-icon {
@@ -283,6 +306,11 @@
     @apply bg-sun/10 text-sun;
   }
 
+  .workflow-step-selected {
+    @apply border-sun/35 bg-sun/[0.075];
+    box-shadow: inset 2px 0 0 rgba(255, 159, 28, 0.9), 0 0 0 1px rgba(255, 159, 28, 0.05);
+  }
+
   .deck-signal {
     @apply absolute inset-x-0 bottom-0 h-px;
     background: linear-gradient(90deg, transparent 0%, rgba(255, 159, 28, 0.95) 50%, transparent 100%);
@@ -297,7 +325,6 @@
 
   .mobile-command {
     @apply absolute bottom-5 right-0 z-20 w-[8.4rem] overflow-hidden rounded-[1.45rem] border-[3px] border-[#102b48] bg-background shadow-[0_30px_65px_rgba(0,0,0,0.48),0_0_0_1px_rgba(157,205,245,0.16)] sm:bottom-8 sm:w-[10rem];
-    animation: mobile-command-float 7s ease-in-out infinite;
     transform: rotateY(-5deg) rotateZ(1deg);
   }
 
@@ -317,6 +344,42 @@
   .spatial-coordinate-bottom {
     bottom: 3%;
     left: 2%;
+  }
+
+  .command-scroll,
+  .command-stage-list,
+  .project-directory-scroll,
+  .project-preview-scroll {
+    scrollbar-color: rgba(255, 159, 28, 0.72) rgba(255, 255, 255, 0.06);
+    scrollbar-width: thin;
+  }
+
+  .command-scroll::-webkit-scrollbar,
+  .command-stage-list::-webkit-scrollbar,
+  .project-directory-scroll::-webkit-scrollbar,
+  .project-preview-scroll::-webkit-scrollbar {
+    height: 0.42rem;
+    width: 0.42rem;
+  }
+
+  .command-scroll::-webkit-scrollbar-track,
+  .command-stage-list::-webkit-scrollbar-track,
+  .project-directory-scroll::-webkit-scrollbar-track,
+  .project-preview-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+  }
+
+  .command-scroll::-webkit-scrollbar-thumb,
+  .command-stage-list::-webkit-scrollbar-thumb,
+  .project-directory-scroll::-webkit-scrollbar-thumb,
+  .project-preview-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 159, 28, 0.72);
+    border-radius: 999px;
+  }
+
+  .project-preview-scroll {
+    scrollbar-gutter: stable;
   }
 }
 
@@ -406,6 +469,12 @@
 
   .mobile-command {
     width: 7.8rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .command-stage-list {
+    max-height: 14rem;
   }
 }
 

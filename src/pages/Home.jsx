@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
     ArrowRight,
@@ -14,13 +13,12 @@ import SEO from '../components/SEO';
 import {
     IndustryCard,
     PlaybookCard,
-    ProjectCard,
     ServiceCard,
 } from '../components/ContentCards';
-import ProjectPreviewModal from '../components/ProjectPreviewModal';
 import { RegionCard } from '../components/ContentCards';
 import { SectionHeading, SystemReviewCTA } from '../components/PageElements';
 import SpatialCommandDeck from '../components/SpatialCommandDeck';
+import ProjectShowcase from '../components/ProjectShowcase';
 import { industries, regions, serviceGroups, services } from '../data/siteContent';
 import { projects } from '../data/projects';
 import { playbooks } from '../data/playbooks';
@@ -56,8 +54,6 @@ const breakpoints = [
     },
 ];
 
-const featuredProjectIds = ['total-quality-plumbing', 'weathersbee-electric', 'flowos'];
-
 const processSteps = [
     ['01', 'Assess', 'Map the website, lead flow, tools, handoffs, and evidence before deciding what to build.'],
     ['02', 'Design', 'Define the customer path, operating rules, data, ownership, and smallest useful release.'],
@@ -66,11 +62,6 @@ const processSteps = [
 ];
 
 export default function Home() {
-    const [previewProject, setPreviewProject] = useState(null);
-    const featuredProjects = featuredProjectIds
-        .map((id) => projects.find((project) => project.slug === id))
-        .filter(Boolean);
-
     const schemas = [
         {
             '@type': 'Organization',
@@ -250,10 +241,8 @@ export default function Home() {
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                     </div>
-                    <div className="mt-12 grid gap-6 lg:grid-cols-3">
-                        {featuredProjects.map((project) => (
-                            <ProjectCard key={project.slug} project={project} onPreview={setPreviewProject} />
-                        ))}
+                    <div className="mt-12">
+                        <ProjectShowcase projects={projects} />
                     </div>
                 </div>
             </section>
@@ -390,9 +379,6 @@ export default function Home() {
 
             <SystemReviewCTA />
 
-            {previewProject && (
-                <ProjectPreviewModal project={previewProject} onClose={() => setPreviewProject(null)} />
-            )}
         </main>
     );
 }
