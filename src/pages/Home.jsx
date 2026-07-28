@@ -20,6 +20,7 @@ import {
 import ProjectPreviewModal from '../components/ProjectPreviewModal';
 import { RegionCard } from '../components/ContentCards';
 import { SectionHeading, SystemReviewCTA } from '../components/PageElements';
+import SpatialCommandDeck from '../components/SpatialCommandDeck';
 import { industries, regions, serviceGroups, services } from '../data/siteContent';
 import { projects } from '../data/projects';
 import { playbooks } from '../data/playbooks';
@@ -103,12 +104,14 @@ export default function Home() {
                 schemas={schemas}
             />
 
-            <section className="relative overflow-hidden bg-primary pb-20 pt-44 text-white md:pb-28 md:pt-52">
-                <div className="grid-field absolute inset-0 opacity-80" aria-hidden="true" />
-                <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-dark/80 to-transparent" aria-hidden="true" />
+            <section className="relative overflow-hidden bg-dark pb-20 pt-44 text-white md:pb-28 md:pt-52 lg:min-h-[55rem]">
+                <div className="spatial-hero-field absolute inset-0" aria-hidden="true" />
+                <div className="absolute -left-48 top-40 h-[34rem] w-[34rem] rounded-full bg-[#0d4f8e]/20 blur-[120px]" aria-hidden="true" />
+                <div className="absolute -right-32 top-28 h-[30rem] w-[30rem] rounded-full bg-sun/[0.08] blur-[120px]" aria-hidden="true" />
+                <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#020d1d] to-transparent" aria-hidden="true" />
 
-                <div className="page-shell relative grid gap-14 lg:grid-cols-[1.12fr_0.88fr] lg:items-center">
-                    <div>
+                <div className="page-shell relative grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-8 xl:grid-cols-[0.86fr_1.14fr] xl:gap-12">
+                    <div className="relative z-10">
                         <div className="eyebrow mb-6 text-sun">
                             <MapPin className="h-4 w-4" aria-hidden="true" />
                             Texas digital systems agency
@@ -116,7 +119,7 @@ export default function Home() {
                         <h1 className="display-title max-w-5xl">
                             Make every lead, customer, and handoff easier to handle.
                         </h1>
-                        <p className="mt-7 max-w-3xl text-lg leading-8 text-white/72 md:text-xl md:leading-9">
+                        <p className="mt-7 max-w-3xl text-lg leading-8 text-white/70 md:text-xl md:leading-9">
                             The Provider System designs the website customers see and the operating
                             system behind it—CRM, follow-up, automation, practical AI, and custom tools
                             built around how a service business actually works.
@@ -131,7 +134,7 @@ export default function Home() {
                                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                             </Link>
                         </div>
-                        <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-white/62">
+                        <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-white/60">
                             <span className="inline-flex items-center gap-2">
                                 <CircleDot className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
                                 Texas first
@@ -147,7 +150,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <TexasSystemMap />
+                    <SpatialCommandDeck />
                 </div>
             </section>
 
@@ -262,7 +265,7 @@ export default function Home() {
                         <div>
                             <p className="eyebrow mb-4 text-sun">Texas proof, not Texas wallpaper</p>
                             <h2 className="section-title">Local relevance has to be earned.</h2>
-                            <p className="mt-5 text-lg leading-8 text-white/62">
+                            <p className="mt-5 text-lg leading-8 text-white/60">
                                 We use statewide positioning to connect a real body of Texas work. Regional pages
                                 exist where project evidence or useful operating context makes them meaningfully different.
                                 No invented offices. No copy-swapped city pages.
@@ -391,39 +394,5 @@ export default function Home() {
                 <ProjectPreviewModal project={previewProject} onClose={() => setPreviewProject(null)} />
             )}
         </main>
-    );
-}
-
-function TexasSystemMap() {
-    return (
-        <aside
-            aria-label="Texas project footprint: Abilene, San Angelo, and the Permian Basin connected to one digital system"
-            className="relative mx-auto aspect-square w-full max-w-[33rem]"
-        >
-            <div className="absolute inset-[8%] rounded-full border border-white/10" aria-hidden="true" />
-            <div className="absolute inset-[22%] rounded-full border border-sun/25" aria-hidden="true" />
-            <div className="absolute inset-[36%] rounded-full border border-white/10" aria-hidden="true" />
-            <div className="absolute left-1/2 top-1/2 grid h-32 w-32 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-sun/40 bg-dark/80 p-5 text-center shadow-2xl backdrop-blur">
-                <span className="font-data text-[0.62rem] font-bold uppercase tracking-[0.15em] text-sun">
-                    One connected system
-                </span>
-            </div>
-            {[
-                ['Abilene', 'left-[4%] top-[25%]'],
-                ['San Angelo', 'right-[0%] top-[45%]'],
-                ['Permian Basin', 'bottom-[9%] left-[16%]'],
-                ['Remote nationwide', 'right-[9%] top-[9%]'],
-            ].map(([label, position], index) => (
-                <div key={label} className={`absolute ${position}`}>
-                    <span className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-2 text-xs font-bold text-white/75 backdrop-blur">
-                        <span className={`h-2 w-2 rounded-full ${index < 3 ? 'bg-sun' : 'bg-teal'}`} />
-                        {label}
-                    </span>
-                </div>
-            ))}
-            <div className="absolute left-[24%] top-[36%] h-px w-[30%] rotate-[18deg] bg-gradient-to-r from-sun/20 to-sun/60" aria-hidden="true" />
-            <div className="absolute right-[17%] top-[50%] h-px w-[26%] -rotate-[8deg] bg-gradient-to-l from-sun/20 to-sun/60" aria-hidden="true" />
-            <div className="absolute bottom-[28%] left-[31%] h-px w-[28%] -rotate-[42deg] bg-gradient-to-r from-sun/20 to-sun/60" aria-hidden="true" />
-        </aside>
     );
 }

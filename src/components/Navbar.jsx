@@ -164,7 +164,7 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    <div className="hidden lg:block">
+                    <div className="hidden xl:block">
                         <Link to="/start" className="button-primary">
                             Start a system review
                         </Link>
