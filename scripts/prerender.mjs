@@ -67,6 +67,7 @@ async function getAllRoutes() {
     '/diagnostic',
     '/faq',
     '/privacy-policy',
+    '/sms-consent',
   ];
 
   const { blueCollarTrades }   = await import(join(ROOT, 'src/data/blueCollarTrades.js'));

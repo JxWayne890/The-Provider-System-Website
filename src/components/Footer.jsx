@@ -39,6 +39,7 @@ export default function Footer() {
                     <div className="col-span-1 flex flex-col gap-4">
                         <h4 className="font-heading font-semibold text-white/50 text-sm tracking-wider uppercase mb-2">Legal</h4>
                         <Link to="/privacy-policy" className="hover:text-accent transition-colors font-heading">Privacy Policy</Link>
+                        <Link to="/sms-consent" className="hover:text-accent transition-colors font-heading">SMS Communications</Link>
                     </div>
 
                 </div>

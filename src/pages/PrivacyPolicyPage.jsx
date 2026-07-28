@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
-const lastUpdated = 'April 26, 2026';
+const lastUpdated = 'July 28, 2026';
 
 export default function PrivacyPolicyPage() {
     return (
@@ -158,7 +158,23 @@ export default function PrivacyPolicyPage() {
 
                     <section>
                         <h2 className="font-heading font-bold text-2xl text-primary mb-3">
-                            6. Your Rights
+                            6. SMS Communications
+                        </h2>
+                        <p>
+                            Our website contact form does not include an SMS marketing opt-in and a form
+                            submission does not constitute consent to receive text messages. If we add an
+                            SMS opt-in program in the future, we will present its terms and consent
+                            disclosure at the point of collection. You can read the current SMS
+                            communications disclosure on the{' '}
+                            <Link to="/sms-consent" className="text-accent hover:text-accent/80 underline underline-offset-4">
+                                SMS Communications page
+                            </Link>.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 className="font-heading font-bold text-2xl text-primary mb-3">
+                            7. Your Rights
                         </h2>
                         <p className="mb-3">Depending on your location, you may have the right to:</p>
                         <ul className="list-disc pl-6 space-y-2">
@@ -179,7 +195,7 @@ export default function PrivacyPolicyPage() {
 
                     <section>
                         <h2 className="font-heading font-bold text-2xl text-primary mb-3">
-                            7. Data Security
+                            8. Data Security
                         </h2>
                         <p>
                             We use commercially reasonable administrative, technical, and physical
@@ -191,7 +207,7 @@ export default function PrivacyPolicyPage() {
 
                     <section>
                         <h2 className="font-heading font-bold text-2xl text-primary mb-3">
-                            8. Third-Party Links
+                            9. Third-Party Links
                         </h2>
                         <p>
                             Our website may contain links to third-party sites or services. We are not

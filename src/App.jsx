@@ -20,6 +20,7 @@ const WebsitesPage = lazy(() => import('./pages/WebsitesPage'));
 const LeadCrmSystemPage = lazy(() => import('./pages/LeadCrmSystemPage'));
 const CustomSystemsPage = lazy(() => import('./pages/CustomSystemsPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const SmsConsentPage = lazy(() => import('./pages/SmsConsentPage'));
 
 function LoadingFallback() {
   return (
@@ -53,6 +54,7 @@ function App() {
             <Route path="/diagnostic" element={<DiagnosticPage />} />
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/sms-consent" element={<SmsConsentPage />} />
 
             {/* Legacy broad-agency routes now point to the focused offer ladder. */}
             <Route path="/services/website-development" element={<Navigate to="/websites" replace />} />

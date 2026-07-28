@@ -72,7 +72,7 @@ const FAQPage = () => {
             <SEO
                 title="Frequently Asked Questions | The Provider System"
                 description="Find answers to common questions about websites, CRMs, follow-up systems, ownership, pricing, and custom operating tools."
-                canonicalUrl="https://theprovidersystem.com/faq"
+                url="/faq"
                 schemas={schemas}
             />
             <main className="pt-32 pb-24">

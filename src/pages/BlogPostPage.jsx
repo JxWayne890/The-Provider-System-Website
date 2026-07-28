@@ -8,6 +8,15 @@ import { buildBreadcrumbSchema, buildArticleSchema, buildFAQSchema } from '../co
 import { blogPosts } from '../data/blogPosts';
 import { cn } from '../lib/cn';
 
+const canonicalServiceRoutes = {
+    'web-development': '/websites',
+    'seo-optimization': '/websites',
+    'ai-workflow-automation': '/lead-crm-system',
+    'chatbot-development': '/lead-crm-system',
+    'crm-integration': '/lead-crm-system',
+    'integration-development': '/custom-systems',
+};
+
 export default function BlogPostPage() {
     const { slug } = useParams();
     const post = blogPosts.find((p) => p.slug === slug);
@@ -233,7 +242,7 @@ export default function BlogPostPage() {
                                 {post.relatedServices.map((svc) => (
                                     <Link
                                         key={svc}
-                                        to={`/services/${svc}`}
+                                        to={canonicalServiceRoutes[svc] || '/lead-crm-system'}
                                         className="font-data text-xs tracking-wider uppercase px-4 py-2 rounded-full border border-white/10 text-white/60 hover:border-accent/40 hover:text-accent transition-colors"
                                     >
                                         {svc.replace(/-/g, ' ')}
