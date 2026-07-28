@@ -1,54 +1,100 @@
+import { ArrowUpRight, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 
+const serviceLinks = [
+    ['Websites', '/services/websites'],
+    ['CRM & job operations', '/services/crm-jobber-alternatives'],
+    ['Automation', '/services/automation'],
+    ['Local SEO', '/services/local-seo'],
+    ['AI receptionist', '/services/ai-receptionist'],
+    ['AI growth systems', '/services/ai-growth-systems'],
+];
+
+const companyLinks = [
+    ['Work', '/work'],
+    ['Texas', '/texas'],
+    ['Industries', '/industries'],
+    ['Process', '/process'],
+    ['About', '/about'],
+    ['Playbooks', '/playbooks'],
+    ['FAQ', '/faq'],
+];
+
 export default function Footer() {
     return (
-        <footer className="bg-primary pt-24 pb-12 px-6 md:px-16 rounded-t-[4rem] text-white">
-            <div className="max-w-7xl mx-auto flex flex-col">
-
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-
-                    <div className="col-span-1 md:col-span-2">
-                        <Logo className="h-24 w-auto mb-6 filter brightness-0 invert" />
-                        <p className="font-heading text-white/50 max-w-sm mb-6">
-                            Websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses.
+        <footer className="bg-primary px-5 pb-10 pt-20 text-white sm:px-8 lg:px-12">
+            <div className="mx-auto max-w-7xl">
+                <div className="grid gap-14 border-b border-white/10 pb-16 lg:grid-cols-[1.25fr_0.75fr_0.65fr]">
+                    <div>
+                        <Logo inverted className="mb-7" />
+                        <h2 className="max-w-xl font-heading text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl">
+                            Clearer systems for the work behind a service business.
+                        </h2>
+                        <p className="mt-5 max-w-xl text-base leading-7 text-white/60">
+                            Websites, CRM and job operations, automation, practical AI, and custom systems.
+                            Texas first, with remote engagements available nationwide.
                         </p>
-                        <p className="font-heading text-white/40 text-sm mb-8">
-                            <a href="mailto:theprovidersystem@gmail.com" className="hover:text-accent transition-colors">
-                                theprovidersystem@gmail.com
+                        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                            <Link to="/start" className="button-primary">
+                                Start a system review
+                                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                            </Link>
+                            <a
+                                href="mailto:theprovidersystem@gmail.com"
+                                className="button-ghost-dark"
+                            >
+                                <Mail className="h-4 w-4" aria-hidden="true" />
+                                Email John
                             </a>
-                        </p>
-                        {/* System Status */}
-                        <div className="inline-flex items-center gap-3 bg-dark px-4 py-2 rounded-full border border-white/5">
-                            <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></div>
-                            <span className="font-data text-xs text-green-500 tracking-wider">SYSTEM OPERATIONAL</span>
                         </div>
                     </div>
 
-                    <div className="col-span-1 flex flex-col gap-4">
-                        <h4 className="font-heading font-semibold text-white/50 text-sm tracking-wider uppercase mb-2">Navigation</h4>
-                        <Link to="/blue-collar" className="hover:text-accent transition-colors font-heading">Blue-Collar</Link>
-                        <Link to="/websites" className="hover:text-accent transition-colors font-heading">Websites</Link>
-                        <Link to="/lead-crm-system" className="hover:text-accent transition-colors font-heading">Lead & CRM</Link>
-                        <Link to="/custom-systems" className="hover:text-accent transition-colors font-heading">Custom Systems</Link>
-                        <Link to="/projects" className="hover:text-accent transition-colors font-heading">Work</Link>
-                        <Link to="/faq" className="hover:text-accent transition-colors font-heading">FAQ</Link>
-                        <Link to="/#contact" className="hover:text-accent transition-colors font-heading">Contact</Link>
+                    <div>
+                        <h3 className="mb-5 font-data text-[0.65rem] font-bold uppercase tracking-[0.2em] text-sun">
+                            Services
+                        </h3>
+                        <ul className="space-y-3">
+                            {serviceLinks.map(([label, to]) => (
+                                <li key={to}>
+                                    <Link to={to} className="text-sm font-semibold text-white/70 transition hover:text-white">
+                                        {label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
 
-                    <div className="col-span-1 flex flex-col gap-4">
-                        <h4 className="font-heading font-semibold text-white/50 text-sm tracking-wider uppercase mb-2">Legal</h4>
-                        <Link to="/privacy-policy" className="hover:text-accent transition-colors font-heading">Privacy Policy</Link>
-                        <Link to="/sms-consent" className="hover:text-accent transition-colors font-heading">SMS Communications</Link>
+                    <div>
+                        <h3 className="mb-5 font-data text-[0.65rem] font-bold uppercase tracking-[0.2em] text-sun">
+                            Explore
+                        </h3>
+                        <ul className="space-y-3">
+                            {companyLinks.map(([label, to]) => (
+                                <li key={to}>
+                                    <Link to={to} className="text-sm font-semibold text-white/70 transition hover:text-white">
+                                        {label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-
                 </div>
 
-                <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-white/30 font-heading text-sm">
+                <div className="flex flex-col gap-5 pt-8 text-sm text-white/65 md:flex-row md:items-center md:justify-between">
                     <p>&copy; {new Date().getFullYear()} The Provider System. All rights reserved.</p>
-                    <p className="mt-4 md:mt-0 font-data text-xs uppercase text-white/20">v1.0.0-PROD</p>
+                    <div className="flex flex-wrap gap-x-5 gap-y-2">
+                        <Link to="/privacy-policy" className="transition hover:text-white">
+                            Privacy
+                        </Link>
+                        <Link to="/sms-consent" className="transition hover:text-white">
+                            SMS communications
+                        </Link>
+                        <a href="mailto:theprovidersystem@gmail.com" className="transition hover:text-white">
+                            theprovidersystem@gmail.com
+                        </a>
+                    </div>
                 </div>
-
             </div>
         </footer>
     );

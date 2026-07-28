@@ -4,7 +4,6 @@ import SEO from '../components/SEO';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ContactFormSection from '../components/ContactFormSection';
 import { buildBreadcrumbSchema } from '../components/SchemaMarkup';
-import { cn } from '../lib/cn';
 
 const resources = [
     {

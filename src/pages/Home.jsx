@@ -1,143 +1,88 @@
-import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     ArrowRight,
-    BriefcaseBusiness,
-    CheckCircle2,
-    ClipboardList,
-    Code2,
-    MessageSquareText,
-    PhoneCall,
-    Search,
-    ShieldCheck,
-    Wrench,
+    ArrowUpRight,
+    Bot,
+    CircleDot,
+    MapPin,
+    MessageSquareWarning,
+    SearchX,
+    Workflow,
 } from 'lucide-react';
-import Hero from '../components/Hero';
-import ProjectCarousel from '../components/ProjectCarousel';
-import GetStarted from '../components/GetStarted';
 import SEO from '../components/SEO';
+import {
+    IndustryCard,
+    PlaybookCard,
+    ProjectCard,
+    ServiceCard,
+} from '../components/ContentCards';
+import ProjectPreviewModal from '../components/ProjectPreviewModal';
+import { RegionCard } from '../components/ContentCards';
+import { SectionHeading, SystemReviewCTA } from '../components/PageElements';
+import { industries, regions, serviceGroups, services } from '../data/siteContent';
+import { projects } from '../data/projects';
+import { playbooks } from '../data/playbooks';
 
-const offerCards = [
+const breakpoints = [
     {
-        icon: Search,
-        title: 'Website Foundation',
-        price: 'Starts at $2,500 or $299/mo',
-        description:
-            'For blue-collar businesses that need a sharper website, clearer service pages, stronger trust, and a lead path that turns visitors into calls or quote requests.',
-        href: '/websites',
-        bullets: ['Service pages', 'Mobile-first design', 'Lead forms', 'Google profile connection'],
+        icon: SearchX,
+        title: 'Hard to find or trust',
+        description: 'The site does not explain the service, coverage, proof, or next step clearly enough.',
+        href: '/services/websites',
+        label: 'Website & local visibility',
     },
     {
-        icon: ClipboardList,
-        title: 'Lead & CRM System',
-        price: 'Starts at $6,500 or $750/mo',
-        description:
-            'For businesses that already get leads but lose track of them in texts, inboxes, voicemail, spreadsheets, or memory.',
-        href: '/lead-crm-system',
-        bullets: ['Lead pipeline', 'Notifications', 'Automated follow-up', 'Review requests'],
+        icon: MessageSquareWarning,
+        title: 'Leads go quiet',
+        description: 'Calls, forms, referrals, and estimates arrive—but responsibility and follow-up are inconsistent.',
+        href: '/services/lead-follow-up',
+        label: 'Lead follow-up',
     },
     {
-        icon: Code2,
-        title: 'Custom Operating System',
-        price: 'Custom quote after audit',
-        description:
-            'For serious operators who need a private app, booking system, client portal, quoting tool, dashboard, or workflow that normal software cannot cover.',
-        href: '/custom-systems',
-        bullets: ['Dashboards', 'Booking flows', 'Client portals', 'Internal tools'],
+        icon: Workflow,
+        title: 'Work is scattered',
+        description: 'Customer, job, quote, and task details live across inboxes, spreadsheets, texts, and memory.',
+        href: '/services/crm-jobber-alternatives',
+        label: 'CRM & job operations',
+    },
+    {
+        icon: Bot,
+        title: 'Customers wait',
+        description: 'Routine questions and intake consume the team, while urgent or unusual requests need better routing.',
+        href: '/services/ai-customer-support',
+        label: 'AI customer experience',
     },
 ];
 
-const leakCards = [
-    {
-        icon: PhoneCall,
-        title: 'Missed calls',
-        text: 'A homeowner or business owner calls once, gets voicemail, and moves to the next provider.',
-    },
-    {
-        icon: MessageSquareText,
-        title: 'Slow follow-up',
-        text: 'Forms, DMs, referrals, and calls land in different places with no reliable next step.',
-    },
-    {
-        icon: BriefcaseBusiness,
-        title: 'Scattered operations',
-        text: 'Jobs, estimates, customers, notes, and status updates live across texts, spreadsheets, and memory.',
-    },
-];
-
-const proofItems = [
-    {
-        title: 'Total Quality Plumbing',
-        type: 'Local SEO Website',
-        text: 'A service-heavy plumbing website with service pages, city pages, reviews, gallery, careers, and clear contact routing.',
-        image: 'https://www.totalqualityplumbingtx.com/og-image.png',
-    },
-    {
-        title: 'FlowOS',
-        type: 'Operations SaaS',
-        text: 'A barbershop operating system with kiosk check-in, queue management, booking, CRM, analytics, and SMS workflows.',
-        image: 'https://www.flowosapp.com/flowos-og.png',
-    },
-    {
-        title: 'The Offer Hero',
-        type: 'Custom App',
-        text: 'A command center for real estate finance producers with borrower intake, pipeline visibility, quote workflows, and outreach support.',
-        image: 'https://www.theofferhero.com/og-image.png',
-    },
-];
+const featuredProjectIds = ['total-quality-plumbing', 'weathersbee-electric', 'flowos'];
 
 const processSteps = [
-    ['Audit the leaks', 'We review the website, lead flow, follow-up, tools, and manual bottlenecks.'],
-    ['Map the system', 'We define what should happen when someone calls, submits a form, books, pays, or needs follow-up.'],
-    ['Build the front and back end', 'We build the website, CRM, dashboard, automations, booking flow, or custom tool needed.'],
-    ['Launch and support', 'We deploy it, document it, train you, and keep improving the system after launch.'],
+    ['01', 'Assess', 'Map the website, lead flow, tools, handoffs, and evidence before deciding what to build.'],
+    ['02', 'Design', 'Define the customer path, operating rules, data, ownership, and smallest useful release.'],
+    ['03', 'Build', 'Implement in visible stages, test representative scenarios, and keep exceptions explicit.'],
+    ['04', 'Launch & learn', 'Document the system, hand it over clearly, and improve it from real use when support is included.'],
 ];
 
 export default function Home() {
-    const { hash } = useLocation();
+    const [previewProject, setPreviewProject] = useState(null);
+    const featuredProjects = featuredProjectIds
+        .map((id) => projects.find((project) => project.slug === id))
+        .filter(Boolean);
 
-    useEffect(() => {
-        if (!hash) return;
-
-        const targetId = hash.replace('#', '');
-        const scrollTimer = setTimeout(() => {
-            const element = document.getElementById(targetId);
-            if (!element) return;
-
-            const offset = 80;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth',
-            });
-        }, 600);
-
-        return () => clearTimeout(scrollTimer);
-    }, [hash]);
-
-    const seoSchemas = [
+    const schemas = [
         {
             '@type': 'Organization',
             '@id': 'https://theprovidersystem.com/#organization',
             name: 'The Provider System',
             url: 'https://theprovidersystem.com',
+            founder: { '@type': 'Person', name: 'John W Johnson' },
+            email: 'theprovidersystem@gmail.com',
             description:
-                'The Provider System builds websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses and select high-value operators.',
-            contactPoint: {
-                '@type': 'ContactPoint',
-                contactType: 'Customer Service',
-                email: 'theprovidersystem@gmail.com',
-                availableLanguage: 'English',
-            },
-            knowsAbout: [
-                'Blue-collar websites',
-                'Local service business websites',
-                'Lead capture systems',
-                'CRM workflows',
-                'Automated follow-up',
-                'Custom business systems',
+                'A Texas-focused digital systems agency for service businesses, providing websites, CRM and job operations, automation, practical AI, and custom systems.',
+            areaServed: [
+                { '@type': 'State', name: 'Texas' },
+                { '@type': 'Country', name: 'United States' },
             ],
         },
         {
@@ -147,88 +92,99 @@ export default function Home() {
             name: 'The Provider System',
             publisher: { '@id': 'https://theprovidersystem.com/#organization' },
         },
-        {
-            '@type': 'Service',
-            '@id': 'https://theprovidersystem.com/#service-blue-collar-systems',
-            name: 'Blue-Collar Website and Lead Systems',
-            provider: { '@id': 'https://theprovidersystem.com/#organization' },
-            serviceType: 'Website Development, CRM Setup, and Lead Follow-Up Systems',
-            description:
-                'Website, CRM, and follow-up systems for contractors, trades, and blue-collar service businesses.',
-        },
     ];
 
     return (
         <main>
             <SEO
-                title="Websites, CRMs & Follow-Up Systems"
-                description="The Provider System builds websites, CRMs, and follow-up systems for blue-collar service businesses that need more leads and less operational chaos."
+                title="Texas Digital Systems for Service Businesses"
+                description="Websites, CRM and job operations, automation, practical AI, and custom systems for Texas service businesses. Remote engagements available nationwide."
                 url="/"
-                schemas={seoSchemas}
+                schemas={schemas}
             />
-            <Hero />
 
-            <section className="py-24 px-6 md:px-16 bg-background">
-                <div className="max-w-6xl mx-auto">
-                    <div className="max-w-3xl mb-14">
-                        <span className="font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
-                            The Real Problem
-                        </span>
-                        <h2 className="font-heading font-bold text-3xl md:text-5xl text-primary tracking-tight mb-5">
-                            Your business does not need more software. It needs fewer leaks.
-                        </h2>
-                        <p className="font-heading text-muted text-lg leading-relaxed">
-                            Most owners do not have a website problem by itself. They have a lead flow problem. The site, phone, forms, follow-up, CRM, schedule, and team all need to connect cleanly.
+            <section className="relative overflow-hidden bg-primary pb-20 pt-44 text-white md:pb-28 md:pt-52">
+                <div className="grid-field absolute inset-0 opacity-80" aria-hidden="true" />
+                <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-dark/80 to-transparent" aria-hidden="true" />
+
+                <div className="page-shell relative grid gap-14 lg:grid-cols-[1.12fr_0.88fr] lg:items-center">
+                    <div>
+                        <div className="eyebrow mb-6 text-sun">
+                            <MapPin className="h-4 w-4" aria-hidden="true" />
+                            Texas digital systems agency
+                        </div>
+                        <h1 className="display-title max-w-5xl">
+                            Make every lead, customer, and handoff easier to handle.
+                        </h1>
+                        <p className="mt-7 max-w-3xl text-lg leading-8 text-white/72 md:text-xl md:leading-9">
+                            The Provider System designs the website customers see and the operating
+                            system behind it—CRM, follow-up, automation, practical AI, and custom tools
+                            built around how a service business actually works.
                         </p>
+                        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                            <Link to="/start" className="button-primary">
+                                Start a system review
+                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                            </Link>
+                            <Link to="/work" className="button-ghost-dark">
+                                See the work
+                                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                            </Link>
+                        </div>
+                        <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-white/62">
+                            <span className="inline-flex items-center gap-2">
+                                <CircleDot className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
+                                Texas first
+                            </span>
+                            <span className="inline-flex items-center gap-2">
+                                <CircleDot className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
+                                Founder-led
+                            </span>
+                            <span className="inline-flex items-center gap-2">
+                                <CircleDot className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
+                                Remote nationwide
+                            </span>
+                        </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {leakCards.map((item) => (
-                            <div key={item.title} className="bg-white rounded-lg border border-muted/10 p-7 shadow-sm">
-                                <item.icon className="w-8 h-8 text-accent mb-5" />
-                                <h3 className="font-heading font-bold text-xl text-primary mb-3">{item.title}</h3>
-                                <p className="font-heading text-muted leading-relaxed">{item.text}</p>
-                            </div>
-                        ))}
+                    <TexasSystemMap />
+                </div>
+            </section>
+
+            <section aria-label="Texas project markets" className="border-b border-primary/10 bg-white">
+                <div className="page-shell flex flex-col gap-5 py-6 md:flex-row md:items-center md:justify-between">
+                    <p className="font-data text-[0.62rem] font-bold uppercase tracking-[0.18em] text-accent">
+                        Selected work across Texas
+                    </p>
+                    <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold text-primary/70">
+                        <span>Abilene & the Big Country</span>
+                        <span>San Angelo</span>
+                        <span>Permian Basin</span>
+                        <span>West Texas service markets</span>
                     </div>
                 </div>
             </section>
 
-            <section className="py-24 px-6 md:px-16 bg-white">
-                <div className="max-w-6xl mx-auto">
-                    <div className="max-w-3xl mb-14">
-                        <span className="font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
-                            Offer Ladder
-                        </span>
-                        <h2 className="font-heading font-bold text-3xl md:text-5xl text-primary tracking-tight mb-5">
-                            Choose the system that matches where your business is right now.
-                        </h2>
-                        <p className="font-heading text-muted text-lg leading-relaxed">
-                            Start with a website when that is the bottleneck. Step into a lead system when follow-up is leaking money. Build a custom operating system when normal tools cannot fit the work.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {offerCards.map((offer) => (
+            <section className="section-pad bg-background">
+                <div className="page-shell">
+                    <SectionHeading
+                        eyebrow="Start with the break"
+                        title="The software is rarely the first problem."
+                        description="A useful system starts by making the customer path and the team handoffs visible. These are the four places we most often begin."
+                    />
+                    <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                        {breakpoints.map((item) => (
                             <Link
-                                key={offer.title}
-                                to={offer.href}
-                                className="group bg-background rounded-lg border border-muted/10 p-7 shadow-sm hover:border-accent/40 hover:shadow-xl transition-all flex flex-col"
+                                key={item.title}
+                                to={item.href}
+                                className="group rounded-3xl border border-primary/10 bg-white p-7 shadow-card transition duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-lift"
                             >
-                                <offer.icon className="w-9 h-9 text-accent mb-6" />
-                                <h3 className="font-heading font-bold text-2xl text-primary mb-2">{offer.title}</h3>
-                                <p className="font-data text-xs uppercase tracking-[0.16em] text-accent mb-5">{offer.price}</p>
-                                <p className="font-heading text-muted leading-relaxed mb-6 flex-1">{offer.description}</p>
-                                <div className="space-y-2 mb-7">
-                                    {offer.bullets.map((bullet) => (
-                                        <div key={bullet} className="flex items-center gap-2 font-heading text-sm text-primary/80">
-                                            <CheckCircle2 className="w-4 h-4 text-accent" />
-                                            {bullet}
-                                        </div>
-                                    ))}
-                                </div>
-                                <span className="inline-flex items-center gap-2 font-heading font-bold text-accent group-hover:gap-3 transition-all">
-                                    View offer <ArrowRight className="w-4 h-4" />
+                                <item.icon className="h-7 w-7 text-accent" aria-hidden="true" />
+                                <h2 className="mt-8 text-xl font-bold tracking-[-0.025em] text-primary">{item.title}</h2>
+                                <p className="mt-3 text-sm leading-6 text-muted">{item.description}</p>
+                                <span className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-accent">
+                                    {item.label}
+                                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
                                 </span>
                             </Link>
                         ))}
@@ -236,109 +192,238 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="py-24 px-6 md:px-16 bg-primary text-white">
-                <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
-                    <div>
-                        <span className="font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
-                            Focus
-                        </span>
-                        <h2 className="font-heading font-bold text-3xl md:text-5xl tracking-tight mb-5">
-                            Blue-collar is the main lane. Custom systems are the selective lane.
-                        </h2>
-                        <p className="font-heading text-white/65 text-lg leading-relaxed">
-                            The public site should not pretend to serve every industry. The core offer is for contractors, trades, and blue-collar service businesses. Custom apps stay on the site as proof and as a higher-ticket path for the right project.
-                        </p>
+            <section className="section-pad bg-white">
+                <div className="page-shell">
+                    <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+                        <SectionHeading
+                            eyebrow="One connected system"
+                            title="Four layers. One operating story."
+                            description="Each layer can stand alone. The value comes from making sure the customer-facing experience and the back-office process agree."
+                        />
+                        <Link to="/services" className="button-secondary w-fit">
+                            Explore all services
+                            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {[
-                            'Plumbing, electrical, HVAC, roofing',
-                            'Construction, concrete, fencing, painting',
-                            'Landscaping, pest control, pressure washing',
-                            'Auto detailing, towing, garage doors, handyman',
-                            'Booking systems, quote systems, dashboards',
-                            'Private apps when the operational value is real',
-                        ].map((item) => (
-                            <div key={item} className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-                                <Wrench className="w-5 h-5 text-accent mb-3" />
-                                <p className="font-heading text-white/75">{item}</p>
+
+                    <div className="mt-14 space-y-8">
+                        {serviceGroups.map((group) => {
+                            const groupServices = group.serviceSlugs
+                                .map((slug) => services.find((service) => service.slug === slug))
+                                .filter(Boolean);
+                            return (
+                                <div key={group.id} className="grid gap-6 border-t border-primary/10 pt-8 lg:grid-cols-[0.38fr_1fr]">
+                                    <div>
+                                        <p className="font-data text-[0.62rem] font-bold uppercase tracking-[0.18em] text-accent">
+                                            {group.number}
+                                        </p>
+                                        <h3 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-primary">
+                                            {group.name}
+                                        </h3>
+                                        <p className="mt-3 max-w-sm text-sm leading-6 text-muted">{group.description}</p>
+                                    </div>
+                                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                                        {groupServices.map((service) => (
+                                            <ServiceCard key={service.slug} service={service} compact />
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            <section className="section-pad bg-background">
+                <div className="page-shell">
+                    <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+                        <SectionHeading
+                            eyebrow="Evidence before claims"
+                            title="Real projects. Observable work."
+                            description="The portfolio explains the business context and what was delivered. It does not invent rankings, revenue, or lead results."
+                        />
+                        <Link to="/work" className="button-secondary w-fit">
+                            View project lab
+                            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
+                    </div>
+                    <div className="mt-12 grid gap-6 lg:grid-cols-3">
+                        {featuredProjects.map((project) => (
+                            <ProjectCard key={project.slug} project={project} onPreview={setPreviewProject} />
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="section-pad relative overflow-hidden bg-primary text-white">
+                <div className="grid-field absolute inset-0 opacity-60" aria-hidden="true" />
+                <div className="page-shell relative">
+                    <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+                        <div>
+                            <p className="eyebrow mb-4 text-sun">Texas proof, not Texas wallpaper</p>
+                            <h2 className="section-title">Local relevance has to be earned.</h2>
+                            <p className="mt-5 text-lg leading-8 text-white/62">
+                                We use statewide positioning to connect a real body of Texas work. Regional pages
+                                exist where project evidence or useful operating context makes them meaningfully different.
+                                No invented offices. No copy-swapped city pages.
+                            </p>
+                            <Link to="/texas" className="button-primary mt-8">
+                                Explore Texas coverage
+                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                            </Link>
+                        </div>
+                        <div className="grid gap-4 sm:grid-cols-2">
+                            {regions.map((region) => (
+                                <RegionCard key={region.slug} region={region} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="section-pad bg-white">
+                <div className="page-shell">
+                    <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+                        <div className="relative min-h-[24rem] overflow-hidden rounded-[2rem] bg-sand p-8 sm:p-10">
+                            <div className="absolute -bottom-16 -right-10 font-drama text-[20rem] leading-none text-primary/[0.045]" aria-hidden="true">
+                                J
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <section className="py-24 px-6 md:px-16 bg-background">
-                <div className="max-w-6xl mx-auto">
-                    <div className="max-w-3xl mb-14">
-                        <span className="font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
-                            Proof
-                        </span>
-                        <h2 className="font-heading font-bold text-3xl md:text-5xl text-primary tracking-tight mb-5">
-                            Real systems already built.
-                        </h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {proofItems.map((project) => (
-                            <article key={project.title} className="overflow-hidden rounded-lg bg-white border border-muted/10 shadow-sm">
-                                <div className="aspect-[16/10] overflow-hidden bg-primary">
-                                    <img src={project.image} alt={project.title} className="w-full h-full object-cover object-top" />
+                            <div className="relative flex h-full flex-col justify-between">
+                                <div className="grid h-16 w-16 place-items-center rounded-2xl bg-primary font-drama text-3xl text-sun">
+                                    JW
                                 </div>
-                                <div className="p-6">
-                                    <p className="font-data text-xs uppercase tracking-[0.16em] text-accent mb-3">{project.type}</p>
-                                    <h3 className="font-heading font-bold text-xl text-primary mb-3">{project.title}</h3>
-                                    <p className="font-heading text-muted leading-relaxed">{project.text}</p>
-                                </div>
-                            </article>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <section className="py-24 px-6 md:px-16 bg-white">
-                <div className="max-w-5xl mx-auto">
-                    <span className="font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
-                        Process
-                    </span>
-                    <h2 className="font-heading font-bold text-3xl md:text-5xl text-primary tracking-tight mb-14">
-                        How the build works.
-                    </h2>
-                    <div className="space-y-8">
-                        {processSteps.map(([title, text], index) => (
-                            <div key={title} className="grid grid-cols-[56px_1fr] gap-5">
-                                <div className="w-12 h-12 rounded-full bg-accent text-white font-heading font-bold flex items-center justify-center">
-                                    {index + 1}
-                                </div>
-                                <div className="border-b border-muted/10 pb-8">
-                                    <h3 className="font-heading font-bold text-xl text-primary mb-2">{title}</h3>
-                                    <p className="font-heading text-muted leading-relaxed">{text}</p>
+                                <div className="mt-24">
+                                    <p className="text-2xl font-bold tracking-[-0.03em] text-primary">John W Johnson</p>
+                                    <p className="mt-2 font-data text-[0.62rem] font-bold uppercase tracking-[0.18em] text-accent">
+                                        Founder & principal architect
+                                    </p>
                                 </div>
                             </div>
-                        ))}
+                        </div>
+                        <div>
+                            <p className="eyebrow mb-4">Founder-led by design</p>
+                            <h2 className="section-title text-primary">
+                                The person mapping the problem stays close to the build.
+                            </h2>
+                            <div className="mt-7 space-y-5 text-lg leading-8 text-muted">
+                                <p>
+                                    John founded The Provider System around a practical gap: service businesses
+                                    are often sold isolated tools when the real issue is the handoff between the
+                                    website, the lead, the customer, and the team.
+                                </p>
+                                <p>
+                                    Engagements are intentionally direct. Scope, access, ownership, third-party
+                                    services, and handoff are made explicit in the project agreement so the operating
+                                    model is understandable before the build begins.
+                                </p>
+                            </div>
+                            <Link to="/about" className="button-secondary mt-8">
+                                Meet the founder
+                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className="py-24 px-6 md:px-16 bg-primary text-white">
-                <div className="max-w-5xl mx-auto">
-                    <ShieldCheck className="w-10 h-10 text-accent mb-6" />
-                    <h2 className="font-heading font-bold text-3xl md:text-5xl tracking-tight mb-5">
-                        Built for control, not hostage situations.
-                    </h2>
-                    <p className="font-heading text-white/70 text-lg leading-relaxed max-w-3xl mb-10">
-                        You should own the important parts of your business: your domain, content, customer data, Google profile, accounts, and code when the project terms are complete.
-                    </p>
-                    <Link
-                        to="/about"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 font-heading font-bold text-white hover:border-accent hover:text-accent transition-colors"
-                    >
-                        Read the ownership stance <ArrowRight className="w-4 h-4" />
+            <section className="section-pad bg-sand">
+                <div className="page-shell">
+                    <SectionHeading
+                        eyebrow="A visible process"
+                        title="Assess before building. Learn before expanding."
+                        description="The process is designed to keep the operating problem, the customer experience, and the technical work in the same conversation."
+                    />
+                    <ol className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-primary/10 bg-primary/10 md:grid-cols-2 xl:grid-cols-4">
+                        {processSteps.map(([number, title, description]) => (
+                            <li key={number} className="bg-background p-7 sm:p-8">
+                                <span className="font-data text-xs font-bold text-accent">{number}</span>
+                                <h3 className="mt-8 text-2xl font-bold tracking-[-0.03em] text-primary">{title}</h3>
+                                <p className="mt-4 text-sm leading-6 text-muted">{description}</p>
+                            </li>
+                        ))}
+                    </ol>
+                    <Link to="/process" className="button-secondary mt-8">
+                        See the full process
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                 </div>
             </section>
 
-            <ProjectCarousel />
-            <GetStarted />
+            <section className="section-pad bg-white">
+                <div className="page-shell">
+                    <div className="grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+                        <SectionHeading
+                            eyebrow="Field notes for owners"
+                            title="Useful guidance before the sales call."
+                            description="Fifteen practical playbooks help service-business owners evaluate websites, CRM, follow-up, AI, content, and custom systems."
+                        />
+                        <div className="grid gap-4 sm:grid-cols-2">
+                            {playbooks.slice(0, 2).map((playbook) => (
+                                <PlaybookCard key={playbook.slug} playbook={playbook} />
+                            ))}
+                        </div>
+                    </div>
+                    <Link to="/playbooks" className="button-secondary mt-8">
+                        Browse all 15 playbooks
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                </div>
+            </section>
+
+            <section className="section-pad bg-background">
+                <div className="page-shell">
+                    <SectionHeading
+                        eyebrow="Who this is built for"
+                        title="Service businesses with a real operating bottleneck."
+                        description="The strongest engagements begin with a defined customer journey and a concrete place where leads, information, or work are getting lost."
+                    />
+                    <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        {industries.map((industry) => (
+                            <IndustryCard key={industry.slug} industry={industry} />
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <SystemReviewCTA />
+
+            {previewProject && (
+                <ProjectPreviewModal project={previewProject} onClose={() => setPreviewProject(null)} />
+            )}
         </main>
+    );
+}
+
+function TexasSystemMap() {
+    return (
+        <aside
+            aria-label="Texas project footprint: Abilene, San Angelo, and the Permian Basin connected to one digital system"
+            className="relative mx-auto aspect-square w-full max-w-[33rem]"
+        >
+            <div className="absolute inset-[8%] rounded-full border border-white/10" aria-hidden="true" />
+            <div className="absolute inset-[22%] rounded-full border border-sun/25" aria-hidden="true" />
+            <div className="absolute inset-[36%] rounded-full border border-white/10" aria-hidden="true" />
+            <div className="absolute left-1/2 top-1/2 grid h-32 w-32 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-sun/40 bg-dark/80 p-5 text-center shadow-2xl backdrop-blur">
+                <span className="font-data text-[0.62rem] font-bold uppercase tracking-[0.15em] text-sun">
+                    One connected system
+                </span>
+            </div>
+            {[
+                ['Abilene', 'left-[4%] top-[25%]'],
+                ['San Angelo', 'right-[0%] top-[45%]'],
+                ['Permian Basin', 'bottom-[9%] left-[16%]'],
+                ['Remote nationwide', 'right-[9%] top-[9%]'],
+            ].map(([label, position], index) => (
+                <div key={label} className={`absolute ${position}`}>
+                    <span className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-2 text-xs font-bold text-white/75 backdrop-blur">
+                        <span className={`h-2 w-2 rounded-full ${index < 3 ? 'bg-sun' : 'bg-teal'}`} />
+                        {label}
+                    </span>
+                </div>
+            ))}
+            <div className="absolute left-[24%] top-[36%] h-px w-[30%] rotate-[18deg] bg-gradient-to-r from-sun/20 to-sun/60" aria-hidden="true" />
+            <div className="absolute right-[17%] top-[50%] h-px w-[26%] -rotate-[8deg] bg-gradient-to-l from-sun/20 to-sun/60" aria-hidden="true" />
+            <div className="absolute bottom-[28%] left-[31%] h-px w-[28%] -rotate-[42deg] bg-gradient-to-r from-sun/20 to-sun/60" aria-hidden="true" />
+        </aside>
     );
 }

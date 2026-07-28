@@ -1,77 +1,162 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import Logo from './Logo';
+import { serviceGroups, services } from '../data/siteContent';
 import { cn } from '../lib/cn';
 
-const navItems = [
-    { label: 'Blue-Collar', to: '/blue-collar' },
-    { label: 'Websites', to: '/websites' },
-    { label: 'Lead & CRM', to: '/lead-crm-system' },
-    { label: 'Custom Systems', to: '/custom-systems' },
-    { label: 'Work', to: '/projects' },
+const primaryNav = [
+    { label: 'Industries', to: '/industries' },
+    { label: 'Texas', to: '/texas' },
+    { label: 'Work', to: '/work' },
+    { label: 'Process', to: '/process' },
+    { label: 'Playbooks', to: '/playbooks' },
     { label: 'About', to: '/about' },
 ];
 
 export default function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [servicesOpen, setServicesOpen] = useState(false);
     const location = useLocation();
-    const isHome = location.pathname === '/';
+    const mobileDialogRef = useRef(null);
+    const closeButtonRef = useRef(null);
+    const previousFocusRef = useRef(null);
 
     useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 50);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    useEffect(() => {
-        setMobileOpen(false);
-    }, [location.pathname]);
-
-    useEffect(() => {
-        const handleKey = (e) => {
-            if (e.key === 'Escape') setMobileOpen(false);
+        const handleEscape = (event) => {
+            if (event.key !== 'Escape') return;
+            setServicesOpen(false);
+            setMobileOpen(false);
         };
-        document.addEventListener('keydown', handleKey);
-        return () => document.removeEventListener('keydown', handleKey);
+
+        document.addEventListener('keydown', handleEscape);
+        return () => document.removeEventListener('keydown', handleEscape);
     }, []);
 
     useEffect(() => {
-        document.body.style.overflow = mobileOpen ? 'hidden' : '';
+        if (!mobileOpen) return undefined;
+
+        previousFocusRef.current = document.activeElement;
+        document.body.style.overflow = 'hidden';
+        closeButtonRef.current?.focus();
+
+        const dialog = mobileDialogRef.current;
+        const trapFocus = (event) => {
+            if (event.key !== 'Tab' || !dialog) return;
+            const focusable = dialog.querySelectorAll(
+                'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            );
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        };
+
+        dialog?.addEventListener('keydown', trapFocus);
         return () => {
             document.body.style.overflow = '';
+            dialog?.removeEventListener('keydown', trapFocus);
+            previousFocusRef.current?.focus?.();
         };
     }, [mobileOpen]);
 
-    const closeMobile = useCallback(() => setMobileOpen(false), []);
-    const getContactLink = () => (isHome ? '#contact' : '/#contact');
+    const closeMenus = () => {
+        setServicesOpen(false);
+        setMobileOpen(false);
+    };
+
+    const isActive = (to) =>
+        location.pathname === to || (to !== '/' && location.pathname.startsWith(`${to}/`));
 
     return (
-        <>
-            <div className="fixed top-0 left-0 w-full z-50 flex justify-center py-6 px-4">
-                <nav
-                    className={cn(
-                        'transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]',
-                        'flex items-center justify-between px-6 py-3 rounded-[3rem]',
-                        'w-full max-w-6xl',
-                        isScrolled || !isHome
-                            ? 'bg-background/85 backdrop-blur-xl border border-muted/20 text-primary shadow-lg'
-                            : 'bg-transparent text-white border-transparent'
-                    )}
-                >
-                    <Link to="/" className="flex items-center" aria-label="The Provider System home">
-                        <Logo className="h-16 w-auto transition-all" />
+        <header className="fixed inset-x-0 top-0 z-50">
+            <div className="bg-primary px-5 py-2 text-center font-data text-[0.62rem] font-bold uppercase tracking-[0.18em] text-white/70">
+                Texas-first systems <span className="mx-2 text-sun">•</span> Remote delivery available nationwide
+            </div>
+            <nav
+                aria-label="Primary navigation"
+                className="border-b border-primary/10 bg-background/95 shadow-[0_10px_35px_rgba(8,27,44,0.06)] backdrop-blur-xl"
+            >
+                <div className="page-shell flex h-[4.6rem] items-center justify-between">
+                    <Link to="/" onClick={closeMenus} aria-label="The Provider System home">
+                        <Logo />
                     </Link>
 
-                    <div className="hidden lg:flex items-center gap-6 font-heading text-sm font-medium">
-                        {navItems.map((item) => (
+                    <div className="hidden items-center gap-1 lg:flex">
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setServicesOpen((open) => !open)}
+                                aria-expanded={servicesOpen}
+                                aria-controls="services-menu"
+                                className={cn(
+                                    'flex min-h-11 items-center gap-1 rounded-full px-4 text-sm font-semibold text-primary transition hover:bg-white',
+                                    isActive('/services') && 'bg-white text-accent'
+                                )}
+                            >
+                                Services
+                                <ChevronDown
+                                    className={cn('h-4 w-4 transition-transform', servicesOpen && 'rotate-180')}
+                                    aria-hidden="true"
+                                />
+                            </button>
+
+                            {servicesOpen && (
+                                <div
+                                    id="services-menu"
+                                    className="absolute left-0 top-[calc(100%+0.8rem)] w-[46rem] rounded-3xl border border-primary/10 bg-white p-3 shadow-lift"
+                                >
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {serviceGroups.map((group) => (
+                                            <div key={group.id} className="rounded-2xl bg-background/80 p-4">
+                                                <p className="mb-3 font-data text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
+                                                    {group.number} — {group.name}
+                                                </p>
+                                                <div className="space-y-1">
+                                                    {group.serviceSlugs.map((slug) => {
+                                                        const service = services.find((item) => item.slug === slug);
+                                                        return (
+                                                            <Link
+                                                                key={slug}
+                                                                to={`/services/${slug}`}
+                                                                onClick={closeMenus}
+                                                                className="block rounded-xl px-3 py-2 text-sm font-semibold text-primary transition hover:bg-white hover:text-accent"
+                                                            >
+                                                                {service.shortName}
+                                                            </Link>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <Link
+                                        to="/services"
+                                        onClick={closeMenus}
+                                        className="mt-2 flex items-center justify-between rounded-2xl bg-primary px-5 py-4 text-sm font-bold text-white transition hover:bg-dark"
+                                    >
+                                        Explore every service
+                                        <ArrowUpRight className="h-4 w-4 text-sun" aria-hidden="true" />
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+
+                        {primaryNav.map((item) => (
                             <Link
                                 key={item.to}
                                 to={item.to}
+                                onClick={closeMenus}
+                                aria-current={isActive(item.to) ? 'page' : undefined}
                                 className={cn(
-                                    'hover:-translate-y-[1px] transition-transform',
-                                    location.pathname === item.to && 'text-accent'
+                                    'flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-primary transition hover:bg-white',
+                                    isActive(item.to) && 'text-accent'
                                 )}
                             >
                                 {item.label}
@@ -79,59 +164,90 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    <a
-                        href={getContactLink()}
-                        className="hidden lg:block group relative overflow-hidden rounded-[2rem] bg-accent text-white px-6 py-2.5 font-heading text-sm font-semibold hover:scale-[1.03] transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-                    >
-                        <span className="relative z-10">Book a Call</span>
-                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-0" />
-                    </a>
+                    <div className="hidden lg:block">
+                        <Link to="/start" className="button-primary">
+                            Start a system review
+                        </Link>
+                    </div>
 
                     <button
+                        type="button"
                         onClick={() => setMobileOpen(true)}
-                        className="lg:hidden p-2 -mr-2"
-                        aria-label="Open menu"
+                        className="grid h-11 w-11 place-items-center rounded-full border border-primary/15 bg-white text-primary lg:hidden"
+                        aria-label="Open navigation"
+                        aria-expanded={mobileOpen}
                     >
-                        <Menu className="w-6 h-6" />
+                        <Menu className="h-5 w-5" aria-hidden="true" />
                     </button>
-                </nav>
-            </div>
+                </div>
+            </nav>
 
             {mobileOpen && (
-                <div className="fixed inset-0 z-[100] bg-white text-primary overflow-y-auto">
-                    <div className="flex items-center justify-between px-6 py-6">
-                        <Link to="/" onClick={closeMobile} className="flex items-center">
-                            <Logo className="h-14 w-auto" />
+                <div
+                    ref={mobileDialogRef}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Navigation menu"
+                    className="fixed inset-0 z-[60] overflow-y-auto bg-background text-primary lg:hidden"
+                >
+                    <div className="sticky top-0 z-10 flex items-center justify-between border-b border-primary/10 bg-background/95 px-5 py-4 backdrop-blur">
+                        <Link to="/" onClick={closeMenus} aria-label="The Provider System home">
+                            <Logo compact />
                         </Link>
-                        <button onClick={closeMobile} aria-label="Close menu" className="p-2 -mr-2">
-                            <X className="w-6 h-6" />
+                        <button
+                            ref={closeButtonRef}
+                            type="button"
+                            onClick={() => setMobileOpen(false)}
+                            className="grid h-11 w-11 place-items-center rounded-full border border-primary/15 bg-white"
+                            aria-label="Close navigation"
+                        >
+                            <X className="h-5 w-5" aria-hidden="true" />
                         </button>
                     </div>
 
-                    <div className="px-6 pb-10 space-y-1">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.to}
-                                to={item.to}
-                                onClick={closeMobile}
-                                className="block py-3 text-lg font-medium"
-                            >
-                                {item.label}
-                            </Link>
-                        ))}
-
-                        <div className="pt-6">
-                            <a
-                                href={getContactLink()}
-                                onClick={closeMobile}
-                                className="block w-full text-center rounded-[2rem] bg-accent text-white px-6 py-3 font-heading text-base font-semibold"
-                            >
-                                Book a Call
-                            </a>
+                    <div className="px-5 py-8">
+                        <p className="eyebrow mb-4">Explore services</p>
+                        <div className="grid gap-2 sm:grid-cols-2">
+                            {services.map((service) => (
+                                <Link
+                                    key={service.slug}
+                                    to={`/services/${service.slug}`}
+                                    onClick={closeMenus}
+                                    className="flex min-h-12 items-center justify-between rounded-2xl border border-primary/10 bg-white px-4 py-3 text-sm font-bold"
+                                >
+                                    {service.shortName}
+                                    <ArrowUpRight className="h-4 w-4 text-accent" aria-hidden="true" />
+                                </Link>
+                            ))}
                         </div>
+
+                        <div className="my-8 h-px bg-primary/10" />
+                        <div className="grid gap-1">
+                            <Link
+                                to="/services"
+                                onClick={closeMenus}
+                                className="rounded-xl py-3 text-xl font-semibold"
+                            >
+                                All services
+                            </Link>
+                            {primaryNav.map((item) => (
+                                <Link
+                                    key={item.to}
+                                    to={item.to}
+                                    onClick={closeMenus}
+                                    className="rounded-xl py-3 text-xl font-semibold"
+                                >
+                                    {item.label}
+                                </Link>
+                            ))}
+                        </div>
+
+                        <Link to="/start" onClick={closeMenus} className="button-primary mt-8 w-full">
+                            Start a system review
+                        </Link>
                     </div>
                 </div>
             )}
-        </>
+        </header>
     );
 }

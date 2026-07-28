@@ -1,83 +1,908 @@
 {
   "redirects": [
     {
+      "source": "/websites",
+      "destination": "/services/websites",
+      "permanent": true
+    },
+    {
+      "source": "/lead-crm-system",
+      "destination": "/services/crm-jobber-alternatives",
+      "permanent": true
+    },
+    {
+      "source": "/custom-systems",
+      "destination": "/services/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/diagnostic",
+      "destination": "/start",
+      "permanent": true
+    },
+    {
+      "source": "/about/process",
+      "destination": "/process",
+      "permanent": true
+    },
+    {
+      "source": "/about/why-choose-us",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/about/technology",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/playbooks",
+      "permanent": true
+    },
+    {
       "source": "/automations",
-      "destination": "/lead-crm-system",
-      "permanent": true
-    },
-    {
-      "source": "/services/website-development",
-      "destination": "/websites",
-      "permanent": true
-    },
-    {
-      "source": "/services/custom-saas-development",
-      "destination": "/custom-systems",
-      "permanent": true
-    },
-    {
-      "source": "/services/:path*",
-      "destination": "/lead-crm-system",
-      "permanent": true
-    },
-    {
-      "source": "/services",
-      "destination": "/lead-crm-system",
-      "permanent": true
-    },
-    {
-      "source": "/industries/:path*",
-      "destination": "/blue-collar",
-      "permanent": true
-    },
-    {
-      "source": "/industries",
-      "destination": "/blue-collar",
-      "permanent": true
-    },
-    {
-      "source": "/use-cases/:path*",
-      "destination": "/lead-crm-system",
-      "permanent": true
-    },
-    {
-      "source": "/use-cases",
-      "destination": "/lead-crm-system",
-      "permanent": true
-    },
-    {
-      "source": "/platforms/:path*",
-      "destination": "/custom-systems",
-      "permanent": true
-    },
-    {
-      "source": "/platforms",
-      "destination": "/custom-systems",
-      "permanent": true
-    },
-    {
-      "source": "/guides/:path*",
-      "destination": "/blog",
-      "permanent": true
-    },
-    {
-      "source": "/guides",
-      "destination": "/blog",
+      "destination": "/services/automation",
       "permanent": true
     },
     {
       "source": "/resources",
-      "destination": "/blog",
+      "destination": "/playbooks",
+      "permanent": true
+    },
+    {
+      "source": "/guides",
+      "destination": "/playbooks",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/platforms",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/reviews",
-      "destination": "/projects",
+      "destination": "/work",
       "permanent": true
     },
     {
       "source": "/faq-hub",
       "destination": "/faq",
+      "permanent": true
+    },
+    {
+      "source": "/services/ai-workflow-automation",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/services/business-process-automation",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/services/integration-development",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/services/chatbot-development",
+      "destination": "/services/ai-chatbots",
+      "permanent": true
+    },
+    {
+      "source": "/services/lead-generation-automation",
+      "destination": "/services/lead-generation",
+      "permanent": true
+    },
+    {
+      "source": "/services/custom-saas-development",
+      "destination": "/services/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/services/website-development",
+      "destination": "/services/websites",
+      "permanent": true
+    },
+    {
+      "source": "/services/ai-consulting-strategy",
+      "destination": "/services/ai-growth-systems",
+      "permanent": true
+    },
+    {
+      "source": "/industries/construction",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/industries/automotive",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/industries/manufacturing-logistics",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/industries/home-services",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/industries/healthcare",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/legal",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/real-estate",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/ecommerce",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/restaurants-hospitality",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/financial-services",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/insurance",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/marketing-agencies",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/education",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/nonprofits",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/saas-companies",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/dental-optometry",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/fitness-wellness",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/recruiting-staffing",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/accounting",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/industries/professional-services",
+      "destination": "/industries",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/lead-capture-qualification",
+      "destination": "/services/lead-generation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/appointment-scheduling",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/customer-onboarding",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/invoice-payment-automation",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/document-processing",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/employee-onboarding",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/proposal-quote-generation",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/webhook-api-integration",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/workflow-error-monitoring",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/email-marketing-automation",
+      "destination": "/services/ai-growth-systems",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/reporting-analytics",
+      "destination": "/services/ai-growth-systems",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/social-media-scheduling",
+      "destination": "/services/ai-content-video",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/ai-content-generation",
+      "destination": "/services/ai-content-video",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/review-reputation-management",
+      "destination": "/services/lead-follow-up",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/sms-whatsapp-automation",
+      "destination": "/services/lead-follow-up",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/multi-channel-communication",
+      "destination": "/services/lead-follow-up",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/crm-data-enrichment",
+      "destination": "/services/crm-jobber-alternatives",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/sales-pipeline-automation",
+      "destination": "/services/crm-jobber-alternatives",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/data-migration-sync",
+      "destination": "/services/crm-jobber-alternatives",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/inventory-alerts",
+      "destination": "/services/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/client-portal-automation",
+      "destination": "/services/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/customer-support-chatbots",
+      "destination": "/services/ai-customer-support",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/voice-ai-agents",
+      "destination": "/services/ai-receptionist",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/ai-training-data-pipelines",
+      "destination": "/services/ai-knowledge-bases",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/n8n",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/make",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/zapier",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/airtable",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/notion",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/slack",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/google-sheets",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/openai",
+      "destination": "/services/ai-growth-systems",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/anthropic-claude",
+      "destination": "/services/ai-growth-systems",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/google-gemini",
+      "destination": "/services/ai-growth-systems",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/voiceflow",
+      "destination": "/services/ai-chatbots",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/vapi",
+      "destination": "/services/ai-receptionist",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/hubspot",
+      "destination": "/services/crm-jobber-alternatives",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/gohighlevel",
+      "destination": "/services/crm-jobber-alternatives",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/salesforce",
+      "destination": "/services/crm-jobber-alternatives",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/twilio",
+      "destination": "/services/lead-follow-up",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/sendgrid",
+      "destination": "/services/lead-follow-up",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/stripe",
+      "destination": "/services/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/shopify",
+      "destination": "/services/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/platforms/wordpress",
+      "destination": "/services/websites",
+      "permanent": true
+    },
+    {
+      "source": "/guides/ai-workflow-automation-cost",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/business-process-automation-cost",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/integration-development-cost",
+      "destination": "/services/automation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/chatbot-development-cost",
+      "destination": "/services/ai-chatbots",
+      "permanent": true
+    },
+    {
+      "source": "/guides/lead-generation-automation-cost",
+      "destination": "/services/lead-generation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/custom-saas-development-cost",
+      "destination": "/services/custom-systems",
+      "permanent": true
+    },
+    {
+      "source": "/guides/website-development-cost",
+      "destination": "/services/websites",
+      "permanent": true
+    },
+    {
+      "source": "/guides/ai-consulting-strategy-cost",
+      "destination": "/services/ai-growth-systems",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blue-collar-homepage-checklist",
+      "destination": "/playbooks/blue-collar-homepage-checklist",
+      "permanent": true
+    },
+    {
+      "source": "/blog/contractor-website-pricing-one-time-vs-monthly",
+      "destination": "/playbooks/contractor-website-pricing-one-time-vs-monthly",
+      "permanent": true
+    },
+    {
+      "source": "/blog/service-area-page-strategy-without-spam",
+      "destination": "/playbooks/service-area-page-strategy-without-spam",
+      "permanent": true
+    },
+    {
+      "source": "/blog/google-business-profile-website-connection",
+      "destination": "/playbooks/google-business-profile-website-connection",
+      "permanent": true
+    },
+    {
+      "source": "/blog/simple-crm-pipeline-home-service-business",
+      "destination": "/playbooks/simple-crm-pipeline-home-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/quote-request-form-that-qualifies-leads",
+      "destination": "/playbooks/quote-request-form-that-qualifies-leads",
+      "permanent": true
+    },
+    {
+      "source": "/blog/missed-call-follow-up-system-contractors",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blue-collar-ai-phone-agent-guardrails",
+      "destination": "/playbooks/blue-collar-ai-phone-agent-guardrails",
+      "permanent": true
+    },
+    {
+      "source": "/blog/custom-system-scope-before-building-app",
+      "destination": "/playbooks/custom-system-scope-before-building-app",
+      "permanent": true
+    },
+    {
+      "source": "/blog/workflows-every-small-business-should-automate",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/300-page-website-strategy-contractors",
+      "destination": "/playbooks/service-area-page-strategy-without-spam",
+      "permanent": true
+    },
+    {
+      "source": "/blog/electrician-website-seo-strategy",
+      "destination": "/playbooks/service-area-page-strategy-without-spam",
+      "permanent": true
+    },
+    {
+      "source": "/blog/local-service-website-trust-signals",
+      "destination": "/playbooks/blue-collar-homepage-checklist",
+      "permanent": true
+    },
+    {
+      "source": "/blog/old-website-redesign-warning-signs",
+      "destination": "/playbooks/blue-collar-homepage-checklist",
+      "permanent": true
+    },
+    {
+      "source": "/blog/service-pages-that-turn-searches-into-leads",
+      "destination": "/playbooks/blue-collar-homepage-checklist",
+      "permanent": true
+    },
+    {
+      "source": "/blog/why-every-contractor-needs-website-2025",
+      "destination": "/playbooks/blue-collar-homepage-checklist",
+      "permanent": true
+    },
+    {
+      "source": "/blog/contractor-website-vs-thumbtack-homeadvisor",
+      "destination": "/playbooks/contractor-website-pricing-one-time-vs-monthly",
+      "permanent": true
+    },
+    {
+      "source": "/blog/website-ownership-for-small-business",
+      "destination": "/playbooks/contractor-website-pricing-one-time-vs-monthly",
+      "permanent": true
+    },
+    {
+      "source": "/blog/why-renting-website-can-trap-business",
+      "destination": "/playbooks/contractor-website-pricing-one-time-vs-monthly",
+      "permanent": true
+    },
+    {
+      "source": "/blog/booking-system-vs-contact-form",
+      "destination": "/playbooks/quote-request-form-that-qualifies-leads",
+      "permanent": true
+    },
+    {
+      "source": "/blog/customer-onboarding-automation-guide",
+      "destination": "/playbooks/quote-request-form-that-qualifies-leads",
+      "permanent": true
+    },
+    {
+      "source": "/blog/review-request-system-after-job",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/automated-review-requests-contractors",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/field-service-lead-response-speed",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/follow-up-templates-for-estimate-requests",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/general-contractor-missed-leads-cost",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/hvac-company-lead-routing",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/plumber-lead-generation-automation",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/solar-company-lead-automation",
+      "destination": "/playbooks/missed-call-follow-up-system-contractors",
+      "permanent": true
+    },
+    {
+      "source": "/blog/contractor-sales-pipeline-stages",
+      "destination": "/playbooks/simple-crm-pipeline-home-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/hubspot-vs-gohighlevel",
+      "destination": "/playbooks/jobber-alternative-crm-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/roofing-company-crm-lead-management",
+      "destination": "/playbooks/jobber-alternative-crm-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/when-contractor-needs-custom-crm",
+      "destination": "/playbooks/jobber-alternative-crm-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-phone-agent-trade-business",
+      "destination": "/playbooks/blue-collar-ai-phone-agent-guardrails",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-receptionist-for-contractors",
+      "destination": "/playbooks/blue-collar-ai-phone-agent-guardrails",
+      "permanent": true
+    },
+    {
+      "source": "/blog/rise-of-voice-ai",
+      "destination": "/playbooks/blue-collar-ai-phone-agent-guardrails",
+      "permanent": true
+    },
+    {
+      "source": "/blog/voiceflow-vs-vapi",
+      "destination": "/playbooks/ai-chatbots-vs-live-chat",
+      "permanent": true
+    },
+    {
+      "source": "/blog/customer-experience-automation-statistics",
+      "destination": "/playbooks/building-ai-customer-support",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-is-not-magic",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blue-collar-business-automation-roi",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/calculate-roi-business-automation",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cost-of-not-automating",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/getting-started-ai-automation",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/hidden-costs-manual-processes",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/roi-of-ai-automation",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/signs-business-needs-ai-automation",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/small-business-ai-competing",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/time-wasted-manual-tasks",
+      "destination": "/playbooks/ai-growth-system-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-content-video-workflow-service-business",
+      "destination": "/playbooks/ai-content-video-workflow-service-business",
+      "permanent": true
+    },
+    {
+      "source": "/blog/automate-sales-pipeline",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/automation-mistakes-waste-time-money",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/automation-strategy-not-just-tools",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-automate-your-business",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-build-first-n8n-workflow",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/hvac-business-automation-guide",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/landscaping-business-scheduling-automation",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/myth-set-it-forget-it-automation",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/n8n-vs-make-vs-zapier",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/pest-control-marketing-automation",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/red-flags-evaluating-automation-tools",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/why-ai-automation-projects-fail",
+      "destination": "/playbooks/workflows-every-small-business-should-automate",
+      "permanent": true
+    },
+    {
+      "source": "/blog/custom-automation-vs-off-the-shelf",
+      "destination": "/playbooks/custom-system-scope-before-building-app",
+      "permanent": true
+    },
+    {
+      "source": "/blog/in-house-vs-agency-automation",
+      "destination": "/playbooks/custom-system-scope-before-building-app",
+      "permanent": true
+    },
+    {
+      "source": "/blog/questions-before-hiring-automation-agency",
+      "destination": "/playbooks/custom-system-scope-before-building-app",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/plumbers",
+      "destination": "/industries/plumbing",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/electricians",
+      "destination": "/industries/electrical",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/hvac",
+      "destination": "/industries/hvac",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/roofers",
+      "destination": "/industries/roofing",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/general-contractors",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/concrete-masonry",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/fencing",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/painters",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/landscapers",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/tree-service",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/solar-installers",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/auto-detailing",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/pest-control",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/pressure-washing",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/garage-doors",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/carpet-cleaning",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/towing",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/junk-removal",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/window-cleaning",
+      "destination": "/industries/service-businesses",
+      "permanent": true
+    },
+    {
+      "source": "/blue-collar/handyman",
+      "destination": "/industries/service-businesses",
       "permanent": true
     }
   ]

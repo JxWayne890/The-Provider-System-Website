@@ -5,7 +5,7 @@ const lastUpdated = 'July 28, 2026';
 
 export default function SmsConsentPage() {
     return (
-        <div className="min-h-screen bg-background pt-32 pb-20">
+        <main className="min-h-screen bg-background pt-32 pb-20">
             <SEO
                 title="SMS Communications"
                 description="The Provider System's current SMS communications and consent disclosure."
@@ -70,6 +70,6 @@ export default function SmsConsentPage() {
                     </section>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }

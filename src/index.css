@@ -50,15 +50,127 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
   }
 
   body {
-    @apply bg-background text-dark font-heading antialiased overflow-x-hidden;
+    @apply bg-background text-dark font-body antialiased overflow-x-hidden;
+    min-width: 320px;
+  }
+
+  * {
+    border-color: rgba(8, 27, 44, 0.14);
+  }
+
+  :focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px #8f2f12;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+
+  ::selection {
+    background: #A83D18;
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .reading-shell {
+    @apply mx-auto w-full max-w-reading px-5 sm:px-8;
+  }
+
+  .section-pad {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-data text-[0.68rem] font-bold uppercase tracking-[0.2em] text-accent;
+  }
+
+  .display-title {
+    @apply font-heading text-4xl font-semibold leading-[0.98] tracking-[-0.045em] sm:text-5xl md:text-6xl lg:text-7xl;
+    text-wrap: balance;
+  }
+
+  .section-title {
+    @apply font-heading text-3xl font-semibold leading-[1.04] tracking-[-0.04em] sm:text-4xl md:text-5xl;
+    text-wrap: balance;
+  }
+
+  .body-large {
+    @apply text-lg leading-8 text-muted md:text-xl md:leading-9;
+  }
+
+  .button-primary {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 font-heading text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-[#8f3213] hover:shadow-lg;
+  }
+
+  .button-secondary {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-primary/20 bg-white/70 px-6 py-3 font-heading text-sm font-bold text-primary transition duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-white;
+  }
+
+  .button-ghost-dark {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/25 bg-white/[0.06] px-6 py-3 font-heading text-sm font-bold text-white transition duration-200 hover:bg-white/10;
+  }
+
+  .card-surface {
+    @apply rounded-3xl border border-primary/10 bg-white shadow-card;
+  }
+
+  .grid-field {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    background-size: 52px 52px;
   }
 }
 
 @layer utilities {
   .text-shadow-sm {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

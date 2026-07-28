@@ -5,7 +5,6 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import ContactFormSection from '../components/ContactFormSection';
 import { buildBreadcrumbSchema } from '../components/SchemaMarkup';
 import { costGuides } from '../data/costGuides';
-import { cn } from '../lib/cn';
 
 export default function GuidesIndex() {
     const schemas = [

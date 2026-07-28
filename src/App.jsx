@@ -1,83 +1,122 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
-import Navbar from './components/Navbar';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Footer from './components/Footer';
+import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
+import { legacyBlogRedirects, legacyTradeRedirects } from './data/legacyRoutes';
 
 const Home = lazy(() => import('./pages/Home'));
-const ProjectsArchive = lazy(() => import('./pages/ProjectsArchive'));
-const DiagnosticPage = lazy(() => import('./pages/DiagnosticPage'));
-const FAQPage = lazy(() => import('./pages/FAQPage'));
+const ServicesHub = lazy(() => import('./pages/ServicesHub'));
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
+const IndustriesHub = lazy(() => import('./pages/IndustriesHub'));
+const IndustryDetailPage = lazy(() => import('./pages/IndustryDetailPage'));
+const TexasHub = lazy(() => import('./pages/TexasHub'));
+const RegionPage = lazy(() => import('./pages/RegionPage'));
+const WorkHub = lazy(() => import('./pages/WorkHub'));
+const CaseStudyPage = lazy(() => import('./pages/CaseStudyPage'));
+const PlaybooksIndex = lazy(() => import('./pages/PlaybooksIndex'));
+const PlaybookPage = lazy(() => import('./pages/PlaybookPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ProcessPage = lazy(() => import('./pages/ProcessPage'));
-const WhyChooseUsPage = lazy(() => import('./pages/WhyChooseUsPage'));
-const TechnologyPage = lazy(() => import('./pages/TechnologyPage'));
-const BlueCollarHub = lazy(() => import('./pages/BlueCollarHub'));
-const BlueCollarTradePage = lazy(() => import('./pages/BlueCollarTradePage'));
-const BlogIndex = lazy(() => import('./pages/BlogIndex'));
-const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
-const WebsitesPage = lazy(() => import('./pages/WebsitesPage'));
-const LeadCrmSystemPage = lazy(() => import('./pages/LeadCrmSystemPage'));
-const CustomSystemsPage = lazy(() => import('./pages/CustomSystemsPage'));
+const StartPage = lazy(() => import('./pages/StartPage'));
+const FAQPage = lazy(() => import('./pages/FAQPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const SmsConsentPage = lazy(() => import('./pages/SmsConsentPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function LoadingFallback() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
+    return (
+        <div role="status" className="grid min-h-[70dvh] place-items-center bg-background pt-32">
+            <div className="flex items-center gap-3 text-sm font-bold text-muted">
+                <span className="h-5 w-5 animate-spin rounded-full border-2 border-accent border-t-transparent" aria-hidden="true" />
+                Loading page…
+            </div>
+        </div>
+    );
+}
+
+function LegacyBlogRedirect() {
+    const { slug } = useParams();
+    return <Navigate to={legacyBlogRedirects[slug] || '/playbooks'} replace />;
+}
+
+function LegacyTradeRedirect() {
+    const { slug } = useParams();
+    return <Navigate to={legacyTradeRedirects[slug] || '/industries'} replace />;
 }
 
 function App() {
-  return (
-    <Router>
-      <ScrollToTop />
-      <div className="relative w-full min-h-screen bg-background text-dark overflow-x-hidden selection:bg-accent selection:text-white">
-        <Navbar />
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/websites" element={<WebsitesPage />} />
-            <Route path="/lead-crm-system" element={<LeadCrmSystemPage />} />
-            <Route path="/custom-systems" element={<CustomSystemsPage />} />
-            <Route path="/about/process" element={<ProcessPage />} />
-            <Route path="/about/why-choose-us" element={<WhyChooseUsPage />} />
-            <Route path="/about/technology" element={<TechnologyPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/blue-collar" element={<BlueCollarHub />} />
-            <Route path="/blue-collar/:slug" element={<BlueCollarTradePage />} />
-            <Route path="/blog" element={<BlogIndex />} />
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/projects" element={<ProjectsArchive />} />
-            <Route path="/diagnostic" element={<DiagnosticPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/sms-consent" element={<SmsConsentPage />} />
+    return (
+        <Router>
+            <ScrollToTop />
+            <a
+                href="#main-content"
+                className="fixed left-4 top-3 z-[200] -translate-y-24 rounded-full bg-sun px-5 py-3 text-sm font-bold text-primary shadow-lg transition focus:translate-y-0"
+            >
+                Skip to main content
+            </a>
+            <div className="min-h-screen bg-background text-dark">
+                <Navbar />
+                <div id="main-content" tabIndex="-1">
+                    <Suspense fallback={<LoadingFallback />}>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/services" element={<ServicesHub />} />
+                            <Route path="/services/:slug" element={<ServiceDetailPage />} />
+                            <Route path="/industries" element={<IndustriesHub />} />
+                            <Route path="/industries/:slug" element={<IndustryDetailPage />} />
+                            <Route path="/texas" element={<TexasHub />} />
+                            <Route path="/texas/:slug" element={<RegionPage />} />
+                            <Route path="/work" element={<WorkHub />} />
+                            <Route path="/work/:slug" element={<CaseStudyPage />} />
+                            <Route path="/playbooks" element={<PlaybooksIndex />} />
+                            <Route path="/playbooks/:slug" element={<PlaybookPage />} />
+                            <Route path="/about" element={<AboutPage />} />
+                            <Route path="/process" element={<ProcessPage />} />
+                            <Route path="/start" element={<StartPage />} />
+                            <Route path="/faq" element={<FAQPage />} />
+                            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+                            <Route path="/sms-consent" element={<SmsConsentPage />} />
 
-            {/* Legacy broad-agency routes now point to the focused offer ladder. */}
-            <Route path="/services/website-development" element={<Navigate to="/websites" replace />} />
-            <Route path="/services/custom-saas-development" element={<Navigate to="/custom-systems" replace />} />
-            <Route path="/services/*" element={<Navigate to="/lead-crm-system" replace />} />
-            <Route path="/services" element={<Navigate to="/lead-crm-system" replace />} />
-            <Route path="/industries/*" element={<Navigate to="/blue-collar" replace />} />
-            <Route path="/industries" element={<Navigate to="/blue-collar" replace />} />
-            <Route path="/use-cases/*" element={<Navigate to="/lead-crm-system" replace />} />
-            <Route path="/use-cases" element={<Navigate to="/lead-crm-system" replace />} />
-            <Route path="/platforms/*" element={<Navigate to="/custom-systems" replace />} />
-            <Route path="/platforms" element={<Navigate to="/custom-systems" replace />} />
-            <Route path="/guides/*" element={<Navigate to="/blog" replace />} />
-            <Route path="/guides" element={<Navigate to="/blog" replace />} />
-            <Route path="/resources" element={<Navigate to="/blog" replace />} />
-            <Route path="/reviews" element={<Navigate to="/projects" replace />} />
-            <Route path="/faq-hub" element={<Navigate to="/faq" replace />} />
-          </Routes>
-        </Suspense>
-        <Footer />
-      </div>
-    </Router>
-  );
+                            <Route path="/websites" element={<Navigate to="/services/websites" replace />} />
+                            <Route path="/lead-crm-system" element={<Navigate to="/services/crm-jobber-alternatives" replace />} />
+                            <Route path="/custom-systems" element={<Navigate to="/services/custom-systems" replace />} />
+                            <Route path="/projects" element={<Navigate to="/work" replace />} />
+                            <Route path="/diagnostic" element={<Navigate to="/start" replace />} />
+                            <Route path="/about/process" element={<Navigate to="/process" replace />} />
+                            <Route path="/about/why-choose-us" element={<Navigate to="/about" replace />} />
+                            <Route path="/about/technology" element={<Navigate to="/services" replace />} />
+                            <Route path="/blue-collar" element={<Navigate to="/industries" replace />} />
+                            <Route path="/blue-collar/:slug" element={<LegacyTradeRedirect />} />
+                            <Route path="/blog" element={<Navigate to="/playbooks" replace />} />
+                            <Route path="/blog/:slug" element={<LegacyBlogRedirect />} />
+                            <Route path="/automations" element={<Navigate to="/services/automation" replace />} />
+                            <Route path="/services/website-development" element={<Navigate to="/services/websites" replace />} />
+                            <Route path="/services/custom-saas-development" element={<Navigate to="/services/custom-systems" replace />} />
+                            <Route path="/services/ai-workflow-automation" element={<Navigate to="/services/automation" replace />} />
+                            <Route path="/services/chatbot-development" element={<Navigate to="/services/ai-chatbots" replace />} />
+                            <Route path="/services/lead-generation-automation" element={<Navigate to="/services/lead-generation" replace />} />
+                            <Route path="/services/business-process-automation" element={<Navigate to="/services/automation" replace />} />
+                            <Route path="/services/ai-consulting-strategy" element={<Navigate to="/services/ai-growth-systems" replace />} />
+                            <Route path="/services/integration-development" element={<Navigate to="/services/automation" replace />} />
+                            <Route path="/resources" element={<Navigate to="/playbooks" replace />} />
+                            <Route path="/guides" element={<Navigate to="/playbooks" replace />} />
+                            <Route path="/guides/:slug" element={<Navigate to="/playbooks" replace />} />
+                            <Route path="/use-cases" element={<Navigate to="/services" replace />} />
+                            <Route path="/use-cases/:slug" element={<Navigate to="/services" replace />} />
+                            <Route path="/platforms" element={<Navigate to="/services" replace />} />
+                            <Route path="/platforms/:slug" element={<Navigate to="/services" replace />} />
+                            <Route path="/reviews" element={<Navigate to="/work" replace />} />
+                            <Route path="/faq-hub" element={<Navigate to="/faq" replace />} />
+
+                            <Route path="*" element={<NotFoundPage />} />
+                        </Routes>
+                    </Suspense>
+                </div>
+                <Footer />
+            </div>
+        </Router>
+    );
 }
 
 export default App;

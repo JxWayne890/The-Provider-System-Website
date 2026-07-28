@@ -10,11 +10,12 @@
  */
 
 import { createServer } from 'http';
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'fs';
 import { join, extname, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
 import { platform } from 'os';
+import { canonicalRoutes } from './site-routes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -49,37 +50,6 @@ const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 const PORT = 4173;
 
-// ── Collect every route from the data files ────────────────────────────
-
-async function getAllRoutes() {
-  const routes = [
-    '/',
-    '/websites',
-    '/lead-crm-system',
-    '/custom-systems',
-    '/about',
-    '/about/process',
-    '/about/why-choose-us',
-    '/about/technology',
-    '/blue-collar',
-    '/blog',
-    '/projects',
-    '/diagnostic',
-    '/faq',
-    '/privacy-policy',
-    '/sms-consent',
-  ];
-
-  const { blueCollarTrades }   = await import(join(ROOT, 'src/data/blueCollarTrades.js'));
-  const { blogPosts }          = await import(join(ROOT, 'src/data/blogPosts.js'));
-
-  for (const t of blueCollarTrades) routes.push(`/blue-collar/${t.slug}`);
-
-  for (const bp of blogPosts) routes.push(`/blog/${bp.slug}`);
-
-  return routes;
-}
-
 // ── Minimal static-file server for the built dist/ folder ──────────────
 
 const MIME = {
@@ -90,6 +60,8 @@ const MIME = {
   '.svg':  'image/svg+xml',
   '.png':  'image/png',
   '.jpg':  'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
   '.woff': 'font/woff',
   '.woff2':'font/woff2',
   '.ttf':  'font/ttf',
@@ -99,7 +71,11 @@ const MIME = {
 function startServer() {
   return new Promise((resolve) => {
     const server = createServer((req, res) => {
-      let filePath = join(DIST, req.url === '/' ? 'index.html' : req.url);
+      const pathname = decodeURIComponent(new URL(req.url, `http://localhost:${PORT}`).pathname);
+      let filePath = join(DIST, pathname === '/' ? 'index.html' : pathname);
+      if (existsSync(filePath) && statSync(filePath).isDirectory()) {
+        filePath = join(filePath, 'index.html');
+      }
       if (!existsSync(filePath)) filePath = join(DIST, 'index.html'); // SPA fallback
       const ext = extname(filePath);
       res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
@@ -118,8 +94,26 @@ async function renderRoute(page, route) {
   const url = `http://localhost:${PORT}${route}`;
   await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
 
-  // Wait a moment for React lazy chunks + GSAP animations to settle
+  // Wait a moment for React lazy chunks and route metadata to settle.
   await page.evaluate(() => new Promise((r) => setTimeout(r, 800)));
+
+  const routeState = await page.$eval('#root', (root) => ({
+    canonical: document.querySelector('link[rel="canonical"]')?.href,
+    hasContent: root.textContent.trim().length > 0,
+    robots: document.querySelector('meta[name="robots"]')?.content,
+  }));
+  if (!routeState.hasContent) {
+    throw new Error('React rendered an empty root');
+  }
+  const expectedCanonical = `https://theprovidersystem.com${route}`;
+  if (routeState.canonical !== expectedCanonical) {
+    throw new Error(
+      `Canonical mismatch: expected ${expectedCanonical}, received ${routeState.canonical || 'none'}`,
+    );
+  }
+  if (!routeState.robots?.toLowerCase().startsWith('index')) {
+    throw new Error(`Canonical route is not indexable: ${routeState.robots || 'robots tag missing'}`);
+  }
 
   const html = await page.content();
 
@@ -134,29 +128,43 @@ async function renderRoute(page, route) {
 async function main() {
   console.log('\n⚡ Pre-rendering all routes…\n');
 
-  const routes = await getAllRoutes();
+  const routes = canonicalRoutes;
   console.log(`  Found ${routes.length} routes to pre-render.\n`);
 
-  const server = await startServer();
-
-  const browserOpts = await getBrowserOptions();
-  const browser = await puppeteer.launch(browserOpts);
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1280, height: 800 });
-
+  let server;
+  let browser;
   let done = 0;
-  for (const route of routes) {
-    try {
-      await renderRoute(page, route);
-      done++;
-      process.stdout.write(`\r  Rendered ${done}/${routes.length}  ${route}`);
-    } catch (err) {
-      console.error(`\n  Failed: ${route} — ${err.message}`);
-    }
-  }
+  const failures = [];
 
-  await browser.close();
-  server.close();
+  try {
+    server = await startServer();
+
+    const browserOpts = await getBrowserOptions();
+    browser = await puppeteer.launch(browserOpts);
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1280, height: 800 });
+
+    for (const route of routes) {
+      try {
+        await renderRoute(page, route);
+        done++;
+        process.stdout.write(`\r  Rendered ${done}/${routes.length}  ${route}`);
+      } catch (err) {
+        failures.push({ route, message: err.message });
+        console.error(`\n  Failed: ${route} — ${err.message}`);
+      }
+    }
+
+    if (failures.length > 0) {
+      const summary = failures
+        .map(({ route, message }) => `${route}: ${message}`)
+        .join('\n');
+      throw new Error(`Pre-render failed for ${failures.length} route(s):\n${summary}`);
+    }
+  } finally {
+    if (browser) await browser.close();
+    if (server) await new Promise((resolve) => server.close(resolve));
+  }
 
   console.log(`\n\n  Pre-rendered ${done}/${routes.length} pages.\n`);
 }

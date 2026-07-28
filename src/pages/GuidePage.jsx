@@ -6,7 +6,6 @@ import FAQSection from '../components/FAQSection';
 import ContactFormSection from '../components/ContactFormSection';
 import { buildBreadcrumbSchema, buildFAQSchema } from '../components/SchemaMarkup';
 import { costGuides } from '../data/costGuides';
-import { cn } from '../lib/cn';
 
 export default function GuidePage() {
     const { slug } = useParams();

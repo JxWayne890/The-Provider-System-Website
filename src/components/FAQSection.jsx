@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '../lib/cn';
-import { buildFAQSchema } from './SchemaMarkup';
 
 function FAQAccordionItem({ question, answer, isOpen, onToggle, theme }) {
     const isDark = theme === 'dark';
@@ -127,14 +126,4 @@ export default function FAQSection({ faqs = [], title = 'Frequently Asked Questi
             </div>
         </section>
     );
-}
-
-/**
- * Helper to generate FAQ schema from the same data format used by FAQSection.
- * Pass the returned object into the SEO component's `schema` or `schemas` prop.
- *
- * @param {{ q: string, a: string }[]} faqs
- */
-export function getFAQSchema(faqs) {
-    return buildFAQSchema(faqs);
 }

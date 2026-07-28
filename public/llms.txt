@@ -1,101 +1,79 @@
 # The Provider System
 
-> Websites, lead CRMs, follow-up systems, and custom operating tools for blue-collar businesses.
+> Texas-first digital systems agency for service businesses. Remote engagements are available nationwide.
 
-The Provider System is owned by John W Johnson. The company builds practical digital systems for contractors, trades, local service companies, and selected operators who need more than a brochure website. The core promise is simple: help business owners get found, capture leads, follow up faster, and keep ownership of the website or system that runs the work.
+The Provider System is owned and led by John W Johnson. It designs websites, CRM and job operations, automation, practical AI customer systems, content workflows, and selected custom software around the way a service business actually works.
 
-## Primary Positioning
+The public site makes no promise of rankings, lead volume, revenue, savings, or perfect AI accuracy. Project stories describe observable delivered scope. Ownership, account access, third-party services, support, and handoff are defined by the project agreement.
 
-The Provider System is focused on blue-collar and local service businesses first. Ideal clients include plumbers, electricians, HVAC companies, roofers, general contractors, landscapers, painters, pest control companies, towing companies, auto detailers, junk removal companies, pressure washing companies, garage door companies, window cleaners, and similar trade businesses.
+## Primary routes
 
-The company also accepts selected custom system builds when the scope is operationally meaningful, such as CRMs, dashboards, intake portals, booking tools, quote workflows, and internal operating systems.
+- `/` — Texas-first homepage and system overview
+- `/services` — complete service map
+- `/industries` — operating guides for priority service industries
+- `/texas` — statewide position and evidence-led regional hubs
+- `/work` — real project archive and safe screenshot previews
+- `/playbooks` — 15 practical owner guides
+- `/process` — assess, design, build, launch, and handoff process
+- `/about` — founder and operating principles
+- `/start` — project inquiry and system-review form
+- `/faq` — project, ownership, AI, and delivery questions
 
-## Core Offers
+## Services
 
-### Website Foundation
-- Route: /websites
-- Best for: blue-collar businesses that need a credible, fast, conversion-focused website.
-- Typical starting point: $2,500+ or managed monthly plans from $299/month.
-- Includes: service pages, mobile-first design, click-to-call actions, contact/quote forms, local search foundations, Google Business Profile support, trust sections, ownership-minded setup, and hosting/deployment configuration.
+- `/services/websites`
+- `/services/local-seo`
+- `/services/lead-generation`
+- `/services/crm-jobber-alternatives`
+- `/services/lead-follow-up`
+- `/services/automation`
+- `/services/ai-receptionist`
+- `/services/ai-chatbots`
+- `/services/ai-customer-support`
+- `/services/ai-knowledge-bases`
+- `/services/ai-content-video`
+- `/services/ai-growth-systems`
+- `/services/custom-systems`
 
-### Lead & CRM System
-- Route: /lead-crm-system
-- Best for: businesses losing leads through scattered forms, phone calls, spreadsheets, inboxes, or missed follow-up.
-- Typical starting point: $6,500+ or managed monthly plans from $750/month.
-- Includes: lead capture, CRM pipeline, status tracking, internal notifications, follow-up workflows, quote/request forms, booking or scheduling support when needed, dashboard views, and owner handoff.
+## Texas coverage
 
-### Custom Operating System
-- Route: /custom-systems
-- Best for: operators who need a custom app, client portal, internal dashboard, workflow system, or purpose-built software tool.
-- Typical starting point: custom quote after audit, often $12k+ depending on scope.
-- Includes: discovery, architecture, app design, database planning, dashboard/admin views, workflow logic, deployment, and handoff.
+Texas is the primary market focus. The project record represented on this site includes work connected to Abilene, San Angelo, Anson, the Big Country, the Permian Basin, Lubbock, Midland, Odessa, and broader West Texas service markets.
 
-## Blue-Collar Hub
+Regional routes:
 
-- /blue-collar — overview of The Provider System's blue-collar website and lead system work.
+- `/texas/abilene-big-country`
+- `/texas/san-angelo-concho-valley`
+- `/texas/lubbock`
+- `/texas/midland-odessa`
 
-Trade pages:
-- /blue-collar/electricians
-- /blue-collar/plumbers
-- /blue-collar/hvac
-- /blue-collar/roofers
-- /blue-collar/tree-service
-- /blue-collar/auto-detailing
-- /blue-collar/solar-installers
-- /blue-collar/painters
-- /blue-collar/landscapers
-- /blue-collar/general-contractors
-- /blue-collar/concrete-masonry
-- /blue-collar/fencing
-- /blue-collar/pest-control
-- /blue-collar/pressure-washing
-- /blue-collar/garage-doors
-- /blue-collar/carpet-cleaning
-- /blue-collar/towing
-- /blue-collar/junk-removal
-- /blue-collar/window-cleaning
-- /blue-collar/handyman
+These are service and project markets, not claimed Provider System office locations.
 
-## Selected Work
+## Industries
 
-- Total Quality Plumbing: local service website and lead path.
-- FlowOS: custom operating system for barbers.
-- The Offer Hero: custom system for lenders.
-- Roller Rink USA: venue-focused website.
-- Weathersbee Electric Co.: blue-collar trade website.
+- `/industries/plumbing`
+- `/industries/electrical`
+- `/industries/hvac`
+- `/industries/roofing`
+- `/industries/oilfield-industrial`
+- `/industries/service-businesses`
 
-## Public Site Structure
+## Selected project records
 
-- / — homepage focused on blue-collar websites, lead CRMs, and custom systems.
-- /websites — website foundation offer.
-- /lead-crm-system — lead capture, CRM, and follow-up system offer.
-- /custom-systems — custom app and operating system offer.
-- /blue-collar — blue-collar industry hub.
-- /projects — selected project archive.
-- /blog — blue-collar website and lead system articles.
-- /about — company story and positioning.
-- /about/process — how projects move from audit to build to handoff.
-- /about/why-choose-us — ownership, practical systems, and focused execution.
-- /about/technology — tools and stack notes.
-- /diagnostic — contact/audit entry point.
-- /faq — common questions.
-- /privacy-policy — privacy policy.
+- Total Quality Plumbing — Abilene plumbing and local website architecture
+- Weathersbee Electric Co. — San Angelo industrial electrical website
+- Roller Rink USA — San Angelo party and event booking experience
+- Adrian's Custom Services — Anson and Big Country contractor website
+- Mansfield Mining — West Texas and Permian Basin industrial website
+- Master Commercial Clean — multi-market West Texas commercial service website
+- Abilene Commercial — commercial property platform
+- FlowOS — booking, queue, CRM, and operations product
+- The Offer Hero — producer pipeline and workflow product
 
-## Redirect Policy
-
-Older broad-positioning routes now redirect into the focused structure:
-
-- /services and /services/* redirect to /lead-crm-system, except website and custom SaaS pages.
-- /services/website-development redirects to /websites.
-- /services/custom-saas-development redirects to /custom-systems.
-- /industries and /industries/* redirect to /blue-collar.
-- /use-cases and /use-cases/* redirect to /lead-crm-system.
-- /platforms and /platforms/* redirect to /custom-systems.
-- /guides and /guides/* redirect to /blog.
+Project previews are static screenshots by default. Live client sites open separately so client frame-security policies and third-party scripts are not bypassed.
 
 ## Contact
 
 - Website: https://theprovidersystem.com
 - Email: theprovidersystem@gmail.com
-- Owner: John W Johnson
-- Primary CTA: book a system audit through the contact form.
+- Founder: John W Johnson
+- Inquiry: https://theprovidersystem.com/start

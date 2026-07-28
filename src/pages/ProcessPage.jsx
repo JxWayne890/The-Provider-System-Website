@@ -1,136 +1,129 @@
-import { Search, Target, Hammer, FlaskConical, Rocket, Headphones } from 'lucide-react';
+import { ArrowRight, Check, CircleDotDashed } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
-import Breadcrumbs from '../components/Breadcrumbs';
-import ContactFormSection from '../components/ContactFormSection';
-import { buildBreadcrumbSchema, buildHowToSchema } from '../components/SchemaMarkup';
-import { cn } from '../lib/cn';
+import { PageHero, SectionHeading, SystemReviewCTA } from '../components/PageElements';
 
-const steps = [
+const phases = [
     {
-        icon: Search,
         number: '01',
-        title: 'Discovery',
-        description: 'We start by listening. In a focused discovery call, we map your website, lead flow, follow-up, tools, and operational bottlenecks. No proposal until we understand the problem.',
+        name: 'Assess the current system',
+        purpose: 'Understand what customers do, what the team does, where information moves, and where the next action disappears.',
+        inputs: ['Current website and lead sources', 'Tools, spreadsheets, inboxes, and handoffs', 'Priority services, customers, and markets', 'Known constraints, evidence, and access'],
+        output: 'A current-state map and a clearly framed bottleneck.',
     },
     {
-        icon: Target,
         number: '02',
-        title: 'Strategy',
-        description: 'Based on discovery, we build a prioritized automation roadmap. You get a clear scope document with architecture diagrams, platform recommendations, timeline, and transparent pricing before any build work begins.',
+        name: 'Design the smallest useful path',
+        purpose: 'Compare configure, integrate, buy, and build options before custom work expands.',
+        inputs: ['Customer and staff journeys', 'Records, statuses, permissions, and owners', 'Edge cases and human escalation', 'Success evidence and excluded scope'],
+        output: 'A scoped system design, phased release, and explicit tradeoffs.',
     },
     {
-        icon: Hammer,
         number: '03',
-        title: 'Build',
-        description: 'We architect and build your workflows, integrations, and applications iteratively. You see working systems early and often, with regular checkpoints to validate that the build matches your operational reality.',
+        name: 'Build and verify in stages',
+        purpose: 'Turn the model into visible working experiences while the business context is still easy to correct.',
+        inputs: ['Responsive interface and content', 'Data and workflow implementation', 'Representative normal and exception scenarios', 'Access, security, and provider constraints'],
+        output: 'A tested release with known limits, decisions, and remaining work.',
     },
     {
-        icon: FlaskConical,
         number: '04',
-        title: 'Test',
-        description: 'Every system goes through rigorous testing with real data. We validate edge cases, stress-test under load, verify error handling paths, and confirm that every integration behaves correctly in production conditions.',
-    },
-    {
-        icon: Rocket,
-        number: '05',
-        title: 'Launch',
-        description: 'Deployment includes full documentation, runbooks for common scenarios, and a guided handoff so your team knows exactly how the system works. We do not disappear after going live.',
-    },
-    {
-        icon: Headphones,
-        number: '06',
-        title: 'Support',
-        description: 'Post-launch, we monitor system health, handle platform updates, and optimize performance as your needs evolve. Ongoing support packages are available for businesses that want continuous improvement.',
+        name: 'Launch, hand off, and learn',
+        purpose: 'Make the system operable after launch and define how changes or support will be handled.',
+        inputs: ['Production readiness checks', 'Account and deployment access', 'Documentation and owner training', 'Support, monitoring, and improvement scope'],
+        output: 'A live or handed-off system with an accountable operating model.',
     },
 ];
 
 export default function ProcessPage() {
-    const schemas = [
-        buildBreadcrumbSchema([
-            { name: 'Home', url: '/' },
-            { name: 'About', url: '/about' },
-            { name: 'Our Process' },
-        ]),
-        buildHowToSchema(
-            'How The Provider System Builds Websites and Lead Systems',
-            steps.map((s) => `${s.title}: ${s.description}`)
-        ),
-    ];
-
     return (
-        <div className="bg-dark min-h-screen font-body text-white selection:bg-accent selection:text-dark">
+        <main>
             <SEO
-                title="Our Process | The Provider System"
-                description="Learn how The Provider System takes blue-collar website, CRM, and custom system projects from discovery through deployment."
-                url="/about/process"
-                schemas={schemas}
+                title="The Provider System Process"
+                description="See how website, CRM, automation, AI, and custom system projects move from current-state assessment through scoped build, verification, launch, and handoff."
+                url="/process"
+            />
+            <PageHero
+                eyebrow="Process"
+                title="Make the system understandable before making it bigger."
+                description="The process keeps customer experience, operating rules, data, technical choices, and ownership in the same conversation. The exact scope and pace depend on the project."
+                breadcrumbs={[{ label: 'Process' }]}
+                actions={
+                    <>
+                        <Link to="/start" className="button-primary">
+                            Start with the assessment
+                            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
+                        <Link to="/work" className="button-ghost-dark">
+                            See delivered work
+                        </Link>
+                    </>
+                }
             />
 
-            <main className="pt-32 pb-0">
-                {/* Hero */}
-                <section className="px-6 md:px-16 mb-20">
-                    <div className="max-w-5xl mx-auto">
-                        <Breadcrumbs
-                            items={[
-                                { name: 'Home', href: '/' },
-                                { name: 'About', href: '/about' },
-                                { name: 'Our Process' },
-                            ]}
-                            theme="dark"
-                        />
-                        <span className="font-data text-accent tracking-[0.2em] text-sm uppercase block mb-4">
-                            How We Work
-                        </span>
-                        <h1 className="font-heading font-bold text-4xl md:text-6xl text-white tracking-tight mb-6">
-                            Our Process
-                        </h1>
-                        <p className="font-heading text-white/60 text-lg md:text-xl leading-relaxed max-w-3xl">
-                            Every engagement follows a practical process designed to clarify the bottleneck, reduce guesswork, and deliver a system your business can actually use.
-                        </p>
-                    </div>
-                </section>
-
-                {/* Timeline / Stepper */}
-                <section className="px-6 md:px-16 pb-24">
-                    <div className="max-w-4xl mx-auto">
-                        <div className="relative">
-                            {/* Vertical line */}
-                            <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-white/10 hidden md:block" />
-
-                            <div className="space-y-12 md:space-y-16">
-                                {steps.map((step, index) => (
-                                    <div key={step.number} className="relative flex gap-6 md:gap-10 items-start">
-                                        {/* Number circle */}
-                                        <div className="relative z-10 flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center">
-                                            <step.icon className="w-5 h-5 md:w-6 md:h-6 text-accent" />
-                                        </div>
-
-                                        {/* Content */}
-                                        <div className="pt-1 md:pt-3">
-                                            <span className="font-data text-accent/60 text-xs tracking-widest uppercase">
-                                                Step {step.number}
-                                            </span>
-                                            <h2 className="font-heading font-bold text-2xl md:text-3xl text-white mt-1 mb-3">
-                                                {step.title}
-                                            </h2>
-                                            <p className="font-heading text-white/60 text-base leading-relaxed max-w-2xl">
-                                                {step.description}
-                                            </p>
-                                        </div>
+            <section className="section-pad bg-background">
+                <div className="page-shell">
+                    <SectionHeading
+                        eyebrow="Four phases"
+                        title="A visible path from mess to working system."
+                        description="Each phase ends with something the owner can review before the next layer earns its complexity."
+                    />
+                    <ol className="mt-14 space-y-8">
+                        {phases.map((phase) => (
+                            <li key={phase.number} className="grid overflow-hidden rounded-[2rem] border border-primary/10 bg-white shadow-card lg:grid-cols-[0.36fr_0.64fr]">
+                                <div className="bg-primary p-8 text-white sm:p-10">
+                                    <span className="font-data text-sm font-bold text-sun">{phase.number}</span>
+                                    <h2 className="mt-10 text-3xl font-bold tracking-[-0.035em]">{phase.name}</h2>
+                                    <p className="mt-5 leading-7 text-white/62">{phase.purpose}</p>
+                                </div>
+                                <div className="p-8 sm:p-10">
+                                    <p className="font-data text-[0.62rem] font-bold uppercase tracking-[0.18em] text-accent">
+                                        What is examined
+                                    </p>
+                                    <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                                        {phase.inputs.map((item) => (
+                                            <li key={item} className="flex items-start gap-3 text-sm leading-6 text-muted">
+                                                <Check className="mt-0.5 h-5 w-5 flex-none text-teal" aria-hidden="true" />
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <div className="mt-8 flex items-start gap-3 rounded-2xl bg-background p-5">
+                                        <CircleDotDashed className="mt-0.5 h-5 w-5 flex-none text-accent" aria-hidden="true" />
+                                        <p className="text-sm leading-6 text-primary">
+                                            <strong>Phase output:</strong> {phase.output}
+                                        </p>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                                </div>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            </section>
 
-                {/* Contact */}
-                <ContactFormSection
-                    heading="Ready to Start the Process?"
-                    subheading="Book a discovery call and we will map the fastest path to a better website, lead system, or custom operating tool."
-                    theme="dark"
-                />
-            </main>
-        </div>
+            <section className="section-pad bg-white">
+                <div className="page-shell grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
+                    <SectionHeading
+                        eyebrow="What changes by project"
+                        title="The process is consistent. The proof required is not."
+                        description="A marketing site, production automation, AI voice system, and customer-data application carry different risks."
+                    />
+                    <div className="grid gap-4 sm:grid-cols-2">
+                        {[
+                            ['Website', 'Content approval, responsive behavior, forms, redirects, schema, and direct route checks.'],
+                            ['CRM or app', 'Roles, permissions, migration, validation, record ownership, logging, and operational scenarios.'],
+                            ['Automation', 'Trigger conditions, duplicates, failure behavior, exception owners, and provider limits.'],
+                            ['AI customer system', 'Approved knowledge, restricted actions, uncertainty, disclosures, testing, and human escalation.'],
+                        ].map(([title, copy]) => (
+                            <div key={title} className="rounded-3xl bg-background p-6">
+                                <h3 className="text-xl font-bold text-primary">{title}</h3>
+                                <p className="mt-3 text-sm leading-6 text-muted">{copy}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <SystemReviewCTA />
+        </main>
     );
 }

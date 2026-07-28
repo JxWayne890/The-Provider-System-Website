@@ -5,7 +5,7 @@ const lastUpdated = 'July 28, 2026';
 
 export default function PrivacyPolicyPage() {
     return (
-        <div className="min-h-screen bg-background pt-32 pb-20">
+        <main className="min-h-screen bg-background pt-32 pb-20">
             <SEO
                 title="Privacy Policy"
                 description="The Provider System privacy policy describing how we collect, use, and protect personal information submitted through our website and services."
@@ -218,7 +218,7 @@ export default function PrivacyPolicyPage() {
 
                     <section>
                         <h2 className="font-heading font-bold text-2xl text-primary mb-3">
-                            9. Children's Privacy
+                            10. Children's Privacy
                         </h2>
                         <p>
                             Our services are intended for business use and are not directed to
@@ -230,7 +230,7 @@ export default function PrivacyPolicyPage() {
 
                     <section>
                         <h2 className="font-heading font-bold text-2xl text-primary mb-3">
-                            10. Changes to This Policy
+                            11. Changes to This Policy
                         </h2>
                         <p>
                             We may update this Privacy Policy from time to time to reflect changes in
@@ -242,7 +242,7 @@ export default function PrivacyPolicyPage() {
 
                     <section>
                         <h2 className="font-heading font-bold text-2xl text-primary mb-3">
-                            11. Contact Us
+                            12. Contact Us
                         </h2>
                         <p>
                             If you have questions about this Privacy Policy or how we handle your
@@ -259,6 +259,6 @@ export default function PrivacyPolicyPage() {
                     </section>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }

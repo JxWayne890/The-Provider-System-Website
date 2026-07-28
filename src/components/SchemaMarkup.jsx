@@ -11,9 +11,7 @@ export function buildOrganizationSchema() {
         "url": BASE_URL,
         "logo": {
             "@type": "ImageObject",
-            "url": `${BASE_URL}/logo.png`,
-            "width": 512,
-            "height": 512,
+            "url": `${BASE_URL}/favicon.svg`,
         },
         "founder": {
             "@type": "Person",
@@ -128,7 +126,7 @@ export function buildArticleSchema(post) {
             "name": "The Provider System",
             "logo": {
                 "@type": "ImageObject",
-                "url": `${BASE_URL}/logo.png`,
+                "url": `${BASE_URL}/favicon.svg`,
             },
         },
         "mainEntityOfPage": {
@@ -210,7 +208,7 @@ export function buildLocalBusinessSchema() {
         "@id": `${BASE_URL}/#localbusiness`,
         "name": "The Provider System",
         "url": BASE_URL,
-        "logo": `${BASE_URL}/logo.png`,
+        "logo": `${BASE_URL}/favicon.svg`,
         "image": `${BASE_URL}/og-fallback.png`,
         "email": "theprovidersystem@gmail.com",
         "founder": {

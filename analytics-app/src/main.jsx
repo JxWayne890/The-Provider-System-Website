@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   Activity,
@@ -32,12 +32,7 @@ function App() {
 
   const isUnlocked = Boolean(token);
 
-  useEffect(() => {
-    if (!isUnlocked) return;
-    loadAnalytics();
-  }, [range, isUnlocked]);
-
-  async function loadAnalytics() {
+  const loadAnalytics = useCallback(async () => {
     setState((current) => ({ ...current, loading: true, error: '' }));
     try {
       const result = await fetch(`/api/analytics?range=${range}`, {
@@ -53,7 +48,12 @@ function App() {
     } catch (error) {
       setState({ loading: false, error: error.message, data: null });
     }
-  }
+  }, [range, token]);
+
+  useEffect(() => {
+    if (!isUnlocked) return;
+    loadAnalytics();
+  }, [isUnlocked, loadAnalytics]);
 
   function handleUnlock(value) {
     localStorage.setItem(ACCESS_STORAGE_KEY, value);
@@ -321,10 +321,12 @@ function ProviderStatus({ provider }) {
   );
 }
 
-function MetricCard({ label, value, icon: Icon }) {
+function MetricCard({ label, value, icon }) {
   return (
     <article className="metric-card">
-      <div className="metric-icon"><Icon size={20} aria-hidden="true" /></div>
+      <div className="metric-icon">
+        {React.createElement(icon, { size: 20, 'aria-hidden': true })}
+      </div>
       <span>{label}</span>
       <strong>{value}</strong>
     </article>

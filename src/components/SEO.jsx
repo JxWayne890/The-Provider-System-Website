@@ -7,19 +7,31 @@ import { useEffect } from 'react';
  * @param {string} description - Meta description
  * @param {string} url - Canonical URL path (e.g., "/projects")
  * @param {string} image - OG image URL
+ * @param {string} type - Open Graph type
+ * @param {boolean} noindex - Prevent indexing for utility/error pages
  * @param {object} schema - Single JSON-LD schema object (backwards compat)
  * @param {object[]} schemas - Array of JSON-LD objects, rendered inside an @graph block
  */
-export default function SEO({ title, description, url, image, schema, schemas }) {
+export default function SEO({
+    title,
+    description,
+    url,
+    image,
+    type = 'website',
+    noindex = false,
+    schema,
+    schemas,
+}) {
     // Base configuration
     const siteTitle = 'The Provider System';
-    const defaultDescription = 'The Provider System builds websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses and select high-value operators.';
+    const defaultDescription = 'The Provider System builds websites, CRM and job operations, automation, practical AI, and custom systems for Texas service businesses.';
     const defaultUrl = 'https://theprovidersystem.com';
     const defaultImage = `${defaultUrl}/og-fallback.png`;
+    const titleAlreadyBranded = title?.includes(siteTitle);
 
     // Computed values
     const seo = {
-        title: title ? `${title} | ${siteTitle}` : siteTitle,
+        title: title ? (titleAlreadyBranded ? title : `${title} | ${siteTitle}`) : siteTitle,
         description: description || defaultDescription,
         url: url ? `${defaultUrl}${url}` : defaultUrl,
         image: image || defaultImage,
@@ -54,11 +66,17 @@ export default function SEO({ title, description, url, image, schema, schemas })
         // Standard Meta
         setMetaTag('name', 'title', seo.title);
         setMetaTag('name', 'description', seo.description);
-        setMetaTag('name', 'robots', 'index, follow');
+        setMetaTag(
+            'name',
+            'robots',
+            noindex
+                ? 'noindex, nofollow'
+                : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+        );
         setLinkTag('canonical', seo.url);
 
         // Open Graph
-        setMetaTag('property', 'og:type', 'website');
+        setMetaTag('property', 'og:type', type);
         setMetaTag('property', 'og:url', seo.url);
         setMetaTag('property', 'og:title', seo.title);
         setMetaTag('property', 'og:description', seo.description);
@@ -66,11 +84,11 @@ export default function SEO({ title, description, url, image, schema, schemas })
         setMetaTag('property', 'og:site_name', siteTitle);
 
         // Twitter
-        setMetaTag('property', 'twitter:card', 'summary_large_image');
-        setMetaTag('property', 'twitter:url', seo.url);
-        setMetaTag('property', 'twitter:title', seo.title);
-        setMetaTag('property', 'twitter:description', seo.description);
-        setMetaTag('property', 'twitter:image', seo.image);
+        setMetaTag('name', 'twitter:card', 'summary_large_image');
+        setMetaTag('name', 'twitter:url', seo.url);
+        setMetaTag('name', 'twitter:title', seo.title);
+        setMetaTag('name', 'twitter:description', seo.description);
+        setMetaTag('name', 'twitter:image', seo.image);
 
         // JSON-LD Schema — supports both single `schema` and `schemas` array via @graph
         let scriptElement = document.querySelector('#seo-schema');
@@ -92,7 +110,7 @@ export default function SEO({ title, description, url, image, schema, schemas })
             scriptElement.remove();
         }
 
-    }, [seo.title, seo.description, seo.url, seo.image, schema, schemas]);
+    }, [seo.title, seo.description, seo.url, seo.image, type, noindex, schema, schemas]);
 
     return null;
 }
