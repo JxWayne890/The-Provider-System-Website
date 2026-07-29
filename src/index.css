@@ -233,6 +233,12 @@
     @apply flex h-14 items-center justify-between border-b border-white/[0.07] bg-white/[0.025] px-3.5 sm:h-16 sm:px-5;
   }
 
+  @media (max-width: 339px) {
+    .command-deck-title {
+      display: none;
+    }
+  }
+
   .command-deck-body {
     @apply flex h-[20.5rem] min-h-0 flex-col sm:h-[23rem] sm:flex-row;
   }
@@ -252,6 +258,36 @@
 
   .command-main {
     @apply min-h-0 flex-1 overflow-hidden p-3 sm:p-4;
+  }
+
+  .guided-site-frame {
+    height: 13.25rem;
+  }
+
+  .guided-site-scroll {
+    height: calc(100% - 1.75rem);
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+
+  .guided-site-section {
+    scroll-margin-top: 0;
+  }
+
+  .guided-progress {
+    @apply absolute bottom-0 left-0 z-10 h-[2px] bg-sun;
+    width: var(--guided-progress);
+    opacity: 0.78;
+    transition: width 540ms ease;
+    box-shadow: 0 0 12px rgba(255, 159, 28, 0.6);
+  }
+
+  .guided-click-target {
+    animation: guided-click 0.92s ease-in-out infinite;
+  }
+
+  .guided-type-caret {
+    animation: guided-caret 0.72s steps(1) infinite;
   }
 
   .command-brand-logo {
@@ -348,6 +384,7 @@
 
   .command-scroll,
   .command-stage-list,
+  .guided-site-scroll,
   .project-directory-scroll,
   .project-preview-scroll {
     scrollbar-color: rgba(255, 159, 28, 0.72) rgba(255, 255, 255, 0.06);
@@ -356,6 +393,7 @@
 
   .command-scroll::-webkit-scrollbar,
   .command-stage-list::-webkit-scrollbar,
+  .guided-site-scroll::-webkit-scrollbar,
   .project-directory-scroll::-webkit-scrollbar,
   .project-preview-scroll::-webkit-scrollbar {
     height: 0.42rem;
@@ -364,6 +402,7 @@
 
   .command-scroll::-webkit-scrollbar-track,
   .command-stage-list::-webkit-scrollbar-track,
+  .guided-site-scroll::-webkit-scrollbar-track,
   .project-directory-scroll::-webkit-scrollbar-track,
   .project-preview-scroll::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.06);
@@ -372,6 +411,7 @@
 
   .command-scroll::-webkit-scrollbar-thumb,
   .command-stage-list::-webkit-scrollbar-thumb,
+  .guided-site-scroll::-webkit-scrollbar-thumb,
   .project-directory-scroll::-webkit-scrollbar-thumb,
   .project-preview-scroll::-webkit-scrollbar-thumb {
     background: rgba(255, 159, 28, 0.72);
@@ -458,6 +498,29 @@
   }
 }
 
+@keyframes guided-click {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 159, 28, 0.42);
+  }
+  48% {
+    transform: scale(0.975);
+    box-shadow: 0 0 0 7px rgba(255, 159, 28, 0);
+  }
+}
+
+@keyframes guided-caret {
+  0%,
+  48% {
+    opacity: 1;
+  }
+  49%,
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (max-width: 389px) {
   .command-deck {
     right: 1.8rem;
@@ -473,6 +536,10 @@
 }
 
 @media (min-width: 640px) {
+  .guided-site-frame {
+    height: 16.45rem;
+  }
+
   .command-stage-list {
     max-height: 14rem;
   }
