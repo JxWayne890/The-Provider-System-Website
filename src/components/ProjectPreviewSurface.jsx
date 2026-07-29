@@ -17,10 +17,11 @@ export default function ProjectPreviewSurface({
     onImageError,
     snapshotScrollRef,
     heightClass,
+    maintainAspectRatio = false,
 }) {
     const sharedFrameClass = cn(
         'project-preview-surface mx-auto bg-white shadow-[0_18px_50px_rgba(3,20,39,0.2)]',
-        heightClass,
+        maintainAspectRatio ? 'aspect-[9/16]' : heightClass,
         device === 'desktop'
             ? 'w-full rounded-lg'
             : 'w-full max-w-[21rem] rounded-[1.8rem] border-[0.45rem] border-primary'

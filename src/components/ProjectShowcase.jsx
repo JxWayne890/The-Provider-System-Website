@@ -86,7 +86,10 @@ export default function ProjectShowcase({ projects }) {
 
     return (
         <section
-            className="project-console relative left-1/2 w-[min(96vw,100rem)] -translate-x-1/2 overflow-hidden rounded-[2rem] border border-primary/10 bg-dark text-white shadow-lift"
+            className={cn(
+                'project-console relative left-1/2 w-[min(96vw,100rem)] -translate-x-1/2 overflow-hidden rounded-[2rem] border border-primary/10 bg-dark text-white shadow-lift',
+                device === 'mobile' && 'project-console-mobile-focus'
+            )}
             aria-label="Provider Project Console"
         >
             <div className="project-console-field absolute inset-0" aria-hidden="true" />
@@ -106,7 +109,12 @@ export default function ProjectShowcase({ projects }) {
                 </span>
             </header>
 
-            <div className="relative grid min-h-0 lg:grid-cols-[minmax(0,1fr)_21rem]">
+            <div className={cn(
+                'relative grid min-h-0',
+                device === 'mobile'
+                    ? 'lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,48rem)_18rem] xl:justify-center'
+                    : 'lg:grid-cols-[minmax(0,1fr)_21rem]'
+            )}>
                 <article className="min-w-0 border-b border-white/[0.08] p-3 sm:p-5 lg:border-b-0 lg:border-r lg:p-6" aria-live="polite">
                     <div className="mb-3 flex flex-wrap items-center justify-between gap-3 sm:mb-4">
                         <div className="min-w-0">
@@ -159,14 +167,25 @@ export default function ProjectShowcase({ projects }) {
                         </div>
                     </div>
 
-                    <div className="project-console-stage relative overflow-hidden rounded-[1.35rem] border border-white/10 bg-[#e9eef5] p-2 shadow-[0_26px_70px_rgba(0,0,0,0.34)] sm:p-3">
+                    <div className={cn(
+                        'project-console-stage relative overflow-hidden rounded-[1.35rem] border border-white/10 shadow-[0_26px_70px_rgba(0,0,0,0.34)]',
+                        device === 'mobile'
+                            ? 'project-console-stage-mobile p-4 sm:p-5'
+                            : 'bg-[#e9eef5] p-2 sm:p-3'
+                    )}>
                         {previousProject && (
                             <div key={`handoff-${transitionId}`} className="project-console-handoff pointer-events-none absolute right-5 top-5 z-30 hidden max-w-44 rounded-xl border border-white/10 bg-[#071a30]/95 px-3 py-2 shadow-xl backdrop-blur sm:block" aria-hidden="true">
                                 <p className="font-data text-[0.42rem] uppercase tracking-[0.13em] text-white/35">Switching from</p>
                                 <p className="mt-1 truncate text-[0.65rem] font-semibold text-white/70">{previousProject.client}</p>
                             </div>
                         )}
-                        <div key={`stage-${selectedProject.slug}-${device}-${transitionId}`} className="project-console-stage-enter">
+                        <div
+                            key={`stage-${selectedProject.slug}-${device}-${transitionId}`}
+                            className={cn(
+                                'project-console-stage-enter',
+                                device === 'mobile' && 'project-console-phone-focus'
+                            )}
+                        >
                             <ProjectPreviewSurface
                                 project={selectedProject}
                                 device={device}
@@ -175,10 +194,11 @@ export default function ProjectShowcase({ projects }) {
                                 imageFailed={imageFailed}
                                 onImageError={() => setFailedPreviewKey(previewKey)}
                                 snapshotScrollRef={previewRef}
+                                maintainAspectRatio={device === 'mobile'}
                                 heightClass={
                                     device === 'desktop'
                                         ? 'h-[15.5rem] sm:h-[20rem] lg:h-[27rem]'
-                                        : 'h-[26rem] lg:h-[27rem]'
+                                        : 'h-[37.333rem]'
                                 }
                             />
                         </div>
@@ -220,7 +240,10 @@ export default function ProjectShowcase({ projects }) {
                     </div>
                 </article>
 
-                <aside className="relative bg-[#06172b]/88 p-4 sm:p-5 lg:p-5">
+                <aside className={cn(
+                    'relative bg-[#06172b]/88 p-4 sm:p-5',
+                    device === 'mobile' ? 'lg:p-4' : 'lg:p-5'
+                )}>
                     <div className="flex items-center justify-between gap-3">
                         <div>
                             <p className="font-data text-[0.52rem] font-bold uppercase tracking-[0.16em] text-sun">Project queue</p>
@@ -246,7 +269,13 @@ export default function ProjectShowcase({ projects }) {
                         </div>
                     </div>
 
-                    <div ref={queueRef} className="project-console-queue mt-4 flex snap-x gap-2.5 overflow-x-auto pb-1 lg:max-h-[31.8rem] lg:snap-none lg:flex-col lg:overflow-y-auto lg:overflow-x-hidden lg:pr-1">
+                    <div
+                        ref={queueRef}
+                        className={cn(
+                            'project-console-queue mt-4 flex snap-x gap-2.5 overflow-x-auto pb-1 lg:snap-none lg:flex-col lg:overflow-y-auto lg:overflow-x-hidden lg:pr-1',
+                            device === 'mobile' ? 'lg:max-h-[39rem]' : 'lg:max-h-[31.8rem]'
+                        )}
+                    >
                         {projects.map((project, index) => {
                             const isActive = selectedProject.slug === project.slug;
                             return (
