@@ -105,7 +105,7 @@ export default function TexasHub() {
                     <SectionHeading
                         eyebrow="Local proof"
                         title="Selected Texas and West Texas work."
-                        description="Every card links to a detailed project story and a safe screenshot preview. No unverified outcome metric is attached."
+                        description="Every card links to a detailed project story with a restricted live preview where supported and a preserved launch snapshot. No unverified outcome metric is attached."
                     />
                     <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {texasProjects.map((project) => (

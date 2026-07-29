@@ -24,6 +24,7 @@ export const projects = [
             'Structured Data',
         ],
         liveUrl: 'https://totalqualityplumbingtx.com/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/total-quality-plumbing-desktop.webp',
@@ -34,7 +35,6 @@ export const projects = [
                 alt: 'Mobile preview of the Total Quality Plumbing website.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The Total Quality Plumbing preview is unavailable. Open the live site to view the current public experience.',
     },
@@ -62,6 +62,7 @@ export const projects = [
             'Lead Capture',
         ],
         liveUrl: 'https://weathersbeeelectric.com/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/weathersbee-electric-desktop.webp',
@@ -72,7 +73,6 @@ export const projects = [
                 alt: 'Mobile preview of the Weathersbee Electric Co. website.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The Weathersbee Electric Co. preview is unavailable. Open the live site to view the current public experience.',
     },
@@ -100,6 +100,7 @@ export const projects = [
             'Quote Request Flow',
         ],
         liveUrl: 'https://www.adrianscustomservices.org/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/adrians-custom-services-desktop.webp',
@@ -110,7 +111,6 @@ export const projects = [
                 alt: "Mobile preview of Adrian's Custom Services website.",
             },
         },
-        previewMode: 'screenshots',
         fallback:
             "The Adrian's Custom Services preview is unavailable. Open the live site to view the current public experience.",
     },
@@ -137,6 +137,7 @@ export const projects = [
             'Quote Request Flow',
         ],
         liveUrl: 'https://www.mastercleanhq.com/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/master-commercial-clean-desktop.webp',
@@ -147,7 +148,6 @@ export const projects = [
                 alt: 'Mobile preview of the Master Commercial Clean website.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The Master Commercial Clean preview is unavailable. Open the live site to view the current public experience.',
     },
@@ -175,6 +175,7 @@ export const projects = [
             'Local Structured Data',
         ],
         liveUrl: 'https://rollerrinkusa.com/',
+        livePreview: false,
         preview: {
             desktop: {
                 src: '/images/projects/previews/roller-rink-usa-desktop.webp',
@@ -185,7 +186,6 @@ export const projects = [
                 alt: 'Mobile preview of the Roller Rink USA booking website.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The Roller Rink USA preview is unavailable. Open the live site to view the current public booking experience.',
     },
@@ -212,6 +212,7 @@ export const projects = [
             'Lead Capture',
         ],
         liveUrl: 'https://www.mansfieldmining.com/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/mansfield-mining-desktop.webp',
@@ -222,7 +223,6 @@ export const projects = [
                 alt: 'Mobile preview of the Mansfield Mining website.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The Mansfield Mining preview is unavailable. Open the live site to view the current public experience.',
     },
@@ -251,6 +251,7 @@ export const projects = [
             'Content Architecture',
         ],
         liveUrl: 'https://abilenecommercial.com/',
+        livePreview: false,
         preview: {
             desktop: {
                 src: '/images/projects/previews/abilene-commercial-desktop.webp',
@@ -261,7 +262,6 @@ export const projects = [
                 alt: 'Mobile preview of the Abilene Commercial website.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The Abilene Commercial preview is unavailable. Open the live site to view the current public property experience.',
     },
@@ -289,6 +289,7 @@ export const projects = [
             'Structured Data',
         ],
         liveUrl: 'https://www.heartoftexasoutfitters.com/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/heart-of-texas-outfitters-desktop.webp',
@@ -299,7 +300,6 @@ export const projects = [
                 alt: 'Mobile preview of the Heart of Texas Outfitters website.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The Heart of Texas Outfitters preview is unavailable. Open the live site to view the current public experience.',
     },
@@ -327,6 +327,7 @@ export const projects = [
             'Analytics Dashboard',
         ],
         liveUrl: 'https://www.flowosapp.com/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/flowos-desktop.webp',
@@ -337,7 +338,6 @@ export const projects = [
                 alt: 'Mobile preview of the FlowOS product.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The FlowOS preview is unavailable. Open the live site to view the current public product experience.',
     },
@@ -364,6 +364,7 @@ export const projects = [
             'Workflow Design',
         ],
         liveUrl: 'https://www.theofferhero.com/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/the-offer-hero-desktop.webp',
@@ -374,7 +375,6 @@ export const projects = [
                 alt: 'Mobile preview of The Offer Hero platform.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The Offer Hero preview is unavailable. Open the live site to view the current public product experience.',
     },
@@ -400,6 +400,7 @@ export const projects = [
             'Responsive Development',
         ],
         liveUrl: 'https://landing.arkidesignstudio.com/',
+        livePreview: true,
         preview: {
             desktop: {
                 src: '/images/projects/previews/arki-design-studio-desktop.webp',
@@ -410,7 +411,6 @@ export const projects = [
                 alt: 'Mobile preview of the ARKI Design Studio website.',
             },
         },
-        previewMode: 'screenshots',
         fallback:
             'The ARKI Design Studio preview is unavailable. Open the live site to view the current public experience.',
     },

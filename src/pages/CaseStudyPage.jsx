@@ -121,11 +121,11 @@ export default function CaseStudyPage() {
                 <div className="page-shell grid gap-12 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
                     <div>
                         <p className="eyebrow mb-4 text-sun">Safe project preview</p>
-                        <h2 className="section-title">See the customer-facing system without loading it inside ours.</h2>
+                        <h2 className="section-title">See the live experience and the launch record.</h2>
                         <p className="mt-5 leading-7 text-white/62">
-                            The preview uses portfolio screenshots instead of a live iframe. That keeps client security
-                            headers intact, avoids pulling third-party scripts into this site, and provides an explicit
-                            fallback if an image is unavailable.
+                            Supported projects load inside a restricted live frame so video, animation, and responsive
+                            behavior remain visible. A full-page launch snapshot stays available when framing is blocked
+                            or when you want to inspect the originally delivered experience.
                         </p>
                         <button type="button" onClick={() => setPreviewOpen(true)} className="button-primary mt-8">
                             Open project preview

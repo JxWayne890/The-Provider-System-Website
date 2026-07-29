@@ -5,22 +5,29 @@ import {
     ArrowRight,
     ArrowUpDown,
     ExternalLink,
+    Image as ImageIcon,
     Monitor,
+    Radio,
     Search,
     ShieldCheck,
     Smartphone,
 } from 'lucide-react';
+import ProjectPreviewSurface from './ProjectPreviewSurface';
 import { cn } from '../lib/cn';
+import { getDefaultPreviewMode, supportsLivePreview } from '../lib/projectPreview';
 
 export default function ProjectShowcase({ projects }) {
     const [selectedSlug, setSelectedSlug] = useState(projects[0]?.slug);
     const [device, setDevice] = useState('desktop');
+    const [previewModes, setPreviewModes] = useState({});
     const [query, setQuery] = useState('');
     const [failedPreviewKey, setFailedPreviewKey] = useState(null);
     const previewRef = useRef(null);
 
     const selectedProject =
         projects.find((project) => project.slug === selectedSlug) || projects[0];
+    const previewMode =
+        previewModes[selectedProject?.slug] || getDefaultPreviewMode(selectedProject);
     const selectedIndex = projects.findIndex((project) => project.slug === selectedProject?.slug);
     const filteredProjects = useMemo(() => {
         const term = query.trim().toLowerCase();
@@ -36,7 +43,7 @@ export default function ProjectShowcase({ projects }) {
 
     useEffect(() => {
         if (previewRef.current) previewRef.current.scrollTop = 0;
-    }, [device, selectedSlug]);
+    }, [device, previewMode, selectedSlug]);
 
     if (!selectedProject) return null;
 
@@ -44,6 +51,15 @@ export default function ProjectShowcase({ projects }) {
     const previewKey = `${selectedProject.slug}-${device}`;
     const imageFailed = failedPreviewKey === previewKey;
     const domain = getDomain(selectedProject.liveUrl);
+    const livePreviewAvailable = supportsLivePreview(selectedProject);
+    const effectivePreviewMode =
+        previewMode === 'live' && livePreviewAvailable ? 'live' : 'snapshot';
+    const setPreviewMode = (mode) => {
+        setPreviewModes((current) => ({
+            ...current,
+            [selectedProject.slug]: mode,
+        }));
+    };
     const moveProject = (direction) => {
         const nextIndex = (selectedIndex + direction + projects.length) % projects.length;
         setSelectedSlug(projects[nextIndex].slug);
@@ -58,7 +74,7 @@ export default function ProjectShowcase({ projects }) {
                         Provider project atlas
                     </div>
                     <p className="mt-1.5 text-sm text-white/50">
-                        Select a client, choose a device, and scroll the full-page portfolio record.
+                        Explore the live site or switch to its preserved launch snapshot.
                     </p>
                 </div>
                 <span className="w-fit rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 font-data text-[0.5rem] uppercase tracking-[0.14em] text-white/45">
@@ -127,7 +143,7 @@ export default function ProjectShowcase({ projects }) {
 
                 <section className="min-w-0 bg-[#020c18] p-3 sm:p-5" aria-live="polite">
                     <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b1a30] shadow-[0_28px_70px_rgba(0,0,0,0.35)]">
-                        <div className="flex items-center gap-3 border-b border-white/10 bg-white/[0.045] p-2.5 sm:p-3">
+                        <div className="flex flex-wrap items-center gap-2 border-b border-white/10 bg-white/[0.045] p-2.5 sm:gap-3 sm:p-3">
                             <div className="hidden gap-1.5 sm:flex" aria-hidden="true">
                                 <span className="h-2.5 w-2.5 rounded-full bg-sun/45" />
                                 <span className="h-2.5 w-2.5 rounded-full bg-sky/40" />
@@ -136,6 +152,48 @@ export default function ProjectShowcase({ projects }) {
                             <div className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-white/[0.06] bg-black/15 px-3 py-2">
                                 <span className="h-1.5 w-1.5 flex-none rounded-full bg-emerald-300" />
                                 <span className="truncate font-data text-[0.53rem] text-white/45">{domain}</span>
+                            </div>
+                            <div
+                                role="group"
+                                aria-label="Project preview source"
+                                className="flex flex-none gap-1 rounded-lg border border-white/[0.07] bg-black/15 p-1"
+                            >
+                                <button
+                                    type="button"
+                                    title={
+                                        livePreviewAvailable
+                                            ? 'Show live animated website'
+                                            : 'Live preview unavailable for this website'
+                                    }
+                                    aria-label="Show live animated website"
+                                    aria-pressed={effectivePreviewMode === 'live'}
+                                    disabled={!livePreviewAvailable}
+                                    onClick={() => setPreviewMode('live')}
+                                    className={cn(
+                                        'flex h-9 items-center gap-1.5 rounded-md px-2.5 font-data text-[0.45rem] uppercase tracking-[0.08em] transition',
+                                        effectivePreviewMode === 'live'
+                                            ? 'bg-emerald-300 text-primary'
+                                            : 'text-white/40 hover:bg-white/[0.06] hover:text-white disabled:cursor-not-allowed disabled:opacity-25'
+                                    )}
+                                >
+                                    <Radio className="h-3.5 w-3.5" aria-hidden="true" />
+                                    Live
+                                </button>
+                                <button
+                                    type="button"
+                                    title="Show preserved launch snapshot"
+                                    aria-label="Show preserved launch snapshot"
+                                    aria-pressed={effectivePreviewMode === 'snapshot'}
+                                    onClick={() => setPreviewMode('snapshot')}
+                                    className={cn(
+                                        'grid h-9 w-9 place-items-center rounded-md transition',
+                                        effectivePreviewMode === 'snapshot'
+                                            ? 'bg-sun text-primary'
+                                            : 'text-white/40 hover:bg-white/[0.06] hover:text-white'
+                                    )}
+                                >
+                                    <ImageIcon className="h-4 w-4" aria-hidden="true" />
+                                </button>
                             </div>
                             <div
                                 role="group"
@@ -176,33 +234,24 @@ export default function ProjectShowcase({ projects }) {
                         </div>
 
                         <div className="relative bg-[#e9eef5] p-2 sm:p-4">
-                            <div
-                                ref={previewRef}
-                                tabIndex={0}
-                                aria-label={`Scrollable ${device} preview of ${selectedProject.client}`}
-                                className={cn(
-                                    'project-preview-scroll mx-auto h-[32rem] overflow-y-auto overscroll-contain bg-white shadow-[0_18px_50px_rgba(3,20,39,0.2)] focus-visible:outline-primary',
-                                    device === 'desktop'
-                                        ? 'w-full rounded-lg'
-                                        : 'w-full max-w-[21rem] rounded-[1.8rem] border-[0.45rem] border-primary'
-                                )}
-                            >
-                                {!preview?.src || imageFailed ? (
-                                    <PreviewFallback project={selectedProject} />
-                                ) : (
-                                    <img
-                                        key={previewKey}
-                                        src={preview.src}
-                                        alt={preview.alt || `${selectedProject.client} ${device} portfolio record`}
-                                        className="block h-auto w-full"
-                                        onError={() => setFailedPreviewKey(previewKey)}
-                                    />
-                                )}
-                            </div>
-                            {!imageFailed && preview?.src && (
+                            <ProjectPreviewSurface
+                                project={selectedProject}
+                                device={device}
+                                mode={effectivePreviewMode}
+                                preview={preview}
+                                imageFailed={imageFailed}
+                                onImageError={() => setFailedPreviewKey(previewKey)}
+                                snapshotScrollRef={previewRef}
+                                heightClass="h-[32rem]"
+                            />
+                            {(effectivePreviewMode === 'live' || (!imageFailed && preview?.src)) && (
                                 <span className="pointer-events-none absolute bottom-5 right-5 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-2 font-data text-[0.48rem] uppercase tracking-[0.1em] text-white shadow-lg">
-                                    <ArrowUpDown className="h-3 w-3 text-sun" aria-hidden="true" />
-                                    Scroll preview
+                                    {effectivePreviewMode === 'live' ? (
+                                        <Radio className="h-3 w-3 text-emerald-300" aria-hidden="true" />
+                                    ) : (
+                                        <ArrowUpDown className="h-3 w-3 text-sun" aria-hidden="true" />
+                                    )}
+                                    {effectivePreviewMode === 'live' ? 'Live site · scroll inside' : 'Scroll snapshot'}
                                 </span>
                             )}
                         </div>
@@ -220,6 +269,19 @@ export default function ProjectShowcase({ projects }) {
                         {selectedProject.client}
                     </h3>
                     <p className="mt-4 text-sm leading-6 text-white/50">{selectedProject.summary}</p>
+                    <p className="mt-4 flex items-center gap-2 text-xs font-semibold text-white/45">
+                        {effectivePreviewMode === 'live' ? (
+                            <>
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" aria-hidden="true" />
+                                Live website with motion and video
+                            </>
+                        ) : (
+                            <>
+                                <ImageIcon className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
+                                Preserved full-page launch snapshot
+                            </>
+                        )}
+                    </p>
                     <div className="mt-5 flex flex-wrap gap-2">
                         {selectedProject.services.slice(0, 4).map((service) => (
                             <span
@@ -272,23 +334,6 @@ export default function ProjectShowcase({ projects }) {
                     </div>
                 </aside>
             </div>
-        </div>
-    );
-}
-
-function PreviewFallback({ project }) {
-    return (
-        <div className="flex min-h-[32rem] w-full flex-col items-center justify-center bg-primary p-8 text-center text-white">
-            <ShieldCheck className="h-8 w-8 text-sun" aria-hidden="true" />
-            <p className="mt-4 max-w-sm text-sm leading-6 text-white/65">{project.fallback}</p>
-            <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 text-sm font-bold text-sun underline underline-offset-4"
-            >
-                Open the live site instead
-            </a>
         </div>
     );
 }

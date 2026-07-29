@@ -1,9 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
-import { ExternalLink, Monitor, ShieldCheck, Smartphone, X } from 'lucide-react';
+import {
+    ExternalLink,
+    Image as ImageIcon,
+    Monitor,
+    Radio,
+    ShieldCheck,
+    Smartphone,
+    X,
+} from 'lucide-react';
+import ProjectPreviewSurface from './ProjectPreviewSurface';
 import { cn } from '../lib/cn';
+import { getDefaultPreviewMode, supportsLivePreview } from '../lib/projectPreview';
 
 export default function ProjectPreviewModal({ project, onClose }) {
     const [device, setDevice] = useState('desktop');
+    const [previewMode, setPreviewMode] = useState(getDefaultPreviewMode(project));
+    const [failedPreviewKey, setFailedPreviewKey] = useState(null);
     const dialogRef = useRef(null);
     const closeRef = useRef(null);
     const previousFocusRef = useRef(null);
@@ -47,10 +59,15 @@ export default function ProjectPreviewModal({ project, onClose }) {
     }, [onClose]);
 
     const preview = project.preview?.[device];
+    const previewKey = `${project.slug}-${device}`;
+    const imageFailed = failedPreviewKey === previewKey;
+    const livePreviewAvailable = supportsLivePreview(project);
+    const effectivePreviewMode =
+        previewMode === 'live' && livePreviewAvailable ? 'live' : 'snapshot';
 
     useEffect(() => {
         if (previewViewportRef.current) previewViewportRef.current.scrollTop = 0;
-    }, [device, project.slug]);
+    }, [device, effectivePreviewMode, project.slug]);
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6">
@@ -71,7 +88,7 @@ export default function ProjectPreviewModal({ project, onClose }) {
                     <div>
                         <div className="mb-1 flex items-center gap-2 font-data text-[0.58rem] font-bold uppercase tracking-[0.16em] text-teal">
                             <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-                            Static, full-page portfolio record
+                            Live website + preserved launch record
                         </div>
                         <h2 id={`preview-title-${project.slug}`} className="text-xl font-bold text-primary sm:text-2xl">
                             {project.client}
@@ -91,56 +108,99 @@ export default function ProjectPreviewModal({ project, onClose }) {
                 <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[1fr_18rem]">
                     <div className="min-h-0 overflow-y-auto p-4 sm:p-7">
                         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                            <div
-                                role="group"
-                                aria-label="Preview viewport"
-                                className="inline-flex w-fit rounded-full border border-primary/10 bg-white p-1"
-                            >
-                                <button
-                                    type="button"
-                                    title="Desktop preview"
-                                    onClick={() => setDevice('desktop')}
-                                    aria-label="Show desktop preview"
-                                    aria-pressed={device === 'desktop'}
-                                    className={cn(
-                                        'grid h-10 w-10 place-items-center rounded-full transition',
-                                        device === 'desktop' ? 'bg-primary text-white' : 'text-muted hover:text-primary'
-                                    )}
+                            <div className="flex flex-wrap items-center gap-2">
+                                <div
+                                    role="group"
+                                    aria-label="Preview source"
+                                    className="inline-flex w-fit rounded-full border border-primary/10 bg-white p-1"
                                 >
-                                    <Monitor className="h-4 w-4" aria-hidden="true" />
-                                </button>
-                                <button
-                                    type="button"
-                                    title="Mobile preview"
-                                    onClick={() => setDevice('mobile')}
-                                    aria-label="Show mobile preview"
-                                    aria-pressed={device === 'mobile'}
-                                    className={cn(
-                                        'grid h-10 w-10 place-items-center rounded-full transition',
-                                        device === 'mobile' ? 'bg-primary text-white' : 'text-muted hover:text-primary'
-                                    )}
+                                    <button
+                                        type="button"
+                                        title={
+                                            livePreviewAvailable
+                                                ? 'Show live animated website'
+                                                : 'Live preview unavailable for this website'
+                                        }
+                                        onClick={() => setPreviewMode('live')}
+                                        aria-label="Show live animated website"
+                                        aria-pressed={effectivePreviewMode === 'live'}
+                                        disabled={!livePreviewAvailable}
+                                        className={cn(
+                                            'flex h-10 items-center gap-2 rounded-full px-3 text-xs font-bold transition',
+                                            effectivePreviewMode === 'live'
+                                                ? 'bg-primary text-white'
+                                                : 'text-muted hover:text-primary disabled:cursor-not-allowed disabled:opacity-35'
+                                        )}
+                                    >
+                                        <Radio className="h-4 w-4" aria-hidden="true" />
+                                        Live
+                                    </button>
+                                    <button
+                                        type="button"
+                                        title="Show preserved launch snapshot"
+                                        onClick={() => setPreviewMode('snapshot')}
+                                        aria-label="Show preserved launch snapshot"
+                                        aria-pressed={effectivePreviewMode === 'snapshot'}
+                                        className={cn(
+                                            'grid h-10 w-10 place-items-center rounded-full transition',
+                                            effectivePreviewMode === 'snapshot'
+                                                ? 'bg-primary text-white'
+                                                : 'text-muted hover:text-primary'
+                                        )}
+                                    >
+                                        <ImageIcon className="h-4 w-4" aria-hidden="true" />
+                                    </button>
+                                </div>
+                                <div
+                                    role="group"
+                                    aria-label="Preview viewport"
+                                    className="inline-flex w-fit rounded-full border border-primary/10 bg-white p-1"
                                 >
-                                    <Smartphone className="h-4 w-4" aria-hidden="true" />
-                                </button>
+                                    <button
+                                        type="button"
+                                        title="Desktop preview"
+                                        onClick={() => setDevice('desktop')}
+                                        aria-label="Show desktop preview"
+                                        aria-pressed={device === 'desktop'}
+                                        className={cn(
+                                            'grid h-10 w-10 place-items-center rounded-full transition',
+                                            device === 'desktop' ? 'bg-primary text-white' : 'text-muted hover:text-primary'
+                                        )}
+                                    >
+                                        <Monitor className="h-4 w-4" aria-hidden="true" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        title="Mobile preview"
+                                        onClick={() => setDevice('mobile')}
+                                        aria-label="Show mobile preview"
+                                        aria-pressed={device === 'mobile'}
+                                        className={cn(
+                                            'grid h-10 w-10 place-items-center rounded-full transition',
+                                            device === 'mobile' ? 'bg-primary text-white' : 'text-muted hover:text-primary'
+                                        )}
+                                    >
+                                        <Smartphone className="h-4 w-4" aria-hidden="true" />
+                                    </button>
+                                </div>
                             </div>
                             <p className="text-xs leading-5 text-muted">
-                                Scroll the full-page record. The live site may have changed.
+                                {effectivePreviewMode === 'live'
+                                    ? 'Scroll inside the real site. Forms and popups are disabled.'
+                                    : 'Scroll the full-page record captured at launch.'}
                             </p>
                         </div>
 
-                        <div
-                            ref={previewViewportRef}
-                            tabIndex={0}
-                            aria-label={`Scrollable ${device} preview of ${project.client}`}
-                            className={cn(
-                                'project-preview-scroll mx-auto h-[62dvh] overflow-y-auto overscroll-contain border-primary bg-white shadow-lift',
-                                device === 'desktop'
-                                    ? 'w-full rounded-2xl border-[0.45rem]'
-                                    : 'w-full max-w-[22rem] rounded-[2.25rem] border-[0.55rem]'
-                            )}
-                        >
-                            <PreviewImage key={`${project.slug}-${device}`} project={project} preview={preview} />
-                        </div>
+                        <ProjectPreviewSurface
+                            project={project}
+                            device={device}
+                            mode={effectivePreviewMode}
+                            preview={preview}
+                            imageFailed={imageFailed}
+                            onImageError={() => setFailedPreviewKey(previewKey)}
+                            snapshotScrollRef={previewViewportRef}
+                            heightClass="h-[62dvh]"
+                        />
                     </div>
 
                     <aside className="border-t border-primary/10 bg-white p-6 lg:border-l lg:border-t-0 lg:p-7">
@@ -152,8 +212,11 @@ export default function ProjectPreviewModal({ project, onClose }) {
                         </p>
                         <div className="mt-6 border-t border-primary/10 pt-6">
                             <p className="text-xs leading-5 text-muted">
-                                This scrollable record is stored locally. It avoids frame-policy failures,
-                                unwanted third-party scripts, and confusing form or analytics behavior.
+                                {effectivePreviewMode === 'live'
+                                    ? 'This sandboxed frame loads the public website so its video, animation, and responsive behavior remain visible. Forms, popups, downloads, and top-level navigation stay restricted.'
+                                    : livePreviewAvailable
+                                        ? 'This full-page launch capture is stored locally as a stable historical record. Switch back to Live to see the current public experience.'
+                                        : 'This website blocks third-party framing, so its full-page launch capture is shown as the reliable portfolio record.'}
                             </p>
                         </div>
                         <a
@@ -169,37 +232,5 @@ export default function ProjectPreviewModal({ project, onClose }) {
                 </div>
             </section>
         </div>
-    );
-}
-
-function PreviewImage({ project, preview }) {
-    const [failed, setFailed] = useState(false);
-
-    if (!preview?.src || failed) {
-        return (
-            <div className="flex min-h-[62dvh] w-full flex-col items-center justify-center bg-primary p-8 text-center text-white">
-                <ShieldCheck className="h-8 w-8 text-sun" aria-hidden="true" />
-                <p className="mt-4 max-w-sm text-sm leading-6 text-white/65">
-                    {project.fallback}
-                </p>
-                <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 text-sm font-bold text-sun underline underline-offset-4"
-                >
-                    Open the live site instead
-                </a>
-            </div>
-        );
-    }
-
-    return (
-        <img
-            src={preview.src}
-            alt={preview.alt || `${project.client} ${project.previewMode} preview`}
-            className="block h-auto w-full"
-            onError={() => setFailed(true)}
-        />
     );
 }
