@@ -214,7 +214,6 @@ export default function SpatialCommandDeck({ onOpenLab }) {
     const [phonePanel, setPhonePanel] = useState('action');
     const [guidedIndex, setGuidedIndex] = useState(0);
     const [autoplayEnabled, setAutoplayEnabled] = useState(true);
-    const [hoverPaused, setHoverPaused] = useState(false);
     const [inViewport, setInViewport] = useState(true);
     const [documentVisible, setDocumentVisible] = useState(true);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -228,7 +227,6 @@ export default function SpatialCommandDeck({ onOpenLab }) {
     const guidedStepMatchesModule = currentGuidedStep.module === activeModule;
     const autoplayRunning =
         autoplayEnabled &&
-        !hoverPaused &&
         inViewport &&
         documentVisible &&
         !prefersReducedMotion;
@@ -352,12 +350,6 @@ export default function SpatialCommandDeck({ onOpenLab }) {
             ref={sceneRef}
             className="spatial-command-scene"
             aria-label="Guided website-to-CRM Provider Command demonstration"
-            onPointerEnter={(event) => {
-                if (event.pointerType === 'mouse') setHoverPaused(true);
-            }}
-            onPointerLeave={(event) => {
-                if (event.pointerType === 'mouse') setHoverPaused(false);
-            }}
         >
             <div className="spatial-architecture">
                 <div className="architecture-plane architecture-plane-left" aria-hidden="true" />
