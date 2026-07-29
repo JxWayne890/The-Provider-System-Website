@@ -1,20 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import {
     ExternalLink,
-    Image as ImageIcon,
     Monitor,
-    Radio,
     ShieldCheck,
     Smartphone,
     X,
 } from 'lucide-react';
 import ProjectPreviewSurface from './ProjectPreviewSurface';
 import { cn } from '../lib/cn';
-import { getDefaultPreviewMode, supportsLivePreview } from '../lib/projectPreview';
+import { supportsLivePreview, warmProjectPreview } from '../lib/projectPreview';
 
 export default function ProjectPreviewModal({ project, onClose }) {
     const [device, setDevice] = useState('desktop');
-    const [previewMode, setPreviewMode] = useState(getDefaultPreviewMode(project));
     const [failedPreviewKey, setFailedPreviewKey] = useState(null);
     const dialogRef = useRef(null);
     const closeRef = useRef(null);
@@ -62,12 +59,15 @@ export default function ProjectPreviewModal({ project, onClose }) {
     const previewKey = `${project.slug}-${device}`;
     const imageFailed = failedPreviewKey === previewKey;
     const livePreviewAvailable = supportsLivePreview(project);
-    const effectivePreviewMode =
-        previewMode === 'live' && livePreviewAvailable ? 'live' : 'snapshot';
+    const effectivePreviewMode = livePreviewAvailable ? 'live' : 'snapshot';
 
     useEffect(() => {
         if (previewViewportRef.current) previewViewportRef.current.scrollTop = 0;
     }, [device, effectivePreviewMode, project.slug]);
+
+    useEffect(() => {
+        warmProjectPreview(project);
+    }, [project]);
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6">
@@ -82,13 +82,13 @@ export default function ProjectPreviewModal({ project, onClose }) {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={`preview-title-${project.slug}`}
-                className="relative flex max-h-[94dvh] w-full max-w-6xl flex-col overflow-hidden rounded-[1.6rem] bg-background shadow-2xl"
+                className="relative flex max-h-[94dvh] w-full max-w-[96rem] flex-col overflow-hidden rounded-[1.6rem] bg-background shadow-2xl"
             >
                 <header className="flex items-start justify-between gap-5 border-b border-primary/10 bg-white px-5 py-4 sm:px-7">
                     <div>
                         <div className="mb-1 flex items-center gap-2 font-data text-[0.58rem] font-bold uppercase tracking-[0.16em] text-teal">
                             <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-                            Live website + preserved launch record
+                            Interactive project preview
                         </div>
                         <h2 id={`preview-title-${project.slug}`} className="text-xl font-bold text-primary sm:text-2xl">
                             {project.client}
@@ -105,52 +105,10 @@ export default function ProjectPreviewModal({ project, onClose }) {
                     </button>
                 </header>
 
-                <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[1fr_18rem]">
+                <div className="flex min-h-0 flex-1 flex-col xl:grid xl:grid-cols-[minmax(0,1fr)_17rem]">
                     <div className="min-h-0 overflow-y-auto p-4 sm:p-7">
                         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex flex-wrap items-center gap-2">
-                                <div
-                                    role="group"
-                                    aria-label="Preview source"
-                                    className="inline-flex w-fit rounded-full border border-primary/10 bg-white p-1"
-                                >
-                                    <button
-                                        type="button"
-                                        title={
-                                            livePreviewAvailable
-                                                ? 'Show live animated website'
-                                                : 'Live preview unavailable for this website'
-                                        }
-                                        onClick={() => setPreviewMode('live')}
-                                        aria-label="Show live animated website"
-                                        aria-pressed={effectivePreviewMode === 'live'}
-                                        disabled={!livePreviewAvailable}
-                                        className={cn(
-                                            'flex h-10 items-center gap-2 rounded-full px-3 text-xs font-bold transition',
-                                            effectivePreviewMode === 'live'
-                                                ? 'bg-primary text-white'
-                                                : 'text-muted hover:text-primary disabled:cursor-not-allowed disabled:opacity-35'
-                                        )}
-                                    >
-                                        <Radio className="h-4 w-4" aria-hidden="true" />
-                                        Live
-                                    </button>
-                                    <button
-                                        type="button"
-                                        title="Show preserved launch snapshot"
-                                        onClick={() => setPreviewMode('snapshot')}
-                                        aria-label="Show preserved launch snapshot"
-                                        aria-pressed={effectivePreviewMode === 'snapshot'}
-                                        className={cn(
-                                            'grid h-10 w-10 place-items-center rounded-full transition',
-                                            effectivePreviewMode === 'snapshot'
-                                                ? 'bg-primary text-white'
-                                                : 'text-muted hover:text-primary'
-                                        )}
-                                    >
-                                        <ImageIcon className="h-4 w-4" aria-hidden="true" />
-                                    </button>
-                                </div>
                                 <div
                                     role="group"
                                     aria-label="Preview viewport"
@@ -185,9 +143,9 @@ export default function ProjectPreviewModal({ project, onClose }) {
                                 </div>
                             </div>
                             <p className="text-xs leading-5 text-muted">
-                                {effectivePreviewMode === 'live'
+                                {livePreviewAvailable
                                     ? 'Scroll inside the real site. Forms and popups are disabled.'
-                                    : 'Scroll the full-page record captured at launch.'}
+                                    : 'This site blocks secure embedding, so its full-page project record is shown automatically.'}
                             </p>
                         </div>
 
@@ -199,11 +157,11 @@ export default function ProjectPreviewModal({ project, onClose }) {
                             imageFailed={imageFailed}
                             onImageError={() => setFailedPreviewKey(previewKey)}
                             snapshotScrollRef={previewViewportRef}
-                            heightClass="h-[62dvh]"
+                            heightClass={device === 'desktop' ? 'h-[min(58dvh,38rem)]' : 'h-[62dvh]'}
                         />
                     </div>
 
-                    <aside className="border-t border-primary/10 bg-white p-6 lg:border-l lg:border-t-0 lg:p-7">
+                    <aside className="border-t border-primary/10 bg-white p-6 xl:border-l xl:border-t-0 xl:p-7">
                         <p className="font-data text-[0.58rem] font-bold uppercase tracking-[0.16em] text-accent">
                             What you are viewing
                         </p>
@@ -212,11 +170,9 @@ export default function ProjectPreviewModal({ project, onClose }) {
                         </p>
                         <div className="mt-6 border-t border-primary/10 pt-6">
                             <p className="text-xs leading-5 text-muted">
-                                {effectivePreviewMode === 'live'
+                                {livePreviewAvailable
                                     ? 'This sandboxed frame loads the public website so its video, animation, and responsive behavior remain visible. Forms, popups, downloads, and top-level navigation stay restricted.'
-                                    : livePreviewAvailable
-                                        ? 'This full-page launch capture is stored locally as a stable historical record. Switch back to Live to see the current public experience.'
-                                        : 'This website blocks third-party framing, so its full-page launch capture is shown as the reliable portfolio record.'}
+                                    : 'This website blocks third-party framing, so its stored full-page project record is shown as the reliable fallback.'}
                             </p>
                         </div>
                         <a

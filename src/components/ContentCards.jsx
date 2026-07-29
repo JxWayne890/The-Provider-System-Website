@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { warmProjectPreview } from '../lib/projectPreview';
 
 const groupIcons = {
     visibility: Search,
@@ -91,7 +92,11 @@ export function RegionCard({ region }) {
 
 export function ProjectCard({ project, onPreview }) {
     return (
-        <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-white shadow-card">
+        <article
+            className="group flex h-full flex-col overflow-hidden rounded-3xl border border-primary/10 bg-white shadow-card"
+            onPointerEnter={() => warmProjectPreview(project)}
+            onFocus={() => warmProjectPreview(project)}
+        >
             <div className="relative aspect-[16/10] overflow-hidden bg-primary">
                 <ProjectImage project={project} />
                 <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">

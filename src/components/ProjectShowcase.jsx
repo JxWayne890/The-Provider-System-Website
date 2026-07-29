@@ -3,31 +3,25 @@ import { Link } from 'react-router-dom';
 import {
     ArrowLeft,
     ArrowRight,
-    ArrowUpDown,
     ExternalLink,
-    Image as ImageIcon,
     Monitor,
-    Radio,
     Search,
     ShieldCheck,
     Smartphone,
 } from 'lucide-react';
 import ProjectPreviewSurface from './ProjectPreviewSurface';
 import { cn } from '../lib/cn';
-import { getDefaultPreviewMode, supportsLivePreview } from '../lib/projectPreview';
+import { supportsLivePreview, warmProjectPreview } from '../lib/projectPreview';
 
 export default function ProjectShowcase({ projects }) {
     const [selectedSlug, setSelectedSlug] = useState(projects[0]?.slug);
     const [device, setDevice] = useState('desktop');
-    const [previewModes, setPreviewModes] = useState({});
     const [query, setQuery] = useState('');
     const [failedPreviewKey, setFailedPreviewKey] = useState(null);
     const previewRef = useRef(null);
 
     const selectedProject =
         projects.find((project) => project.slug === selectedSlug) || projects[0];
-    const previewMode =
-        previewModes[selectedProject?.slug] || getDefaultPreviewMode(selectedProject);
     const selectedIndex = projects.findIndex((project) => project.slug === selectedProject?.slug);
     const filteredProjects = useMemo(() => {
         const term = query.trim().toLowerCase();
@@ -43,7 +37,23 @@ export default function ProjectShowcase({ projects }) {
 
     useEffect(() => {
         if (previewRef.current) previewRef.current.scrollTop = 0;
-    }, [device, previewMode, selectedSlug]);
+    }, [device, selectedSlug]);
+
+    useEffect(() => {
+        warmProjectPreview(selectedProject);
+
+        const warmRemainingProjects = () => {
+            projects.forEach(warmProjectPreview);
+        };
+
+        if (typeof window.requestIdleCallback === 'function') {
+            const idleId = window.requestIdleCallback(warmRemainingProjects, { timeout: 1800 });
+            return () => window.cancelIdleCallback(idleId);
+        }
+
+        const timeoutId = window.setTimeout(warmRemainingProjects, 1200);
+        return () => window.clearTimeout(timeoutId);
+    }, [projects, selectedProject]);
 
     if (!selectedProject) return null;
 
@@ -52,21 +62,14 @@ export default function ProjectShowcase({ projects }) {
     const imageFailed = failedPreviewKey === previewKey;
     const domain = getDomain(selectedProject.liveUrl);
     const livePreviewAvailable = supportsLivePreview(selectedProject);
-    const effectivePreviewMode =
-        previewMode === 'live' && livePreviewAvailable ? 'live' : 'snapshot';
-    const setPreviewMode = (mode) => {
-        setPreviewModes((current) => ({
-            ...current,
-            [selectedProject.slug]: mode,
-        }));
-    };
+    const effectivePreviewMode = livePreviewAvailable ? 'live' : 'snapshot';
     const moveProject = (direction) => {
         const nextIndex = (selectedIndex + direction + projects.length) % projects.length;
         setSelectedSlug(projects[nextIndex].slug);
     };
 
     return (
-        <div className="project-atlas overflow-hidden rounded-[2rem] border border-primary/10 bg-dark text-white shadow-lift">
+        <div className="project-atlas relative left-1/2 w-[min(96vw,100rem)] -translate-x-1/2 overflow-hidden rounded-[2rem] border border-primary/10 bg-dark text-white shadow-lift">
             <header className="flex flex-col gap-4 border-b border-white/[0.08] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7">
                 <div>
                     <div className="flex items-center gap-2 font-data text-[0.58rem] font-bold uppercase tracking-[0.17em] text-sun">
@@ -74,7 +77,7 @@ export default function ProjectShowcase({ projects }) {
                         Provider project atlas
                     </div>
                     <p className="mt-1.5 text-sm text-white/50">
-                        Explore the live site or switch to its preserved launch snapshot.
+                        Scroll through the real website with its motion, video, and responsive behavior intact.
                     </p>
                 </div>
                 <span className="w-fit rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 font-data text-[0.5rem] uppercase tracking-[0.14em] text-white/45">
@@ -82,8 +85,8 @@ export default function ProjectShowcase({ projects }) {
                 </span>
             </header>
 
-            <div className="grid min-h-0 lg:grid-cols-[17rem_minmax(0,1fr)_17rem]">
-                <aside className="border-b border-white/[0.08] bg-[#06172b] p-4 lg:border-b-0 lg:border-r lg:p-5">
+            <div className="grid min-h-0 grid-cols-[minmax(0,1fr)] xl:grid-cols-[15rem_minmax(0,1fr)_17rem]">
+                <aside className="border-b border-white/[0.08] bg-[#06172b] p-4 xl:border-b-0 xl:border-r xl:p-5">
                     <label className="flex min-h-11 items-center gap-2 rounded-xl border border-white/10 bg-black/10 px-3">
                         <Search className="h-4 w-4 text-white/35" aria-hidden="true" />
                         <span className="sr-only">Search projects</span>
@@ -95,7 +98,7 @@ export default function ProjectShowcase({ projects }) {
                         />
                     </label>
 
-                    <div className="project-directory-scroll mt-3 max-h-[18rem] space-y-1.5 overflow-y-auto pr-1 lg:max-h-[41rem]">
+                    <div className="project-directory-scroll mt-3 flex gap-2 overflow-x-auto pb-1 xl:block xl:max-h-[41rem] xl:space-y-1.5 xl:overflow-y-auto xl:pr-1">
                         {filteredProjects.length ? (
                             filteredProjects.map((project) => (
                                 <button
@@ -104,7 +107,7 @@ export default function ProjectShowcase({ projects }) {
                                     onClick={() => setSelectedSlug(project.slug)}
                                     aria-pressed={selectedProject.slug === project.slug}
                                     className={cn(
-                                        'group flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left transition',
+                                        'group flex w-[14rem] flex-none items-center gap-3 rounded-xl border px-3 py-3 text-left transition xl:w-full',
                                         selectedProject.slug === project.slug
                                             ? 'border-sun/30 bg-sun/[0.08]'
                                             : 'border-transparent bg-white/[0.025] hover:border-white/10 hover:bg-white/[0.05]'
@@ -155,48 +158,6 @@ export default function ProjectShowcase({ projects }) {
                             </div>
                             <div
                                 role="group"
-                                aria-label="Project preview source"
-                                className="flex flex-none gap-1 rounded-lg border border-white/[0.07] bg-black/15 p-1"
-                            >
-                                <button
-                                    type="button"
-                                    title={
-                                        livePreviewAvailable
-                                            ? 'Show live animated website'
-                                            : 'Live preview unavailable for this website'
-                                    }
-                                    aria-label="Show live animated website"
-                                    aria-pressed={effectivePreviewMode === 'live'}
-                                    disabled={!livePreviewAvailable}
-                                    onClick={() => setPreviewMode('live')}
-                                    className={cn(
-                                        'flex h-9 items-center gap-1.5 rounded-md px-2.5 font-data text-[0.45rem] uppercase tracking-[0.08em] transition',
-                                        effectivePreviewMode === 'live'
-                                            ? 'bg-emerald-300 text-primary'
-                                            : 'text-white/40 hover:bg-white/[0.06] hover:text-white disabled:cursor-not-allowed disabled:opacity-25'
-                                    )}
-                                >
-                                    <Radio className="h-3.5 w-3.5" aria-hidden="true" />
-                                    Live
-                                </button>
-                                <button
-                                    type="button"
-                                    title="Show preserved launch snapshot"
-                                    aria-label="Show preserved launch snapshot"
-                                    aria-pressed={effectivePreviewMode === 'snapshot'}
-                                    onClick={() => setPreviewMode('snapshot')}
-                                    className={cn(
-                                        'grid h-9 w-9 place-items-center rounded-md transition',
-                                        effectivePreviewMode === 'snapshot'
-                                            ? 'bg-sun text-primary'
-                                            : 'text-white/40 hover:bg-white/[0.06] hover:text-white'
-                                    )}
-                                >
-                                    <ImageIcon className="h-4 w-4" aria-hidden="true" />
-                                </button>
-                            </div>
-                            <div
-                                role="group"
                                 aria-label="Project preview device"
                                 className="flex flex-none gap-1 rounded-lg border border-white/[0.07] bg-black/15 p-1"
                             >
@@ -242,23 +203,13 @@ export default function ProjectShowcase({ projects }) {
                                 imageFailed={imageFailed}
                                 onImageError={() => setFailedPreviewKey(previewKey)}
                                 snapshotScrollRef={previewRef}
-                                heightClass="h-[32rem]"
+                                heightClass={device === 'desktop' ? 'h-[34rem]' : 'h-[32rem] sm:h-[34rem]'}
                             />
-                            {(effectivePreviewMode === 'live' || (!imageFailed && preview?.src)) && (
-                                <span className="pointer-events-none absolute bottom-5 right-5 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-2 font-data text-[0.48rem] uppercase tracking-[0.1em] text-white shadow-lg">
-                                    {effectivePreviewMode === 'live' ? (
-                                        <Radio className="h-3 w-3 text-emerald-300" aria-hidden="true" />
-                                    ) : (
-                                        <ArrowUpDown className="h-3 w-3 text-sun" aria-hidden="true" />
-                                    )}
-                                    {effectivePreviewMode === 'live' ? 'Live site · scroll inside' : 'Scroll snapshot'}
-                                </span>
-                            )}
                         </div>
                     </div>
                 </section>
 
-                <aside className="border-t border-white/[0.08] bg-[#06172b] p-5 lg:border-l lg:border-t-0 lg:p-6">
+                <aside className="border-t border-white/[0.08] bg-[#06172b] p-5 xl:border-l xl:border-t-0 xl:p-6">
                     <p className="font-data text-[0.52rem] font-bold uppercase tracking-[0.15em] text-sun">
                         {selectedProject.category}
                     </p>
@@ -269,19 +220,6 @@ export default function ProjectShowcase({ projects }) {
                         {selectedProject.client}
                     </h3>
                     <p className="mt-4 text-sm leading-6 text-white/50">{selectedProject.summary}</p>
-                    <p className="mt-4 flex items-center gap-2 text-xs font-semibold text-white/45">
-                        {effectivePreviewMode === 'live' ? (
-                            <>
-                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" aria-hidden="true" />
-                                Live website with motion and video
-                            </>
-                        ) : (
-                            <>
-                                <ImageIcon className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
-                                Preserved full-page launch snapshot
-                            </>
-                        )}
-                    </p>
                     <div className="mt-5 flex flex-wrap gap-2">
                         {selectedProject.services.slice(0, 4).map((service) => (
                             <span

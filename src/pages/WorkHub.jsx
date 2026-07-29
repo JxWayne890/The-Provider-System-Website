@@ -53,7 +53,7 @@ export default function WorkHub() {
             <PageHero
                 eyebrow="Project lab"
                 title="Inspect the work without relying on invented results."
-                description="Every project story explains the business context and delivered pieces. Supported projects include a sandboxed live website alongside the preserved launch snapshot."
+                description="Every project story explains the business context and delivered pieces. Supported projects open as interactive websites with desktop and mobile views."
                 breadcrumbs={[{ label: 'Work' }]}
                 actions={
                     <>
@@ -70,8 +70,8 @@ export default function WorkHub() {
                     <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-7">
                         <ShieldCheck className="h-7 w-7 text-sun" aria-hidden="true" />
                         <p className="mt-6 text-sm leading-6 text-white/65">
-                            Live previews load only the selected public website and restrict forms, popups, downloads,
-                            and top-level navigation. Full-page launch snapshots remain available for every project.
+                            Interactive previews restrict forms, popups, downloads, and top-level navigation. If a
+                            website blocks secure embedding, its full-page project record appears automatically.
                         </p>
                     </div>
                 }
@@ -83,7 +83,7 @@ export default function WorkHub() {
                         <SectionHeading
                             eyebrow="Observable scope"
                             title={`${projects.length} project records, organized for evaluation.`}
-                            description="Filter by the kind of evidence you need, then inspect the live experience or its preserved launch snapshot."
+                            description="Filter by the kind of evidence you need, then inspect the website in a secure interactive preview."
                         />
                         <div className="flex flex-wrap gap-2" aria-label="Filter projects">
                             <span className="mr-1 inline-flex min-h-11 items-center gap-2 text-xs font-bold text-muted">

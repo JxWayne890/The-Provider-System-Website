@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { ExternalLink, LoaderCircle, ShieldCheck } from 'lucide-react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ExternalLink, ShieldCheck } from 'lucide-react';
 import { cn } from '../lib/cn';
-import { supportsLivePreview } from '../lib/projectPreview';
+import { supportsLivePreview, warmProjectPreview } from '../lib/projectPreview';
 
 const viewportWidths = {
-    desktop: 1440,
+    desktop: 1728,
     mobile: 390,
 };
 
@@ -29,9 +29,11 @@ export default function ProjectPreviewSurface({
     if (mode === 'live' && supportsLivePreview(project)) {
         return (
             <LiveProjectFrame
-                key={`${project.slug}-${device}`}
                 project={project}
                 device={device}
+                preview={preview}
+                imageFailed={imageFailed}
+                onImageError={onImageError}
                 className={sharedFrameClass}
             />
         );
@@ -62,12 +64,17 @@ export default function ProjectPreviewSurface({
     );
 }
 
-function LiveProjectFrame({ project, device, className }) {
+function LiveProjectFrame({ project, device, preview, imageFailed, onImageError, className }) {
     const stageRef = useRef(null);
     const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
-    const [loaded, setLoaded] = useState(false);
+    const [loadedUrl, setLoadedUrl] = useState('');
+    const loaded = loadedUrl === project.liveUrl;
 
     useEffect(() => {
+        warmProjectPreview(project);
+    }, [project]);
+
+    useLayoutEffect(() => {
         const stage = stageRef.current;
         if (!stage) return undefined;
 
@@ -104,33 +111,44 @@ function LiveProjectFrame({ project, device, className }) {
             ref={stageRef}
             className={cn(className, 'relative overflow-hidden')}
             aria-label={`Live ${device} preview of ${project.client}`}
+            aria-busy={!loaded}
         >
             {!loaded && (
-                <div className="absolute inset-0 z-10 grid place-items-center bg-[#eef3f8] text-primary">
-                    <div className="text-center">
-                        <LoaderCircle className="mx-auto h-6 w-6 animate-spin text-accent" aria-hidden="true" />
-                        <p className="mt-3 font-data text-[0.52rem] uppercase tracking-[0.12em] text-primary/55">
-                            Loading live site
-                        </p>
-                    </div>
+                <div className="absolute inset-0 z-10 overflow-hidden bg-[#eef3f8]" aria-hidden="true">
+                    {preview?.src && !imageFailed ? (
+                        <img
+                            src={preview.src}
+                            alt=""
+                            fetchPriority="high"
+                            className="block h-auto min-h-full w-full object-cover object-top"
+                            onError={onImageError}
+                        />
+                    ) : (
+                        <div className="h-full w-full animate-pulse bg-[linear-gradient(110deg,#e6edf4_20%,#f8fafc_45%,#e6edf4_70%)] bg-[length:240%_100%]" />
+                    )}
+                    <span className="absolute inset-x-0 top-0 h-0.5 origin-left animate-pulse bg-accent/80" />
                 </div>
             )}
             <iframe
                 src={project.liveUrl}
                 title={`Live website preview of ${project.client}`}
-                loading="lazy"
+                loading="eager"
+                fetchPriority="high"
                 tabIndex={0}
                 referrerPolicy="strict-origin-when-cross-origin"
                 sandbox="allow-scripts allow-same-origin allow-presentation"
                 allow="autoplay; fullscreen; picture-in-picture"
-                onLoad={() => setLoaded(true)}
-                className="block border-0 bg-white"
+                onLoad={() => setLoadedUrl(project.liveUrl)}
+                className={cn(
+                    'block border-0 bg-white transition-opacity duration-200',
+                    loaded ? 'opacity-100' : 'opacity-0'
+                )}
                 style={{
                     width: `${viewportWidth}px`,
                     height: `${viewportHeight}px`,
                     transform: `scale(${scale})`,
                     transformOrigin: 'top left',
-                    opacity: stageSize.width ? 1 : 0,
+                    visibility: stageSize.width ? 'visible' : 'hidden',
                 }}
             />
         </div>

@@ -121,11 +121,11 @@ export default function CaseStudyPage() {
                 <div className="page-shell grid gap-12 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
                     <div>
                         <p className="eyebrow mb-4 text-sun">Safe project preview</p>
-                        <h2 className="section-title">See the live experience and the launch record.</h2>
+                        <h2 className="section-title">See the real website in context.</h2>
                         <p className="mt-5 leading-7 text-white/62">
-                            Supported projects load inside a restricted live frame so video, animation, and responsive
-                            behavior remain visible. A full-page launch snapshot stays available when framing is blocked
-                            or when you want to inspect the originally delivered experience.
+                            Supported projects load inside a restricted frame so video, animation, and responsive
+                            behavior remain visible. If a website blocks secure embedding, the preview automatically
+                            uses its stored full-page project record.
                         </p>
                         <button type="button" onClick={() => setPreviewOpen(true)} className="button-primary mt-8">
                             Open project preview
