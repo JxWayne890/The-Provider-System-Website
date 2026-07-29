@@ -100,7 +100,7 @@ const guidedSteps = [
         websiteSection: 'hero',
         label: 'Visitor arrives',
         heading: 'A customer understands the offer.',
-        duration: 2800,
+        duration: 1500,
     },
     {
         id: 'site-proof',
@@ -108,7 +108,7 @@ const guidedSteps = [
         websiteSection: 'proof',
         label: 'Local proof',
         heading: 'Real context builds confidence.',
-        duration: 2200,
+        duration: 1300,
     },
     {
         id: 'site-services',
@@ -116,15 +116,7 @@ const guidedSteps = [
         websiteSection: 'services',
         label: 'Service match',
         heading: 'The right service is easy to find.',
-        duration: 2200,
-    },
-    {
-        id: 'site-contact',
-        module: 'site',
-        websiteSection: 'contact',
-        label: 'Contact form',
-        heading: 'The website captures useful context.',
-        duration: 1900,
+        duration: 1400,
     },
     {
         id: 'site-contact-type',
@@ -132,7 +124,7 @@ const guidedSteps = [
         websiteSection: 'contact',
         label: 'Entering sample data',
         heading: 'Morgan shares the request.',
-        duration: 3000,
+        duration: 1800,
     },
     {
         id: 'site-contact-click',
@@ -140,7 +132,7 @@ const guidedSteps = [
         websiteSection: 'contact',
         label: 'Submitting inquiry',
         heading: 'The form hands the lead forward.',
-        duration: 950,
+        duration: 650,
     },
     {
         id: 'site-submit',
@@ -148,7 +140,7 @@ const guidedSteps = [
         websiteSection: 'contact',
         label: 'Inquiry received',
         heading: 'The customer gets a clear confirmation.',
-        duration: 1900,
+        duration: 1100,
     },
     {
         id: 'crm-inquiry',
@@ -285,7 +277,7 @@ export default function SpatialCommandDeck({ onOpenLab }) {
                 }
                 return demoCustomerName.slice(0, current.length + 1);
             });
-        }, 95);
+        }, 70);
         return () => window.clearInterval(interval);
     }, [autoplayRunning, currentGuidedStep.id]);
 
@@ -483,6 +475,7 @@ export default function SpatialCommandDeck({ onOpenLab }) {
                                 <GuidedWebsiteDemo
                                     step={currentGuidedStep}
                                     typedName={typedName}
+                                    autoplayRunning={autoplayRunning}
                                     prefersReducedMotion={prefersReducedMotion}
                                     onManualInteraction={pauseAutoplay}
                                 />
@@ -596,11 +589,13 @@ export default function SpatialCommandDeck({ onOpenLab }) {
 function GuidedWebsiteDemo({
     step,
     typedName,
+    autoplayRunning,
     prefersReducedMotion,
     onManualInteraction,
 }) {
     const viewportRef = useRef(null);
     const sectionRefs = useRef({});
+    const lastAnimatedStepRef = useRef(null);
     const sectionId = step.websiteSection || 'hero';
     const isTyping = step.id === 'site-contact-type';
     const isClicking = step.id === 'site-contact-click';
@@ -609,17 +604,64 @@ function GuidedWebsiteDemo({
 
     useEffect(() => {
         const viewport = viewportRef.current;
-        const target = sectionRefs.current[sectionId];
-        if (!viewport || !target) return;
+        if (!viewport || !autoplayRunning) return undefined;
+
+        const nextSectionByStep = {
+            'site-hero': 'proof',
+            'site-proof': 'services',
+            'site-services': 'contact',
+        };
+        const targetSectionId = nextSectionByStep[step.id] || sectionId;
+        const target = sectionRefs.current[targetSectionId];
+        if (!target) return undefined;
+
+        const stepChanged = lastAnimatedStepRef.current !== step.id;
+        lastAnimatedStepRef.current = step.id;
+        if (step.id === 'site-hero' && stepChanged) {
+            viewport.scrollTop = 0;
+        }
+
         const targetTop =
             target.getBoundingClientRect().top -
             viewport.getBoundingClientRect().top +
             viewport.scrollTop;
-        viewport.scrollTo({
-            top: Math.max(targetTop, 0),
-            behavior: prefersReducedMotion ? 'auto' : 'smooth',
-        });
-    }, [prefersReducedMotion, sectionId]);
+        const source = sectionRefs.current[sectionId];
+        const sourceTop = source
+            ? source.getBoundingClientRect().top -
+                viewport.getBoundingClientRect().top +
+                viewport.scrollTop
+            : viewport.scrollTop;
+        const startTop = viewport.scrollTop;
+        const distance = Math.max(targetTop, 0) - startTop;
+
+        if (prefersReducedMotion || !nextSectionByStep[step.id]) {
+            viewport.scrollTop = Math.max(targetTop, 0);
+            return undefined;
+        }
+
+        let animationFrame;
+        let startedAt;
+        const fullDistance = Math.max(Math.abs(targetTop - sourceTop), 1);
+        const remainingRatio = Math.min(Math.abs(distance) / fullDistance, 1);
+        const animationDuration = Math.max(step.duration * remainingRatio, 180);
+        const animateScroll = (timestamp) => {
+            if (startedAt === undefined) startedAt = timestamp;
+            const progress = Math.min((timestamp - startedAt) / animationDuration, 1);
+            viewport.scrollTop = startTop + distance * progress;
+            if (progress < 1) {
+                animationFrame = window.requestAnimationFrame(animateScroll);
+            }
+        };
+
+        animationFrame = window.requestAnimationFrame(animateScroll);
+        return () => window.cancelAnimationFrame(animationFrame);
+    }, [
+        autoplayRunning,
+        prefersReducedMotion,
+        sectionId,
+        step.duration,
+        step.id,
+    ]);
 
     return (
         <section className="guided-site-frame mt-3 overflow-hidden rounded-xl border border-white/10 bg-[#061a33] shadow-[0_18px_45px_rgba(0,0,0,0.22)] sm:mt-4 sm:rounded-2xl">
