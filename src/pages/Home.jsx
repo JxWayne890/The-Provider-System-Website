@@ -1,3 +1,4 @@
+import { lazy, Suspense, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
     ArrowRight,
@@ -22,6 +23,8 @@ import ProjectShowcase from '../components/ProjectShowcase';
 import { industries, regions, serviceGroups, services } from '../data/siteContent';
 import { projects } from '../data/projects';
 import { playbooks } from '../data/playbooks';
+
+const ProviderCommandLab = lazy(() => import('../components/ProviderCommandLab'));
 
 const breakpoints = [
     {
@@ -61,7 +64,43 @@ const processSteps = [
     ['04', 'Launch & learn', 'Document the system, hand it over clearly, and improve it from real use when support is included.'],
 ];
 
+const connectedSystemLayers = [
+    {
+        number: '01',
+        title: 'A clear customer-facing website',
+        description:
+            'Service, market, proof, and next steps are organized so the right visitor can understand the offer and take action.',
+        href: '/services/websites',
+        label: 'Website systems',
+    },
+    {
+        number: '02',
+        title: 'Useful local relevance',
+        description:
+            'Real project context, accurate coverage, and substantial regional information support Texas visibility without thin city pages.',
+        href: '/services/local-seo',
+        label: 'Local SEO architecture',
+    },
+    {
+        number: '03',
+        title: 'A visible lead handoff',
+        description:
+            'Inquiry details can move into a shared operating view for qualification, calls, quotes, scheduling, and ownership.',
+        href: '/services/crm-jobber-alternatives',
+        label: 'CRM and job operations',
+    },
+    {
+        number: '04',
+        title: 'Follow-up that stays connected',
+        description:
+            'The next customer touchpoint remains attached to the original request instead of disappearing into inboxes and memory.',
+        href: '/services/lead-follow-up',
+        label: 'Lead follow-up',
+    },
+];
+
 export default function Home() {
+    const [labOpen, setLabOpen] = useState(false);
     const schemas = [
         {
             '@type': 'Organization',
@@ -141,7 +180,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <SpatialCommandDeck />
+                    <SpatialCommandDeck onOpenLab={() => setLabOpen(true)} />
                 </div>
             </section>
 
@@ -155,6 +194,63 @@ export default function Home() {
                         <span>San Angelo</span>
                         <span>Permian Basin</span>
                         <span>West Texas service markets</span>
+                    </div>
+                </div>
+            </section>
+
+            <section
+                id="connected-system-demo"
+                aria-labelledby="connected-system-demo-title"
+                className="section-pad border-b border-primary/10 bg-white"
+            >
+                <div className="page-shell">
+                    <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+                        <div>
+                            <p className="eyebrow mb-4">Website to follow-up</p>
+                            <h2 id="connected-system-demo-title" className="section-title text-primary">
+                                A better website is only the front door.
+                            </h2>
+                            <p className="mt-5 max-w-2xl text-lg leading-8 text-muted">
+                                The customer experience works better when the public website and the
+                                internal lead process tell the same story. Explore a sample website
+                                blueprint and CRM workspace to see how the handoff can stay visible.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => setLabOpen(true)}
+                                className="button-primary mt-8"
+                            >
+                                Explore the interactive system
+                                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                            </button>
+                            <p className="mt-3 text-xs leading-5 text-muted">
+                                Sample data only. The demo does not place calls, book appointments,
+                                or transmit form information.
+                            </p>
+                        </div>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                            {connectedSystemLayers.map((layer) => (
+                                <article
+                                    key={layer.number}
+                                    className="rounded-2xl border border-primary/10 bg-background p-5"
+                                >
+                                    <span className="font-data text-[0.56rem] font-bold uppercase tracking-[0.16em] text-accent">
+                                        Layer {layer.number}
+                                    </span>
+                                    <h3 className="mt-4 text-lg font-bold tracking-[-0.025em] text-primary">
+                                        {layer.title}
+                                    </h3>
+                                    <p className="mt-2 text-sm leading-6 text-muted">{layer.description}</p>
+                                    <Link
+                                        to={layer.href}
+                                        className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-accent"
+                                    >
+                                        {layer.label}
+                                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                                    </Link>
+                                </article>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -379,6 +475,22 @@ export default function Home() {
 
             <SystemReviewCTA />
 
+            {labOpen && (
+                <Suspense
+                    fallback={
+                        <div className="fixed inset-0 z-[120] grid place-items-center bg-dark/90 p-6 text-center text-white backdrop-blur-md">
+                            <div>
+                                <span className="signal-dot mx-auto block h-3 w-3 rounded-full bg-emerald-300" />
+                                <p className="mt-4 font-data text-xs uppercase tracking-[0.16em] text-white/60">
+                                    Loading Provider Command Lab
+                                </p>
+                            </div>
+                        </div>
+                    }
+                >
+                    <ProviderCommandLab onClose={() => setLabOpen(false)} />
+                </Suspense>
+            )}
         </main>
     );
 }

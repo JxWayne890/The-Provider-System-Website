@@ -6,6 +6,7 @@ import {
     FileCheck2,
     Globe2,
     MessageSquareText,
+    Maximize2,
     PhoneCall,
     Radio,
     Search,
@@ -96,7 +97,7 @@ const phonePanels = [
     { id: 'action', label: 'Next action', icon: ArrowRight },
 ];
 
-export default function SpatialCommandDeck() {
+export default function SpatialCommandDeck({ onOpenLab }) {
     const [activeModule, setActiveModule] = useState('journey');
     const [activeStageId, setActiveStageId] = useState('routed');
     const [searchTerm, setSearchTerm] = useState('');
@@ -144,12 +145,18 @@ export default function SpatialCommandDeck() {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.045] px-2.5 py-1.5">
+                        <button
+                            type="button"
+                            onClick={onOpenLab}
+                            className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.045] px-2.5 py-1.5 transition hover:border-sun/30 hover:bg-sun/[0.08]"
+                            aria-label="Open the full Provider Command interactive demo"
+                        >
                             <span className="signal-dot h-1.5 w-1.5 rounded-full bg-emerald-300" />
-                            <span className="hidden font-data text-[0.45rem] uppercase tracking-[0.14em] text-white/50 sm:inline">
-                                Demo online
+                            <span className="hidden font-data text-[0.45rem] uppercase tracking-[0.14em] text-white/55 transition group-hover:text-white/80 sm:inline">
+                                Full demo
                             </span>
-                        </div>
+                            <Maximize2 className="h-3 w-3 text-white/45 transition group-hover:text-sun" aria-hidden="true" />
+                        </button>
                     </header>
 
                     <div className="command-deck-body">
