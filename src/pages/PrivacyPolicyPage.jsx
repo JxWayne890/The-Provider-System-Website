@@ -97,18 +97,19 @@ export default function PrivacyPolicyPage() {
                                 <span className="font-semibold">Automatically collected information:</span>{' '}
                                 When you visit our site, we may automatically collect basic technical
                                 information such as IP address, browser type, device type, pages visited,
-                                referring URLs, and campaign parameters through standard server logs and,
-                                when configured, Google Analytics.
+                                referring URLs, and approved campaign parameters through standard server
+                                logs and Google Analytics.
                             </li>
                             <li>
                                 <span className="font-semibold">Cookies and similar technologies:</span>{' '}
-                                Our site may use cookies and similar tracking technologies to improve
-                                user experience and understand site usage patterns.
+                                We use cookies and similar tracking technologies to improve user experience
+                                and understand site usage patterns. Google Analytics uses first-party cookies
+                                to distinguish visitors and sessions.
                             </li>
                         </ul>
                         <p className="mt-4">
-                            When Google Analytics is enabled, it measures page views and actions such as
-                            primary-button clicks, phone-link clicks, and successful inquiry submissions.
+                            We use Google Analytics to measure page views and actions such as primary-button
+                            clicks, phone-link clicks, and successful inquiry submissions.
                             We keep the first landing page, referring page, and any UTM campaign parameters
                             in browser session storage so they can be included with an inquiry. We do not
                             send contact-form field contents to Google Analytics. Learn more about{' '}
@@ -151,8 +152,8 @@ export default function PrivacyPolicyPage() {
                             <li>
                                 <span className="font-semibold">Service providers:</span> Third-party
                                 vendors that help us operate our business, including email delivery
-                                (Resend), hosting (Vercel), and website measurement (Google Analytics,
-                                when enabled). These providers are
+                                (Resend), hosting (Vercel), and website measurement (Google Analytics).
+                                These providers are
                                 contractually required to protect your information.
                             </li>
                             <li>

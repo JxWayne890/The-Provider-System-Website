@@ -1,5 +1,21 @@
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() || 'G-4NN7E5E3Q7';
+const DEFAULT_GA_MEASUREMENT_ID = 'G-4NN7E5E3Q7';
+const ANALYTICS_DISABLED = import.meta.env.VITE_GA_DISABLED === 'true';
+const GA_MEASUREMENT_ID = ANALYTICS_DISABLED
+    ? ''
+    : import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() || DEFAULT_GA_MEASUREMENT_ID;
 const ATTRIBUTION_STORAGE_KEY = 'provider-system-attribution-v1';
+const ANALYTICS_QUERY_PARAMETERS = new Set([
+    'utm_id',
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_term',
+    'utm_content',
+    'gclid',
+    'dclid',
+    'gbraid',
+    'wbraid',
+]);
 const UTM_FIELDS = {
     utm_source: 'utmSource',
     utm_medium: 'utmMedium',
@@ -31,6 +47,17 @@ const safeUrlWithoutQuery = (value) => {
     } catch {
         return '';
     }
+};
+
+const safeAnalyticsPageLocation = () => {
+    const url = new URL(window.location.href);
+    [...url.searchParams.keys()].forEach((key) => {
+        if (!ANALYTICS_QUERY_PARAMETERS.has(key.toLowerCase())) {
+            url.searchParams.delete(key);
+        }
+    });
+    url.hash = '';
+    return url.toString();
 };
 
 function readStoredAttribution() {
@@ -110,7 +137,7 @@ function trackPageView() {
     lastTrackedPath = pagePath;
     trackEvent('page_view', {
         page_path: pagePath,
-        page_location: window.location.href.split('#')[0],
+        page_location: safeAnalyticsPageLocation(),
         page_title: document.title,
     });
 }

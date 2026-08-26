@@ -26,8 +26,10 @@ The public contact form is served by `api/contact.js`. Configure server secrets 
 - `RESEND_FROM_EMAIL` (optional override; defaults to `The Provider System <notifications@mail.theprovidersystem.com>`)
 - `CONTACT_NOTIFICATION_EMAIL` (optional override; defaults to `theprovidersystem@gmail.com`)
 
-Public analytics is optional and only loads when this build-time variable is configured:
+Public analytics uses the production Provider System GA4 property by default on
+`theprovidersystem.com` and `www.theprovidersystem.com`. These build-time variables are optional:
 
-- `VITE_GA_MEASUREMENT_ID`
+- `VITE_GA_MEASUREMENT_ID` (override the default measurement ID)
+- `VITE_GA_DISABLED=true` (explicitly disable public analytics)
 
 The private Search Console/Bing reporting app lives in `analytics-app/` and deploys as a separate Vercel project.
