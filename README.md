@@ -23,7 +23,7 @@ The production build regenerates the sitemap, builds the Vite app, and prerender
 The public contact form is served by `api/contact.js`. Configure server secrets in the deployment project; never commit them.
 
 - `RESEND_API_KEY`
-- `RESEND_FROM_EMAIL` (optional override; defaults to `The Provider System <notifications@theprovidersystem.com>`)
+- `RESEND_FROM_EMAIL` (optional override; defaults to `The Provider System <notifications@mail.theprovidersystem.com>`)
 - `CONTACT_NOTIFICATION_EMAIL` (optional override; defaults to `theprovidersystem@gmail.com`)
 
 Public analytics is optional and only loads when this build-time variable is configured:

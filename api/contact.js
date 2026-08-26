@@ -189,7 +189,7 @@ export default async function handler(req, res) {
             headers: resendHeaders,
             signal: AbortSignal.timeout(12_000),
             body: JSON.stringify({
-                from: process.env.RESEND_FROM_EMAIL || 'The Provider System <notifications@theprovidersystem.com>',
+                from: process.env.RESEND_FROM_EMAIL || 'The Provider System <notifications@mail.theprovidersystem.com>',
                 to: process.env.CONTACT_NOTIFICATION_EMAIL || 'theprovidersystem@gmail.com',
                 subject: `[WEBSITE INQUIRY] ${normalizedInquiryType} — ${normalizedName}`,
                 reply_to: normalizedEmail,
