@@ -111,9 +111,17 @@ export default function PrivacyPolicyPage() {
                             primary-button clicks, phone-link clicks, and successful inquiry submissions.
                             We keep the first landing page, referring page, and any UTM campaign parameters
                             in browser session storage so they can be included with an inquiry. We do not
-                            send contact-form field contents to Google Analytics. You can limit analytics
-                            collection through browser cookie controls, privacy extensions, JavaScript
-                            settings, or Google Analytics opt-out tools.
+                            send contact-form field contents to Google Analytics. Learn more about{' '}
+                            <a
+                                href="https://policies.google.com/technologies/partner-sites"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-accent hover:text-accent/80 underline underline-offset-4"
+                            >
+                                how Google uses information from sites that use its services
+                            </a>
+                            . You can limit analytics collection through browser cookie controls, privacy
+                            extensions, JavaScript settings, or Google Analytics opt-out tools.
                         </p>
                     </section>
 

@@ -1,4 +1,4 @@
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() || 'G-4NN7E5E3Q7';
 const ATTRIBUTION_STORAGE_KEY = 'provider-system-attribution-v1';
 const UTM_FIELDS = {
     utm_source: 'utmSource',
