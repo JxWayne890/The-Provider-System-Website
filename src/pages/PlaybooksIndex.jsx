@@ -35,7 +35,7 @@ export default function PlaybooksIndex() {
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </a>
                         <Link to="/start" className="button-ghost-dark">
-                            Discuss your system
+                            Request a website and lead-flow review
                         </Link>
                     </>
                 }

@@ -46,19 +46,19 @@ export default function WorkHub() {
     return (
         <main>
             <SEO
-                title="Project Lab | Websites & Business Systems"
-                description="Explore real websites, booking systems, CRM experiences, and custom applications built by The Provider System, with safe desktop and mobile previews."
+                title="West Texas Website & Lead System Work"
+                description="Explore websites, booking flows, CRM experiences, and custom systems built for West Texas service businesses and other operating teams."
                 url="/work"
             />
             <PageHero
-                eyebrow="Project lab"
-                title="Inspect the work without relying on invented results."
-                description="Every project story explains the business context and delivered pieces. Supported projects open as interactive websites with desktop and mobile views."
+                eyebrow="Selected work"
+                title="Real websites and systems built around real operations."
+                description="See how West Texas service businesses and other operating teams have used clearer websites, lead paths, booking flows, and custom tools."
                 breadcrumbs={[{ label: 'Work' }]}
                 actions={
                     <>
                         <Link to="/start" className="button-primary">
-                            Build something useful
+                            Request a website and lead-flow review
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         <a href="#project-grid" className="button-ghost-dark">
@@ -70,8 +70,8 @@ export default function WorkHub() {
                     <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-7">
                         <ShieldCheck className="h-7 w-7 text-sun" aria-hidden="true" />
                         <p className="mt-6 text-sm leading-6 text-white/65">
-                            Interactive previews restrict forms, popups, downloads, and top-level navigation. If a
-                            website blocks secure embedding, its full-page project record appears automatically.
+                            Each record shows the business context, delivered scope, stored desktop and mobile
+                            launch views, and a direct link to the current live site when available.
                         </p>
                     </div>
                 }
@@ -81,9 +81,9 @@ export default function WorkHub() {
                 <div className="page-shell">
                     <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
                         <SectionHeading
-                            eyebrow="Observable scope"
-                            title={`${projects.length} project records, organized for evaluation.`}
-                            description="Filter by the kind of evidence you need, then inspect the website in a secure interactive preview."
+                            eyebrow="Project proof"
+                            title={`${projects.length} projects across websites, lead paths, booking, and operations.`}
+                            description="Filter the work, compare desktop and mobile launch views, or open the current live site in a new tab."
                         />
                         <div className="flex flex-wrap gap-2" aria-label="Filter projects">
                             <span className="mr-1 inline-flex min-h-11 items-center gap-2 text-xs font-bold text-muted">
@@ -120,16 +120,16 @@ export default function WorkHub() {
             <section className="section-pad bg-white">
                 <div className="page-shell grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
                     <SectionHeading
-                        eyebrow="How to read a case study"
-                        title="Scope is proof. Metrics require more."
-                        description="The archive deliberately separates directly observable deliverables from outcomes that would need client approval and attributable measurement."
+                        eyebrow="What each case study shows"
+                        title="Business context, delivered work, and a live path to inspect."
+                        description="The project record focuses on what was built and why. Performance claims only appear when approved, attributable evidence exists."
                     />
                     <div className="grid gap-4 sm:grid-cols-2">
                         {[
-                            ['Published now', 'Business context, project type, visible features, public pages, regional context, and live links.'],
-                            ['Requires approval', 'Client testimonials, private workflow details, screenshots containing customer data, or non-public operating information.'],
-                            ['Requires measurement', 'Rankings, qualified leads, revenue, conversion rates, time savings, or attribution across channels.'],
-                            ['Always available', 'A clear explanation of what was designed, what was built, and how a similar engagement would be scoped.'],
+                            ['Business context', 'The customer, territory, operating need, and reason the project existed.'],
+                            ['Delivered scope', 'The pages, workflows, interfaces, integrations, and customer paths that were built.'],
+                            ['Public experience', 'Stored desktop and mobile launch views plus direct links to current client sites.'],
+                            ['Related fit', 'The services and starting point that apply to a similar West Texas operation.'],
                         ].map(([title, copy]) => (
                             <div key={title} className="rounded-3xl bg-background p-6">
                                 <h3 className="text-lg font-bold text-primary">{title}</h3>

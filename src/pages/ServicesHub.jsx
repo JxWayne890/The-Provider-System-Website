@@ -6,29 +6,32 @@ import { PageHero, SectionHeading, SystemReviewCTA } from '../components/PageEle
 import { serviceGroups, services } from '../data/siteContent';
 
 const decisionPaths = [
-    ['Customers cannot understand or find us', 'Websites, local SEO, and lead-generation architecture', '/services/websites'],
-    ['Leads arrive but do not move', 'CRM, job operations, follow-up, and automation', '/services/crm-jobber-alternatives'],
-    ['The team repeats the same customer answers', 'AI receptionist, chat, support, and knowledge systems', '/services/ai-receptionist'],
-    ['The business has a proven workflow software cannot fit', 'Custom business systems and phased product design', '/services/custom-systems'],
+    ['Customers cannot understand or find us', 'Website design, local visibility, and useful lead capture', '/services/websites'],
+    ['Leads arrive but do not move', 'CRM, lead ownership, estimate status, and follow-up', '/services/crm-jobber-alternatives'],
+    ['The same handoff is repeated every day', 'Automation, integrations, and carefully bounded AI', '/services/automation'],
+    ['Available software cannot fit a proven workflow', 'A phased custom tool with an explicit ownership plan', '/services/custom-systems'],
 ];
 
 export default function ServicesHub() {
+    const primaryGroups = serviceGroups.filter((group) => group.tier === 'primary');
+    const secondaryGroups = serviceGroups.filter((group) => group.tier === 'secondary');
+
     return (
         <main>
             <SEO
-                title="Digital Systems Services for Texas Businesses"
-                description="Explore websites, local SEO, CRM and Jobber alternatives, automation, lead generation, AI customer systems, content, and custom software."
+                title="West Texas Web Design, CRM & Lead Systems"
+                description="Website design, local visibility, lead capture, CRM, and follow-up for West Texas service businesses, with automation, practical AI, and custom tools when needed."
                 url="/services"
             />
             <PageHero
-                eyebrow="Services"
-                title="Build the part of the system the business needs next."
-                description="The Provider System connects visibility, intake, job operations, customer support, and growth infrastructure. Each engagement is scoped around a real operating bottleneck—not a bundle of trendy tools."
+                eyebrow="West Texas service-business systems"
+                title="Start with the website or lead handoff that is costing the business clarity."
+                description="The front-door offer is website design and local visibility, followed by lead capture, CRM, and follow-up. Automation, practical AI, and custom tools stay secondary until the operating need is clear."
                 breadcrumbs={[{ label: 'Services' }]}
                 actions={
                     <>
                         <Link to="/start" className="button-primary">
-                            Start a system review
+                            Request a website and lead-flow review
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         <Link to="/work" className="button-ghost-dark">
@@ -41,12 +44,12 @@ export default function ServicesHub() {
             <section className="section-pad bg-background">
                 <div className="page-shell">
                     <SectionHeading
-                        eyebrow="A connected service map"
-                        title="Four layers, organized around the work."
-                        description="Start at the bottleneck. A website project does not have to become a CRM build, and an AI use case does not need to expand into a full platform."
+                        eyebrow="Primary service paths"
+                        title="Get found and make the lead easier to handle."
+                        description="These are the clearest starting points for a West Texas service business. Either path can stand alone, or they can be connected when the customer handoff requires both."
                     />
                     <div className="mt-14 space-y-14">
-                        {serviceGroups.map((group) => {
+                        {primaryGroups.map((group) => {
                             const groupServices = group.serviceSlugs
                                 .map((slug) => services.find((service) => service.slug === slug))
                                 .filter(Boolean);
@@ -62,6 +65,42 @@ export default function ServicesHub() {
                                         </div>
                                     </div>
                                     <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                        {groupServices.map((service) => (
+                                            <ServiceCard key={service.slug} service={service} />
+                                        ))}
+                                    </div>
+                                </section>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            <section className="section-pad bg-primary text-white">
+                <div className="page-shell">
+                    <SectionHeading
+                        eyebrow="Secondary capabilities"
+                        title="Add automation, AI, or custom software only when it earns its complexity."
+                        description="These services support a defined customer or operating workflow. They are not required add-ons to a website or CRM engagement."
+                        dark
+                    />
+                    <div className="mt-14 space-y-14">
+                        {secondaryGroups.map((group) => {
+                            const groupServices = group.serviceSlugs
+                                .map((slug) => services.find((service) => service.slug === slug))
+                                .filter(Boolean);
+                            return (
+                                <section key={group.id} aria-labelledby={`secondary-service-group-${group.id}`}>
+                                    <div className="grid gap-5 border-t border-white/15 pt-7 md:grid-cols-[0.18fr_0.82fr]">
+                                        <p className="font-data text-sm font-bold text-sun">{group.number}</p>
+                                        <div>
+                                            <h2 id={`secondary-service-group-${group.id}`} className="text-3xl font-bold tracking-[-0.035em] text-white">
+                                                {group.name}
+                                            </h2>
+                                            <p className="mt-3 max-w-2xl leading-7 text-white/62">{group.description}</p>
+                                        </div>
+                                    </div>
+                                    <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                                         {groupServices.map((service) => (
                                             <ServiceCard key={service.slug} service={service} />
                                         ))}
@@ -100,9 +139,9 @@ export default function ServicesHub() {
             </section>
 
             <SystemReviewCTA
-                eyebrow="Not sure where to begin?"
-                title="Bring the messy version."
-                description="Share the tools, handoffs, customer questions, and manual work as they exist today. The first task is to make the problem understandable."
+                eyebrow="Not sure which layer comes first?"
+                title="Bring the website, lead flow, and tools as they work today."
+                description="The first task is to identify the earliest broken handoff and define a useful first release—not to sell every capability on this page."
             />
         </main>
     );

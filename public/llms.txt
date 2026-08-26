@@ -1,22 +1,22 @@
 # The Provider System
 
-> Texas-first digital systems agency for service businesses. Remote engagements are available nationwide.
+> Websites and lead systems for West Texas service businesses.
 
-The Provider System is owned and led by John W Johnson. It designs websites, CRM and job operations, automation, practical AI customer systems, content workflows, and selected custom software around the way a service business actually works.
+The Provider System is owned and led by John W Johnson. It builds the website customers see and the lead system behind it: local visibility, CRM and lead routing, follow-up, automation, practical AI, and selected custom software for service businesses.
 
 The public site makes no promise of rankings, lead volume, revenue, savings, or perfect AI accuracy. Project stories describe observable delivered scope. Ownership, account access, third-party services, support, and handoff are defined by the project agreement.
 
 ## Primary routes
 
-- `/` — Texas-first homepage and system overview
-- `/services` — complete service map
+- `/` — West Texas website and lead-system homepage
+- `/services` — website, visibility, lead-management, and operating-system services
 - `/industries` — operating guides for priority service industries
-- `/texas` — statewide position and evidence-led regional hubs
-- `/work` — real project archive and safe screenshot previews
+- `/texas` — West Texas markets and regional project proof
+- `/work` — real project archive and responsive previews
 - `/playbooks` — 15 practical owner guides
 - `/process` — assess, design, build, launch, and handoff process
 - `/about` — founder and operating principles
-- `/start` — project inquiry and system-review form
+- `/start` — website and lead-flow review request
 - `/faq` — project, ownership, AI, and delivery questions
 
 ## Services
@@ -35,9 +35,9 @@ The public site makes no promise of rankings, lead volume, revenue, savings, or 
 - `/services/ai-growth-systems`
 - `/services/custom-systems`
 
-## Texas coverage
+## West Texas coverage
 
-Texas is the primary market focus. The project record represented on this site includes work connected to Abilene, San Angelo, Anson, the Big Country, the Permian Basin, Lubbock, Midland, Odessa, and broader West Texas service markets.
+West Texas is the primary market focus. The Provider System is anchored in San Angelo and uses a founder-led, remote-first delivery model. The project record represented on this site includes work connected to San Angelo, Abilene, Anson, the Big Country, the Permian Basin, Lubbock, Midland, Odessa, and broader regional service markets.
 
 Regional routes:
 
@@ -46,7 +46,7 @@ Regional routes:
 - `/texas/lubbock`
 - `/texas/midland-odessa`
 
-These are service and project markets, not claimed Provider System office locations.
+These are service and project markets, not additional Provider System office locations.
 
 ## Industries
 
@@ -69,11 +69,12 @@ These are service and project markets, not claimed Provider System office locati
 - FlowOS — booking, queue, CRM, and operations product
 - The Offer Hero — producer pipeline and workflow product
 
-Project previews are scrollable, full-page static portfolio records by default. Live client sites open separately so client frame-security policies and third-party scripts are not bypassed.
+Project previews use stored desktop and mobile launch screenshots. Current client sites remain available through direct project links.
 
 ## Contact
 
 - Website: https://theprovidersystem.com
+- Phone: (325) 249-5191
 - Email: theprovidersystem@gmail.com
 - Founder: John W Johnson
-- Inquiry: https://theprovidersystem.com/start
+- Website and lead-flow review: https://theprovidersystem.com/start

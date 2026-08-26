@@ -16,19 +16,19 @@ export default function IndustriesHub() {
     return (
         <main>
             <SEO
-                title="Digital Systems for Texas Service Industries"
-                description="Websites and operating systems for plumbing, electrical, HVAC, roofing, oilfield, industrial, and other service businesses."
+                title="West Texas Service-Business Websites"
+                description="Websites and lead systems for West Texas plumbing, electrical, HVAC, roofing, oilfield, industrial, and other service businesses."
                 url="/industries"
             />
             <PageHero
-                eyebrow="Industries"
-                title="Industry knowledge should change the system—not just the headline."
-                description="Each industry has different intake, urgency, proof, scheduling, and handoff needs. These pages focus on those operating differences instead of substituting trade names into the same template."
+                eyebrow="West Texas industries"
+                title="Built around how your customers choose—and how your team handles the work."
+                description="Plumbing, electrical, HVAC, roofing, oilfield, industrial, and other service businesses each need different proof, intake, urgency, scheduling, and follow-up paths."
                 breadcrumbs={[{ label: 'Industries' }]}
                 actions={
                     <>
                         <Link to="/start" className="button-primary">
-                            Map your workflow
+                            Request a website and lead-flow review
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         <Link to="/work" className="button-ghost-dark">
@@ -42,8 +42,8 @@ export default function IndustriesHub() {
                 <div className="page-shell">
                     <SectionHeading
                         eyebrow="Priority operating models"
-                        title="Built around the customer and the work."
-                        description="The public site focuses on industries where the customer journey and operating workflow can be described specifically."
+                        title="West Texas service businesses need more than a trade-name template."
+                        description="Each path connects a clear customer-facing website with the lead and operating handoffs that matter for that kind of work."
                     />
                     <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                         {industries.map((industry) => (

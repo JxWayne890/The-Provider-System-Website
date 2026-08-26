@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import {
     ArrowRight,
     ArrowUpRight,
-    Bot,
     CircleDot,
     MapPin,
     MessageSquareWarning,
+    Phone,
     SearchX,
     Workflow,
 } from 'lucide-react';
@@ -17,7 +17,7 @@ import {
     ServiceCard,
 } from '../components/ContentCards';
 import { RegionCard } from '../components/ContentCards';
-import { SectionHeading, SystemReviewCTA } from '../components/PageElements';
+import { SectionHeading } from '../components/PageElements';
 import SpatialCommandDeck from '../components/SpatialCommandDeck';
 import ProjectShowcase from '../components/ProjectShowcase';
 import { industries, regions, serviceGroups, services } from '../data/siteContent';
@@ -26,34 +26,54 @@ import { playbooks } from '../data/playbooks';
 
 const ProviderCommandLab = lazy(() => import('../components/ProviderCommandLab'));
 
+const homepageServiceGroups = serviceGroups.filter((group) =>
+    ['visibility', 'operations'].includes(group.id)
+);
+
+const featuredProjects = projects.filter((project) =>
+    [
+        'total-quality-plumbing',
+        'weathersbee-electric',
+        'master-commercial-clean',
+        'mansfield-mining',
+    ].includes(project.slug)
+);
+
+const marketLinks = [
+    ['San Angelo', '/texas/san-angelo-concho-valley'],
+    ['Abilene', '/texas/abilene-big-country'],
+    ['Midland–Odessa', '/texas/midland-odessa'],
+    ['Lubbock', '/texas/lubbock'],
+];
+
 const breakpoints = [
     {
         icon: SearchX,
-        title: 'Hard to find or trust',
-        description: 'The site does not explain the service, coverage, proof, or next step clearly enough.',
+        title: 'The website does not win trust',
+        description: 'Services, coverage, proof, and the next step are hard to understand on the first visit.',
         href: '/services/websites',
-        label: 'Website & local visibility',
+        label: 'Service-business websites',
+    },
+    {
+        icon: MapPin,
+        title: 'Local buyers cannot place you',
+        description: 'The site does not make the real service area, local work, or market relevance clear enough.',
+        href: '/services/local-seo',
+        label: 'Local visibility',
     },
     {
         icon: MessageSquareWarning,
-        title: 'Leads go quiet',
-        description: 'Calls, forms, referrals, and estimates arrive—but responsibility and follow-up are inconsistent.',
+        title: 'Leads go quiet after contact',
+        description: 'Calls, forms, referrals, and estimates arrive—but ownership and follow-up are inconsistent.',
         href: '/services/lead-follow-up',
         label: 'Lead follow-up',
     },
     {
         icon: Workflow,
-        title: 'Work is scattered',
-        description: 'Customer, job, quote, and task details live across inboxes, spreadsheets, texts, and memory.',
+        title: 'No shared view of the opportunity',
+        description: 'Customer, quote, task, and next-step details live across inboxes, spreadsheets, texts, and memory.',
         href: '/services/crm-jobber-alternatives',
         label: 'CRM & job operations',
-    },
-    {
-        icon: Bot,
-        title: 'Customers wait',
-        description: 'Routine questions and intake consume the team, while urgent or unusual requests need better routing.',
-        href: '/services/ai-customer-support',
-        label: 'AI customer experience',
     },
 ];
 
@@ -109,11 +129,16 @@ export default function Home() {
             url: 'https://theprovidersystem.com',
             founder: { '@type': 'Person', name: 'John W Johnson' },
             email: 'theprovidersystem@gmail.com',
+            telephone: '+13252495191',
             description:
-                'A Texas-focused digital systems agency for service businesses, providing websites, CRM and job operations, automation, practical AI, and custom systems.',
+                'Websites and lead systems for West Texas service businesses, with local visibility, CRM, and follow-up connected around the customer journey.',
             areaServed: [
+                { '@type': 'City', name: 'San Angelo' },
+                { '@type': 'City', name: 'Abilene' },
+                { '@type': 'City', name: 'Midland' },
+                { '@type': 'City', name: 'Odessa' },
+                { '@type': 'City', name: 'Lubbock' },
                 { '@type': 'State', name: 'Texas' },
-                { '@type': 'Country', name: 'United States' },
             ],
         },
         {
@@ -128,8 +153,8 @@ export default function Home() {
     return (
         <main>
             <SEO
-                title="Texas Digital Systems for Service Businesses"
-                description="Websites, CRM and job operations, automation, practical AI, and custom systems for Texas service businesses. Remote engagements available nationwide."
+                title="West Texas Websites & Lead Systems"
+                description="Websites and local visibility for West Texas service businesses, connected to CRM and lead follow-up across San Angelo, Abilene, Midland–Odessa, and Lubbock."
                 url="/"
                 schemas={schemas}
             />
@@ -144,38 +169,42 @@ export default function Home() {
                     <div className="relative z-10">
                         <div className="eyebrow mb-6 text-sun">
                             <MapPin className="h-4 w-4" aria-hidden="true" />
-                            Texas digital systems agency
+                            San Angelo based · Serving West Texas
                         </div>
                         <h1 className="display-title max-w-5xl">
-                            Make every lead, customer, and handoff easier to handle.
+                            Websites and lead systems for West Texas service businesses.
                         </h1>
                         <p className="mt-7 max-w-3xl text-lg leading-8 text-white/70 md:text-xl md:leading-9">
-                            The Provider System designs the website customers see and the operating
-                            system behind it—CRM, follow-up, automation, practical AI, and custom tools
-                            built around how a service business actually works.
+                            Start with a clear website, useful local visibility, and real proof. Then
+                            connect each call or inquiry to CRM and follow-up so the opportunity has an
+                            owner and a visible next step.
                         </p>
                         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                             <Link to="/start" className="button-primary">
-                                Start a system review
+                                Request a website and lead-flow review
                                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
                             </Link>
-                            <Link to="/work" className="button-ghost-dark">
-                                See the work
-                                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                            </Link>
+                            <a
+                                href="tel:+13252495191"
+                                className="button-ghost-dark"
+                                aria-label="Call The Provider System at 325 249 5191"
+                            >
+                                <Phone className="h-4 w-4" aria-hidden="true" />
+                                (325) 249-5191
+                            </a>
                         </div>
                         <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-white/60">
                             <span className="inline-flex items-center gap-2">
                                 <CircleDot className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
-                                Texas first
+                                Websites first
                             </span>
                             <span className="inline-flex items-center gap-2">
                                 <CircleDot className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
-                                Founder-led
+                                Local proof, not city-page filler
                             </span>
                             <span className="inline-flex items-center gap-2">
                                 <CircleDot className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
-                                Remote nationwide
+                                CRM and follow-up connected
                             </span>
                         </div>
                     </div>
@@ -184,16 +213,17 @@ export default function Home() {
                 </div>
             </section>
 
-            <section aria-label="Texas project markets" className="border-b border-primary/10 bg-white">
+            <section aria-label="West Texas service markets" className="border-b border-primary/10 bg-white">
                 <div className="page-shell flex flex-col gap-5 py-6 md:flex-row md:items-center md:justify-between">
                     <p className="font-data text-[0.62rem] font-bold uppercase tracking-[0.18em] text-accent">
-                        Selected work across Texas
+                        West Texas focus
                     </p>
                     <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold text-primary/70">
-                        <span>Abilene & the Big Country</span>
-                        <span>San Angelo</span>
-                        <span>Permian Basin</span>
-                        <span>West Texas service markets</span>
+                        {marketLinks.map(([label, to]) => (
+                            <Link key={to} to={to} className="transition hover:text-accent">
+                                {label}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -206,19 +236,19 @@ export default function Home() {
                 <div className="page-shell">
                     <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
                         <div>
-                            <p className="eyebrow mb-4">Website to follow-up</p>
+                            <p className="eyebrow mb-4">The connected difference</p>
                             <h2 id="connected-system-demo-title" className="section-title text-primary">
-                                A better website is only the front door.
+                                The website earns the inquiry. The lead system keeps it moving.
                             </h2>
                             <p className="mt-5 max-w-2xl text-lg leading-8 text-muted">
-                                The customer experience works better when the public website and the
-                                internal lead process tell the same story. Explore a sample website
-                                blueprint and CRM workspace to see how the handoff can stay visible.
+                                The Provider System starts with the customer-facing website and local
+                                visibility. CRM and follow-up connect what happens next, so calls, forms,
+                                quotes, and ownership do not disappear into separate tools.
                             </p>
                             <button
                                 type="button"
                                 onClick={() => setLabOpen(true)}
-                                className="button-primary mt-8"
+                                className="button-secondary mt-8"
                             >
                                 Explore the interactive system
                                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -258,9 +288,9 @@ export default function Home() {
             <section className="section-pad bg-background">
                 <div className="page-shell">
                     <SectionHeading
-                        eyebrow="Start with the break"
-                        title="The software is rarely the first problem."
-                        description="A useful system starts by making the customer path and the team handoffs visible. These are the four places we most often begin."
+                        eyebrow="Website and visibility first"
+                        title="Fix the public path. Then connect the handoff."
+                        description="A useful lead system begins with a website that explains the service, earns trust, and makes the next step clear. CRM and follow-up solve what happens after contact."
                     />
                     <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
                         {breakpoints.map((item) => (
@@ -286,9 +316,9 @@ export default function Home() {
                 <div className="page-shell">
                     <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
                         <SectionHeading
-                            eyebrow="One connected system"
-                            title="Four layers. One operating story."
-                            description="Each layer can stand alone. The value comes from making sure the customer-facing experience and the back-office process agree."
+                            eyebrow="Focused services"
+                            title="Get found and chosen. Then handle every lead."
+                            description="The homepage leads with websites and local visibility. CRM, lead ownership, and follow-up are the connected operational advantage behind them."
                         />
                         <Link to="/services" className="button-secondary w-fit">
                             Explore all services
@@ -297,7 +327,7 @@ export default function Home() {
                     </div>
 
                     <div className="mt-14 space-y-8">
-                        {serviceGroups.map((group) => {
+                        {homepageServiceGroups.map((group) => {
                             const groupServices = group.serviceSlugs
                                 .map((slug) => services.find((service) => service.slug === slug))
                                 .filter(Boolean);
@@ -328,17 +358,17 @@ export default function Home() {
                 <div className="page-shell">
                     <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
                         <SectionHeading
-                            eyebrow="Evidence before claims"
-                            title="Real projects. Observable work."
-                            description="The portfolio explains the business context and what was delivered. It does not invent rankings, revenue, or lead results."
+                            eyebrow="West Texas project proof"
+                            title="Real service-business websites you can inspect."
+                            description="Explore work for Total Quality Plumbing, Weathersbee Electric, Master Commercial Clean, and Mansfield Mining. Each case study shows the business context and delivered scope."
                         />
                         <Link to="/work" className="button-secondary w-fit">
-                            View project lab
+                            View all project work
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                     </div>
                     <div className="mt-12">
-                        <ProjectShowcase projects={projects} />
+                        <ProjectShowcase projects={featuredProjects} />
                     </div>
                 </div>
             </section>
@@ -348,15 +378,15 @@ export default function Home() {
                 <div className="page-shell relative">
                     <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
                         <div>
-                            <p className="eyebrow mb-4 text-sun">Texas proof, not Texas wallpaper</p>
-                            <h2 className="section-title">Local relevance has to be earned.</h2>
+                            <p className="eyebrow mb-4 text-sun">West Texas proof, not city-name filler</p>
+                            <h2 className="section-title">Four regional markets. One honest service model.</h2>
                             <p className="mt-5 text-lg leading-8 text-white/60">
-                                We use statewide positioning to connect a real body of Texas work. Regional pages
-                                exist where project evidence or useful operating context makes them meaningfully different.
-                                No invented offices. No copy-swapped city pages.
+                                San Angelo, Abilene, Midland–Odessa, and Lubbock each have a useful regional
+                                page grounded in project evidence or operating context. Delivery stays
+                                founder-led from San Angelo, with clear remote milestones across the region.
                             </p>
-                            <Link to="/texas" className="button-primary mt-8">
-                                Explore Texas coverage
+                            <Link to="/texas" className="button-ghost-dark mt-8">
+                                Explore West Texas markets
                                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
                             </Link>
                         </div>
@@ -473,7 +503,26 @@ export default function Home() {
                 </div>
             </section>
 
-            <SystemReviewCTA />
+            <section className="bg-sand px-5 py-16 sm:px-8 md:py-20 lg:px-12">
+                <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[2rem] bg-primary text-white shadow-lift lg:grid-cols-[1fr_auto] lg:items-center">
+                    <div className="p-8 sm:p-10 lg:p-14">
+                        <p className="eyebrow mb-4 text-sun">Start with the website and lead flow</p>
+                        <h2 className="font-heading text-3xl font-semibold tracking-[-0.035em] md:text-4xl">
+                            Show John what customers see—and what happens after they reach out.
+                        </h2>
+                        <p className="mt-4 max-w-2xl leading-7 text-white/65">
+                            Share the current website, priority West Texas market, and the point where
+                            calls, forms, quotes, or follow-up are getting lost. The review starts there.
+                        </p>
+                    </div>
+                    <div className="border-t border-white/10 p-8 sm:p-10 lg:border-l lg:border-t-0 lg:p-14">
+                        <Link to="/start" className="button-primary w-full justify-center text-center sm:w-auto">
+                            Request a website and lead-flow review
+                            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
+                    </div>
+                </div>
+            </section>
 
             {labOpen && (
                 <Suspense

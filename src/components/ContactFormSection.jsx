@@ -1,25 +1,30 @@
 import { useRef, useState } from 'react';
-import { AlertCircle, CheckCircle2, LoaderCircle, Mail } from 'lucide-react';
+import { AlertCircle, CheckCircle2, LoaderCircle, Mail, PhoneCall } from 'lucide-react';
 import { cn } from '../lib/cn';
+import { getLeadAttribution, trackEvent } from '../lib/analytics';
 
 const inquiryOptions = [
-    'Website or local SEO',
-    'Lead generation or follow-up',
-    'CRM or Jobber alternative',
-    'Automation or integrations',
-    'AI receptionist, chat, or support',
-    'AI content or growth system',
-    'Custom business system',
-    'I am not sure yet',
+    'Website or redesign',
+    'Local SEO or Google Business Profile',
+    'Lead follow-up or CRM',
+    'Automation, AI, or a custom system',
+    'Not sure yet',
 ];
 
-const emptyForm = {
-    firstName: '',
-    lastName: '',
+const createEmptyForm = () => ({
+    name: '',
     email: '',
     phone: '',
     inquiryType: inquiryOptions[0],
     message: '',
+    website: '',
+});
+
+const createSubmissionId = () => {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+    }
+    return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 };
 
 export default function ContactFormSection({
@@ -28,10 +33,13 @@ export default function ContactFormSection({
     theme = 'light',
 }) {
     const isDark = theme === 'dark';
-    const [formData, setFormData] = useState(emptyForm);
+    const [formData, setFormData] = useState(createEmptyForm);
     const [status, setStatus] = useState('idle');
     const [errorMessage, setErrorMessage] = useState('');
     const statusRef = useRef(null);
+    const formStartedAtRef = useRef(Date.now());
+    const submissionIdRef = useRef(createSubmissionId());
+    const hasTrackedStartRef = useRef(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -41,33 +49,87 @@ export default function ContactFormSection({
         }));
     };
 
+    const handleFormStart = () => {
+        if (hasTrackedStartRef.current) return;
+        hasTrackedStartRef.current = true;
+        trackEvent('lead_form_start', {
+            form_name: 'project_inquiry',
+            page_path: window.location.pathname,
+        });
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setStatus('sending');
         setErrorMessage('');
 
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                credentials: 'same-origin',
+                signal: controller.signal,
+                body: JSON.stringify({
+                    ...formData,
+                    ...getLeadAttribution(),
+                    submissionId: submissionIdRef.current,
+                    formStartedAt: formStartedAtRef.current,
+                    submittedAt: new Date().toISOString(),
+                }),
             });
             const result = await response.json().catch(() => ({}));
             if (!response.ok) {
-                throw new Error(result.error || 'The request could not be sent.');
+                const requestError = new Error(result.error || 'The request could not be sent.');
+                requestError.status = response.status;
+                throw requestError;
             }
 
-            setFormData(emptyForm);
+            setFormData(createEmptyForm());
             setStatus('success');
+            trackEvent('form_success', {
+                form_name: 'project_inquiry',
+                inquiry_type: formData.inquiryType,
+                page_path: window.location.pathname,
+            });
+            trackEvent('generate_lead', {
+                form_name: 'project_inquiry',
+                inquiry_type: formData.inquiryType,
+            });
             requestAnimationFrame(() => statusRef.current?.focus());
         } catch (error) {
             console.error('Contact form submission failed:', error);
-            setErrorMessage(
-                'The form could not send right now. Please try again or email theprovidersystem@gmail.com.'
-            );
+            const isRateLimited = error.status === 429;
+            const isTimeout = error.name === 'AbortError';
+            setErrorMessage(isRateLimited
+                ? 'Too many requests were received. Please wait a few minutes, call, or email John directly.'
+                : isTimeout
+                    ? 'The request took too long to send. Please try again, call, or email John directly.'
+                    : 'The form could not send right now. Please try again, call, or email John directly.');
             setStatus('error');
+            trackEvent('form_error', {
+                form_name: 'project_inquiry',
+                error_type: isRateLimited ? 'rate_limited' : isTimeout ? 'timeout' : 'submission_failed',
+                page_path: window.location.pathname,
+            });
             requestAnimationFrame(() => statusRef.current?.focus());
+        } finally {
+            window.clearTimeout(timeoutId);
         }
+    };
+
+    const handleSendAnother = () => {
+        setFormData(createEmptyForm());
+        setStatus('idle');
+        setErrorMessage('');
+        formStartedAtRef.current = Date.now();
+        submissionIdRef.current = createSubmissionId();
+        hasTrackedStartRef.current = false;
     };
 
     const surfaceClass = isDark
@@ -99,7 +161,19 @@ export default function ContactFormSection({
                     <p className={cn('mt-5 text-lg leading-8', isDark ? 'text-white/62' : 'text-muted')}>
                         {subheading}
                     </p>
-                    <div className={cn('mt-8 rounded-2xl border p-5', isDark ? 'border-white/10 bg-white/[0.04]' : 'border-primary/10 bg-white')}>
+                    <div className={cn('mt-8 grid gap-4 rounded-2xl border p-5 sm:grid-cols-2', isDark ? 'border-white/10 bg-white/[0.04]' : 'border-primary/10 bg-white')}>
+                        <div className="flex items-start gap-3">
+                            <PhoneCall className={cn('mt-0.5 h-5 w-5 flex-none', isDark ? 'text-sun' : 'text-accent')} aria-hidden="true" />
+                            <div>
+                                <p className={cn('text-sm font-bold', isDark ? 'text-white' : 'text-primary')}>Prefer to call?</p>
+                                <a
+                                    href="tel:+13252495191"
+                                    className={cn('mt-1 block break-all text-sm underline underline-offset-4', isDark ? 'text-white/62' : 'text-muted')}
+                                >
+                                    (325) 249-5191
+                                </a>
+                            </div>
+                        </div>
                         <div className="flex items-start gap-3">
                             <Mail className={cn('mt-0.5 h-5 w-5 flex-none', isDark ? 'text-sun' : 'text-accent')} aria-hidden="true" />
                             <div>
@@ -128,43 +202,53 @@ export default function ContactFormSection({
                             </span>
                             <h3 className="mt-7 text-3xl font-bold tracking-[-0.035em]">Project context received.</h3>
                             <p className={cn('mt-4 max-w-lg leading-7', isDark ? 'text-white/62' : 'text-muted')}>
-                                John can now review the business, the current system, and the requested direction before following up.
+                                Thanks—your request was sent. John will review it and reply using the contact information you provided.
                             </p>
-                            <button type="button" onClick={() => setStatus('idle')} className="button-secondary mt-8">
+                            <button type="button" onClick={handleSendAnother} className="button-secondary mt-8">
                                 Send another inquiry
                             </button>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} aria-busy={status === 'sending'}>
+                        <form
+                            onSubmit={handleSubmit}
+                            onFocusCapture={handleFormStart}
+                            aria-busy={status === 'sending'}
+                        >
+                            <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+                                <label htmlFor="contact-website">Leave this field empty</label>
+                                <input
+                                    id="contact-website"
+                                    name="website"
+                                    type="text"
+                                    tabIndex="-1"
+                                    autoComplete="off"
+                                    value={formData.website}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
                             <div className="grid gap-5 sm:grid-cols-2">
                                 <Field
-                                    label="First name"
-                                    id="contact-first-name"
-                                    name="firstName"
-                                    autoComplete="given-name"
-                                    value={formData.firstName}
+                                    label="Your name"
+                                    id="contact-name"
+                                    name="name"
+                                    autoComplete="name"
+                                    maxLength={120}
+                                    required
+                                    value={formData.name}
                                     onChange={handleChange}
                                     disabled={status === 'sending'}
                                     inputClass={inputClass}
                                     labelClass={labelClass}
                                 />
                                 <Field
-                                    label="Last name"
-                                    id="contact-last-name"
-                                    name="lastName"
-                                    autoComplete="family-name"
-                                    value={formData.lastName}
-                                    onChange={handleChange}
-                                    disabled={status === 'sending'}
-                                    inputClass={inputClass}
-                                    labelClass={labelClass}
-                                />
-                                <Field
-                                    label="Work email"
+                                    label="Email"
                                     id="contact-email"
                                     name="email"
                                     type="email"
                                     autoComplete="email"
+                                    maxLength={320}
+                                    required
                                     value={formData.email}
                                     onChange={handleChange}
                                     disabled={status === 'sending'}
@@ -172,54 +256,56 @@ export default function ContactFormSection({
                                     labelClass={labelClass}
                                 />
                                 <Field
-                                    label="Phone"
+                                    label="Phone (optional)"
                                     id="contact-phone"
                                     name="phone"
                                     type="tel"
                                     autoComplete="tel"
                                     inputMode="tel"
+                                    maxLength={50}
                                     value={formData.phone}
                                     onChange={handleChange}
                                     disabled={status === 'sending'}
                                     inputClass={inputClass}
                                     labelClass={labelClass}
                                 />
-                            </div>
-
-                            <div className="mt-5">
-                                <label htmlFor="contact-inquiry-type" className={labelClass}>
-                                    Where should we start?
-                                </label>
-                                <select
-                                    id="contact-inquiry-type"
-                                    name="inquiryType"
-                                    value={formData.inquiryType}
-                                    onChange={handleChange}
-                                    disabled={status === 'sending'}
-                                    className={inputClass}
-                                >
-                                    {inquiryOptions.map((option) => (
-                                        <option key={option} value={option} className="text-primary">
-                                            {option}
-                                        </option>
-                                    ))}
-                                </select>
+                                <div>
+                                    <label htmlFor="contact-inquiry-type" className={labelClass}>
+                                        What do you need help with?
+                                    </label>
+                                    <select
+                                        id="contact-inquiry-type"
+                                        name="inquiryType"
+                                        value={formData.inquiryType}
+                                        onChange={handleChange}
+                                        disabled={status === 'sending'}
+                                        className={inputClass}
+                                    >
+                                        {inquiryOptions.map((option) => (
+                                            <option key={option} value={option} className="text-primary">
+                                                {option}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
 
                             <div className="mt-5">
                                 <label htmlFor="contact-message" className={labelClass}>
-                                    What is happening today?
+                                    Business, location, and project goal
                                 </label>
                                 <textarea
                                     id="contact-message"
                                     name="message"
-                                    rows="6"
+                                    rows="5"
                                     required
+                                    minLength="20"
+                                    maxLength="5000"
                                     value={formData.message}
                                     onChange={handleChange}
                                     disabled={status === 'sending'}
-                                    placeholder="What business do you run? Where do leads or work get lost? Which tools are involved? What would a better next step look like?"
-                                    className={cn(inputClass, 'min-h-36 resize-y')}
+                                    placeholder="What business do you run, where do you serve, and what should the website or lead process do better?"
+                                    className={cn(inputClass, 'min-h-32 resize-y')}
                                 />
                                 <p className={cn('mt-2 text-xs leading-5', isDark ? 'text-white/65' : 'text-muted')}>
                                     Please do not include passwords, payment details, medical information, or other sensitive data.
@@ -246,10 +332,10 @@ export default function ContactFormSection({
                                 {status === 'sending' ? (
                                     <>
                                         <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
-                                        Sending project context…
+                                        Sending request…
                                     </>
                                 ) : (
-                                    'Send project context'
+                                    'Request a website and lead-flow review'
                                 )}
                             </button>
                             <p className={cn('mt-4 text-center text-xs leading-5', isDark ? 'text-white/65' : 'text-muted')}>
@@ -270,6 +356,8 @@ function Field({
     type = 'text',
     autoComplete,
     inputMode,
+    maxLength,
+    required = false,
     value,
     onChange,
     disabled,
@@ -287,7 +375,8 @@ function Field({
                 type={type}
                 autoComplete={autoComplete}
                 inputMode={inputMode}
-                required
+                maxLength={maxLength}
+                required={required}
                 value={value}
                 onChange={onChange}
                 disabled={disabled}

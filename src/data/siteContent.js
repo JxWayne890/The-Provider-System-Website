@@ -2,48 +2,55 @@ export const serviceGroups = [
     {
         id: 'visibility',
         number: '01',
-        name: 'Get found and chosen',
+        name: 'Websites & local visibility',
         description:
-            'Make the business easy to understand, easy to trust, and easy to contact in the markets it actually serves.',
+            'Give West Texas customers a clear service, credible local proof, and a direct path to call or inquire.',
         serviceSlugs: ['websites', 'local-seo', 'lead-generation'],
+        tier: 'primary',
     },
     {
         id: 'operations',
         number: '02',
-        name: 'Capture and run the work',
+        name: 'Lead management & follow-up',
         description:
-            'Give every inquiry, estimate, customer, and handoff a visible owner and a useful next step.',
-        serviceSlugs: ['crm-jobber-alternatives', 'lead-follow-up', 'automation'],
+            'Connect inquiries, CRM records, estimates, owners, and next actions so fewer opportunities disappear between tools.',
+        serviceSlugs: ['crm-jobber-alternatives', 'lead-follow-up'],
+        tier: 'primary',
     },
     {
         id: 'customer-experience',
         number: '03',
-        name: 'Support the customer',
+        name: 'Automation & customer response',
         description:
-            'Use practical AI where it improves response and consistency, with clear limits and human escalation.',
-        serviceSlugs: ['ai-receptionist', 'ai-chatbots', 'ai-customer-support', 'ai-knowledge-bases'],
+            'Connect repeatable handoffs and use practical AI only where approved knowledge, limits, and human escalation are clear.',
+        serviceSlugs: ['automation', 'ai-receptionist', 'ai-chatbots', 'ai-customer-support'],
+        tier: 'secondary',
     },
     {
         id: 'growth',
         number: '04',
-        name: 'Build the growth engine',
+        name: 'Knowledge, growth & custom tools',
         description:
-            'Turn approved business knowledge into useful content, reporting, and connected operating systems.',
-        serviceSlugs: ['ai-content-video', 'ai-growth-systems', 'custom-systems'],
+            'Organize approved knowledge, content, reporting, and software around an operating need that has earned a custom layer.',
+        serviceSlugs: ['ai-knowledge-bases', 'ai-content-video', 'ai-growth-systems', 'custom-systems'],
+        tier: 'secondary',
     },
 ];
 
 export const services = [
     {
         slug: 'websites',
-        name: 'Service-business websites',
-        shortName: 'Websites',
+        name: 'West Texas service-business websites',
+        shortName: 'Website design',
         group: 'visibility',
         kicker: 'The customer-facing system',
+        seoTitle: 'West Texas Web Design for Service Businesses',
+        seoDescription:
+            'Clear, fast websites for West Texas service businesses, with local proof, useful lead capture, and a direct path to call or request work.',
         summary:
-            'Clear, fast websites for service businesses that need local relevance, credible proof, and a direct path from question to call or inquiry.',
+            'Clear, fast websites for West Texas service businesses that need local relevance, credible proof, and useful lead capture.',
         promise:
-            'Build a useful sales and service experience around how customers actually choose a provider.',
+            'Build the website customers see and connect it to the first lead handoff the team needs to manage.',
         problem:
             'A brochure site can look polished and still leave visitors unsure about services, coverage, credibility, or the next step. The work starts with those decisions—not with a template.',
         includes: [
@@ -84,12 +91,15 @@ export const services = [
     },
     {
         slug: 'local-seo',
-        name: 'Local SEO architecture',
-        shortName: 'Local SEO',
+        name: 'Local SEO & Google visibility',
+        shortName: 'Local visibility',
         group: 'visibility',
         kicker: 'Earn local relevance without page spam',
+        seoTitle: 'West Texas Local SEO for Service Businesses',
+        seoDescription:
+            'Proof-led local SEO for West Texas service businesses, connecting service pages, regional pages, Google Business Profile, and qualified-inquiry measurement.',
         summary:
-            'A proof-led search structure for services, regions, and questions that deserve their own useful page.',
+            'A proof-led search structure that connects real services, West Texas markets, useful pages, and Google Business Profile information.',
         promise:
             'Help search engines and customers understand what you do, where you do it, and why each page exists.',
         problem:
@@ -103,7 +113,7 @@ export const services = [
             'Measurement plan for qualified inquiries—not page count',
         ],
         goodFit: [
-            'The business serves multiple Texas markets',
+            'The business serves multiple West Texas markets',
             'Existing pages overlap or target the same intent',
             'Local proof is scattered across the site',
             'The team needs an editorial plan grounded in customer questions',
@@ -132,10 +142,13 @@ export const services = [
     },
     {
         slug: 'lead-generation',
-        name: 'Lead-generation systems',
-        shortName: 'Lead generation',
+        name: 'Lead capture & routing',
+        shortName: 'Lead capture & routing',
         group: 'visibility',
         kicker: 'From attention to a handled opportunity',
+        seoTitle: 'Lead Capture & Routing for West Texas Businesses',
+        seoDescription:
+            'Landing pages, forms, source tracking, lead routing, and CRM handoffs for West Texas service businesses.',
         summary:
             'Connected landing pages, intake, source tracking, routing, and follow-up designed around the offers a business can actually fulfill.',
         promise:
@@ -180,10 +193,13 @@ export const services = [
     },
     {
         slug: 'crm-jobber-alternatives',
-        name: 'CRM & Jobber alternatives',
-        shortName: 'CRM & job operations',
+        name: 'CRM & lead management',
+        shortName: 'CRM & lead management',
         group: 'operations',
         kicker: 'Fit the system to the operation',
+        seoTitle: 'CRM & Lead Management for Service Businesses',
+        seoDescription:
+            'CRM, estimating, scheduling, lead, customer, and job workflows configured around how a service business actually operates.',
         summary:
             'CRM, estimating, scheduling, customer, and job workflows—configured off the shelf or custom-built when the operating model truly requires it.',
         promise:
@@ -228,10 +244,13 @@ export const services = [
     },
     {
         slug: 'lead-follow-up',
-        name: 'Lead follow-up',
-        shortName: 'Follow-up',
+        name: 'Lead follow-up systems',
+        shortName: 'Lead follow-up',
         group: 'operations',
         kicker: 'Make the next action visible',
+        seoTitle: 'Lead Follow-Up Systems for Service Businesses',
+        seoDescription:
+            'Confirmation, assignment, reminder, estimate, and re-engagement workflows with clear stop conditions and human ownership.',
         summary:
             'Practical confirmation, assignment, reminder, estimate, and re-engagement workflows with stop conditions and human ownership.',
         promise:
@@ -765,19 +784,43 @@ export const regions = [
         name: 'San Angelo & the Concho Valley',
         shortName: 'San Angelo',
         counties: 'San Angelo, the Concho Valley, and Tom Green County',
+        seoTitle: 'San Angelo Web Design & Lead Systems',
+        seoDescription:
+            'Websites, local visibility, lead capture, CRM, and follow-up for San Angelo and Concho Valley service businesses.',
+        heroTitle: 'Websites and lead systems for San Angelo service businesses.',
         stance:
-            'The region is represented through real San Angelo work and a remote-first delivery process—not an invented office location.',
+            'The Provider System connects the website customers see with the inquiry, booking, or follow-up path behind it, using real San Angelo project context and a founder-led delivery process.',
+        deliveryModel:
+            'Planning, reviews, and implementation are handled directly with John through a remote-first process. Any in-person need, access, support, or ongoing ownership is agreed in the project scope.',
         localContext: [
-            'Service businesses often need to explain both city coverage and work across surrounding communities without cloning the same page.',
-            'Industrial, venue, and regional service work benefit from direct phone and inquiry routing because the buyer’s context varies widely.',
-            'Local proof should come from approved projects, business history, service knowledge, and customer-facing artifacts.',
+            'Explain the service, real coverage, and next step clearly for customers in San Angelo and surrounding communities.',
+            'Separate consumer, commercial, industrial, and event inquiries when each path needs different details or urgency.',
+            'Route calls, quote requests, bookings, and forms into a visible owner and next action instead of leaving them in separate inboxes.',
         ],
+        serviceSlugs: ['websites', 'local-seo', 'lead-follow-up', 'custom-systems'],
         proofProjects: ['roller-rink-usa', 'weathersbee-electric', 'master-commercial-clean'],
-        firstChecks: [
-            'Does the website separate local consumer, commercial, and regional service paths?',
-            'Can mobile visitors call, request, or book without hunting?',
-            'Do pages use genuine regional proof instead of city-name substitutions?',
-            'Does every inquiry reach a visible owner and next action?',
+        fitTitle: 'A practical fit for a San Angelo business when…',
+        fitIntro:
+            'The strongest starting point is a specific customer or team handoff that is currently hard to see or manage.',
+        fitSignals: [
+            'The website no longer reflects the services or territory the business actually serves.',
+            'Mobile customers have to hunt for a call, quote, booking, or contact path.',
+            'Inquiries arrive through several channels without consistent ownership or follow-up.',
+            'The business needs a focused first release rather than a bundle of disconnected tools.',
+        ],
+        faqs: [
+            {
+                q: 'Can you rebuild an existing San Angelo business website?',
+                a: 'Yes. The first step is to inventory the current domain, important URLs, content, analytics, forms, and ownership before deciding what should stay, change, merge, or redirect.',
+            },
+            {
+                q: 'Can the website connect to our CRM, booking tool, or inbox?',
+                a: 'Often. The current tools, permissions, data fields, and failure path are checked before an integration is included in scope.',
+            },
+            {
+                q: 'Do you guarantee local rankings or lead volume?',
+                a: 'No. The work can improve relevance, clarity, technical quality, measurement, and follow-through, but search placement and demand are not controlled by a website build.',
+            },
         ],
     },
     {
@@ -785,39 +828,87 @@ export const regions = [
         name: 'Abilene & the Big Country',
         shortName: 'Abilene',
         counties: 'Abilene and Big Country service markets',
+        seoTitle: 'Abilene Web Design & Lead Systems',
+        seoDescription:
+            'Web design, local visibility, lead capture, CRM, and follow-up for Abilene and Big Country service businesses.',
+        heroTitle: 'Websites and lead systems for Abilene and the Big Country.',
         stance:
-            'Abilene is supported by a visible body of project work across plumbing, construction, commercial property, and regional business.',
+            'Abilene is the strongest evidence-backed regional market on this site, with visible work across plumbing, contracting, and commercial property.',
+        deliveryModel:
+            'Projects are founder-led and remote-first, with milestones, review points, access, handoff, and support written into scope. This regional service page does not claim a separate Provider System office in Abilene.',
         localContext: [
-            'Service-area structure should reflect the real radius, travel constraints, and priority work supplied by the business.',
-            'A strong local experience connects service detail, proof, contact options, and Google Business Profile information without creating a doorway-page matrix.',
-            'The lead path should distinguish urgent service, quote requests, commercial inquiries, and longer consideration work.',
+            'Organize services and Big Country coverage around the work the business can actually accept, rather than a copy-swapped page for every town.',
+            'Connect service detail, approved project proof, contact options, and accurate Google Business Profile information.',
+            'Distinguish urgent service, planned estimates, commercial inquiries, and longer-consideration work before each request reaches the team.',
         ],
+        serviceSlugs: ['websites', 'local-seo', 'lead-generation', 'lead-follow-up'],
         proofProjects: ['total-quality-plumbing', 'adrians-custom-services', 'abilene-commercial'],
-        firstChecks: [
-            'Which services and customer types are genuinely highest priority in the Big Country?',
-            'Are business details and service areas consistent across the site and business profiles?',
-            'Which local projects can be shown with approval?',
-            'How are calls, forms, and estimates tracked after first contact?',
+        fitTitle: 'A practical fit for an Abilene business when…',
+        fitIntro:
+            'The project can begin with visibility, lead handling, or both, as long as the first operating problem is clear.',
+        fitSignals: [
+            'Service and coverage information is inconsistent across the website and business profiles.',
+            'Urgent calls, quote requests, and commercial opportunities need different intake paths.',
+            'Forms and estimates do not have a reliable owner or follow-up rule.',
+            'The business has real local work or knowledge that is not being used as useful proof.',
+        ],
+        faqs: [
+            {
+                q: 'Do we need a separate page for every Big Country town?',
+                a: 'No. A broader service or regional page is usually better unless a city has distinct demand, coverage, proof, or customer questions that justify its own useful page.',
+            },
+            {
+                q: 'Can you preserve our current domain and important URLs?',
+                a: 'Usually. Existing URLs, indexed content, analytics, and ownership are inventoried before a redirect or replacement plan is approved.',
+            },
+            {
+                q: 'Can you improve the lead path without replacing our whole website?',
+                a: 'Yes, when the current site and tools provide a stable base. Intake, routing, tracking, or follow-up can be scoped as a focused layer instead of a full rebuild.',
+            },
         ],
     },
     {
         slug: 'lubbock',
         name: 'Lubbock',
         shortName: 'Lubbock',
-        counties: 'Lubbock and surrounding West Texas service areas',
+        counties: 'Lubbock and surrounding South Plains service markets',
+        seoTitle: 'Lubbock Web Design & Lead Systems',
+        seoDescription:
+            'Focused websites, local visibility, lead capture, and follow-up for Lubbock service businesses through founder-led remote delivery.',
+        heroTitle: 'A focused website and lead path for Lubbock service businesses.',
         stance:
-            'Lubbock is a regional delivery market, not a claimed office. New local pages should follow demand and proof—not precede them.',
+            'The Provider System serves Lubbock as a founder-led remote delivery market, with a focused offer and project evidence instead of a claimed local office or a grid of thin city pages.',
+        deliveryModel:
+            'Discovery, planning, reviews, implementation, and handoff are remote-first. A Lubbock engagement should begin with a defined website or lead-flow problem and written expectations for access, communication, and support.',
         localContext: [
-            'A Lubbock page earns its place when it contains specific service coverage, useful market guidance, or approved project evidence.',
-            'Until first-party proof is available, a regional hub should explain the delivery model and link to the strongest relevant service and industry guidance.',
-            'Search and conversion decisions should be validated through Search Console, analytics, CRM geography, and real inquiries.',
+            'Lead with a specific service, audience, and conversion path instead of a broad list of digital capabilities.',
+            'Use approved project material and first-party business knowledge to make local content useful beyond the city name.',
+            'Measure impressions, calls, forms, source, and qualified inquiries before expanding into additional South Plains pages.',
         ],
+        serviceSlugs: ['websites', 'local-seo', 'lead-generation', 'lead-follow-up'],
         proofProjects: ['master-commercial-clean'],
-        firstChecks: [
-            'Is there verified Lubbock demand in search, calls, or the sales pipeline?',
-            'What first-party local knowledge or project material can make the page distinct?',
-            'Should the need be served by a regional hub instead of a city-service page?',
-            'What will be measured before any additional local page is added?',
+        fitTitle: 'A practical fit for a Lubbock business when…',
+        fitIntro:
+            'Remote delivery works best when the owner can identify the customer path, current tools, and first result the project needs to produce.',
+        fitSignals: [
+            'The business needs a clearer website or quote path rather than a large marketing bundle.',
+            'Calls and forms need source tracking, qualification, or a visible follow-up step.',
+            'The team is comfortable reviewing work through scheduled remote milestones.',
+            'There is enough real business knowledge or approved proof to support useful local content.',
+        ],
+        faqs: [
+            {
+                q: 'Does The Provider System have a Lubbock office?',
+                a: 'This page represents a regional remote-delivery market, not a separate office location. Project communication, access, milestones, and support are agreed before work begins.',
+            },
+            {
+                q: 'Can a Lubbock project begin with the website only?',
+                a: 'Yes. A website can be scoped as a standalone first release. CRM, follow-up, automation, or custom tools are added only when the operating need is clear.',
+            },
+            {
+                q: 'Will you create pages for every nearby city?',
+                a: 'Not by default. New pages should follow distinct customer needs, real coverage, first-party proof, or validated search demand.',
+            },
         ],
     },
     {
@@ -825,19 +916,43 @@ export const regions = [
         name: 'Midland–Odessa',
         shortName: 'Midland–Odessa',
         counties: 'The Midland–Odessa area and Permian Basin service markets',
+        seoTitle: 'Midland–Odessa Web Design & Lead Systems',
+        seoDescription:
+            'Websites, commercial intake, lead routing, automation, and custom systems for Midland–Odessa and Permian Basin service businesses.',
+        heroTitle: 'Websites and lead systems for Midland–Odessa operators.',
         stance:
-            'The paired regional hub reflects how many industrial and service operators work across the Permian Basin; it does not imply a physical office.',
+            'The paired market page is built for industrial, oilfield, and service businesses that need clear capabilities, stronger qualification, and a visible path from inquiry to owner.',
+        deliveryModel:
+            'The Provider System works through a founder-led remote process and does not claim a separate Midland or Odessa office. Any site visit, specialized access, integration, or support requirement must be included in scope.',
         localContext: [
-            'Industrial and oilfield buyers need precise capabilities, territories, response expectations, and commercial qualification.',
-            'A regional hub is more honest and maintainable than near-duplicate Midland and Odessa pages without separate proof.',
-            'Dedicated industry intersections should wait for a named project, first-hand field guide, or validated demand.',
+            'Present capabilities, territory, commercial requirements, and response expectations precisely enough for a buyer to self-qualify.',
+            'Separate customer, vendor, recruiting, and bid inquiries when each one needs different records or ownership.',
+            'Use one substantial Midland–Odessa page until separate demand and first-party proof justify distinct city experiences.',
         ],
+        serviceSlugs: ['websites', 'lead-generation', 'automation', 'custom-systems'],
         proofProjects: ['mansfield-mining', 'master-commercial-clean'],
-        firstChecks: [
-            'Does the site distinguish industrial buyers, service customers, vendors, and applicants?',
-            'Are capabilities and service territory specific enough to qualify an inquiry?',
-            'Can the team route requests by site, urgency, and commercial requirement?',
-            'Is there enough proof for a dedicated Permian Basin industry page?',
+        fitTitle: 'A practical fit for a Permian Basin operator when…',
+        fitIntro:
+            'The best projects begin with a commercial or operating workflow that can be described, tested, and assigned to a real owner.',
+        fitSignals: [
+            'The current site does not qualify industrial or commercial inquiries well enough.',
+            'Customer, vendor, recruiting, and bid requests are mixed together.',
+            'The team repeatedly moves the same information between forms, inboxes, spreadsheets, or software.',
+            'A proven workflow needs a focused portal, dashboard, quoting tool, or custom operational release.',
+        ],
+        faqs: [
+            {
+                q: 'Why are Midland and Odessa covered on one page?',
+                a: 'The paired page reflects the current project evidence and regional operating context. Separate pages should exist only when demand, proof, or customer needs are meaningfully different.',
+            },
+            {
+                q: 'Can you build separate intake for customers, vendors, and applicants?',
+                a: 'Yes, when each path has defined fields, ownership, response expectations, and a real destination. The workflow is mapped before forms or automations are built.',
+            },
+            {
+                q: 'Do you replace existing field-service or operational software?',
+                a: 'Not automatically. The first decision is whether the current tool should be kept, configured, integrated, or replaced. Custom software has to earn its added ownership and maintenance cost.',
+            },
         ],
     },
 ];

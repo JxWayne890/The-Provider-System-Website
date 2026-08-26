@@ -24,7 +24,7 @@ export default function SEO({
 }) {
     // Base configuration
     const siteTitle = 'The Provider System';
-    const defaultDescription = 'The Provider System builds websites, CRM and job operations, automation, practical AI, and custom systems for Texas service businesses.';
+    const defaultDescription = 'The Provider System builds websites and lead systems for West Texas service businesses, connecting local visibility, CRM, and follow-up.';
     const defaultUrl = 'https://theprovidersystem.com';
     const defaultImage = `${defaultUrl}/og-fallback.png`;
     const titleAlreadyBranded = title?.includes(siteTitle);

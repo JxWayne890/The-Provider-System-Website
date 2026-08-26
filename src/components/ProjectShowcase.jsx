@@ -10,7 +10,6 @@ import {
 } from 'lucide-react';
 import ProjectPreviewSurface from './ProjectPreviewSurface';
 import { cn } from '../lib/cn';
-import { supportsLivePreview, warmProjectPreview } from '../lib/projectPreview';
 
 export default function ProjectShowcase({ projects }) {
     const featuredProject = projects.find((project) => project.slug === 'adrians-custom-services') || projects[0];
@@ -40,22 +39,6 @@ export default function ProjectShowcase({ projects }) {
         });
     }, [device, selectedSlug]);
 
-    useEffect(() => {
-        warmProjectPreview(selectedProject);
-
-        const warmRemainingProjects = () => {
-            projects.forEach(warmProjectPreview);
-        };
-
-        if (typeof window.requestIdleCallback === 'function') {
-            const idleId = window.requestIdleCallback(warmRemainingProjects, { timeout: 1800 });
-            return () => window.cancelIdleCallback(idleId);
-        }
-
-        const timeoutId = window.setTimeout(warmRemainingProjects, 1200);
-        return () => window.clearTimeout(timeoutId);
-    }, [projects, selectedProject]);
-
     useEffect(() => () => window.clearTimeout(transitionTimerRef.current), []);
 
     if (!selectedProject) return null;
@@ -64,14 +47,11 @@ export default function ProjectShowcase({ projects }) {
     const previewKey = `${selectedProject.slug}-${device}`;
     const imageFailed = failedPreviewKey === previewKey;
     const domain = getDomain(selectedProject.liveUrl);
-    const livePreviewAvailable = supportsLivePreview(selectedProject);
-    const effectivePreviewMode = livePreviewAvailable ? 'live' : 'snapshot';
     const position = `${String(selectedIndex + 1).padStart(2, '0')} / ${String(projects.length).padStart(2, '0')}`;
 
     const selectProject = (project) => {
         if (!project || project.slug === selectedProject.slug) return;
 
-        warmProjectPreview(project);
         window.clearTimeout(transitionTimerRef.current);
         setPreviousProject(selectedProject);
         setSelectedSlug(project.slug);
@@ -101,7 +81,7 @@ export default function ProjectShowcase({ projects }) {
                         Provider Project Console
                     </div>
                     <p className="mt-1.5 text-sm text-white/46">
-                        Live client websites, motion, video, and responsive views—kept compact.
+                        Responsive launch snapshots with direct links to each live client site.
                     </p>
                 </div>
                 <span className="w-fit rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 font-data text-[0.5rem] uppercase tracking-[0.14em] text-white/45">
@@ -110,7 +90,7 @@ export default function ProjectShowcase({ projects }) {
             </header>
 
             <div className={cn(
-                'relative grid min-h-0',
+                'relative grid min-h-0 grid-cols-[minmax(0,1fr)]',
                 device === 'mobile'
                     ? 'lg:grid-cols-[minmax(0,1fr)_18rem] xl:grid-cols-[minmax(0,48rem)_18rem] xl:justify-center'
                     : 'lg:grid-cols-[minmax(0,1fr)_21rem]'
@@ -125,7 +105,7 @@ export default function ProjectShowcase({ projects }) {
                                 </span>
                             </div>
                             <p className="mt-2 font-data text-[0.48rem] font-bold uppercase tracking-[0.15em] text-sun">
-                                {livePreviewAvailable ? 'Live client site' : 'Project launch preview'}
+                                Project launch preview
                             </p>
                         </div>
 
@@ -189,7 +169,7 @@ export default function ProjectShowcase({ projects }) {
                             <ProjectPreviewSurface
                                 project={selectedProject}
                                 device={device}
-                                mode={effectivePreviewMode}
+                                mode="snapshot"
                                 preview={preview}
                                 imageFailed={imageFailed}
                                 onImageError={() => setFailedPreviewKey(previewKey)}
@@ -241,7 +221,7 @@ export default function ProjectShowcase({ projects }) {
                 </article>
 
                 <aside className={cn(
-                    'relative bg-[#06172b]/88 p-4 sm:p-5',
+                    'relative min-w-0 bg-[#06172b]/88 p-4 sm:p-5',
                     device === 'mobile' ? 'lg:p-4' : 'lg:p-5'
                 )}>
                     <div className="flex items-center justify-between gap-3">
@@ -272,7 +252,7 @@ export default function ProjectShowcase({ projects }) {
                     <div
                         ref={queueRef}
                         className={cn(
-                            'project-console-queue mt-4 flex snap-x gap-2.5 overflow-x-auto pb-1 lg:snap-none lg:flex-col lg:overflow-y-auto lg:overflow-x-hidden lg:pr-1',
+                            'project-console-queue mt-4 flex min-w-0 snap-x gap-2.5 overflow-x-auto pb-1 lg:snap-none lg:flex-col lg:overflow-y-auto lg:overflow-x-hidden lg:pr-1',
                             device === 'mobile' ? 'lg:max-h-[39rem]' : 'lg:max-h-[31.8rem]'
                         )}
                     >
@@ -285,8 +265,6 @@ export default function ProjectShowcase({ projects }) {
                                     data-project-slug={project.slug}
                                     aria-pressed={isActive}
                                     onClick={() => selectProject(project)}
-                                    onPointerEnter={() => warmProjectPreview(project)}
-                                    onFocus={() => warmProjectPreview(project)}
                                     className={cn(
                                         'group relative flex w-[15rem] flex-none snap-start items-center gap-3 overflow-hidden rounded-xl border p-2 text-left transition duration-300 lg:w-full',
                                         isActive

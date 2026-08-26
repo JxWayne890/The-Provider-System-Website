@@ -15,6 +15,14 @@ import { projects } from '../data/projects';
 import { playbooks } from '../data/playbooks';
 import NotFoundPage from './NotFoundPage';
 
+const primaryServiceSlugs = new Set([
+    'websites',
+    'local-seo',
+    'lead-generation',
+    'crm-jobber-alternatives',
+    'lead-follow-up',
+]);
+
 export default function ServiceDetailPage() {
     const { slug } = useParams();
     const service = getService(slug);
@@ -29,6 +37,7 @@ export default function ServiceDetailPage() {
         .map((id) => playbooks.find((playbook) => playbook.slug === id))
         .filter(Boolean);
     const isAiService = service.slug.startsWith('ai-');
+    const isPrimaryService = primaryServiceSlugs.has(service.slug);
 
     const schemas = [
         {
@@ -39,6 +48,7 @@ export default function ServiceDetailPage() {
             url: `https://theprovidersystem.com/services/${service.slug}`,
             provider: { '@id': 'https://theprovidersystem.com/#organization' },
             areaServed: [
+                { '@type': 'AdministrativeArea', name: 'West Texas' },
                 { '@type': 'State', name: 'Texas' },
                 { '@type': 'Country', name: 'United States' },
             ],
@@ -70,20 +80,20 @@ export default function ServiceDetailPage() {
     return (
         <main>
             <SEO
-                title={`${service.shortName} for Service Businesses`}
-                description={service.summary}
+                title={service.seoTitle || `${service.shortName} for Service Businesses`}
+                description={service.seoDescription || service.summary}
                 url={`/services/${service.slug}`}
                 schemas={schemas}
             />
             <PageHero
-                eyebrow={service.kicker}
+                eyebrow={isPrimaryService ? `${service.kicker} · West Texas first` : service.kicker}
                 title={service.name}
                 description={service.promise}
                 breadcrumbs={[{ label: 'Services', to: '/services' }, { label: service.shortName }]}
                 actions={
                     <>
                         <Link to="/start" className="button-primary">
-                            Talk through the workflow
+                            Request a website and lead-flow review
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         {relatedProjects.length > 0 && (
@@ -151,19 +161,19 @@ export default function ServiceDetailPage() {
                     </div>
                     <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-8 sm:p-10">
                         <CircleAlert className="h-7 w-7 text-sun" aria-hidden="true" />
-                        <h3 className="mt-7 text-2xl font-bold">What this page does not promise</h3>
+                        <h3 className="mt-7 text-2xl font-bold">What we verify before the build</h3>
                         <ul className="mt-6 space-y-4 text-sm leading-6 text-white/62">
                             <li className="flex items-start gap-3">
                                 <Minus className="mt-1 h-4 w-4 flex-none text-sun" aria-hidden="true" />
-                                Rankings, lead volume, revenue, savings, or perfect AI accuracy.
+                                The current baseline, practical goal, and measurement plan for this project.
                             </li>
                             <li className="flex items-start gap-3">
                                 <Minus className="mt-1 h-4 w-4 flex-none text-sun" aria-hidden="true" />
-                                Integrations before current documentation, access, and platform limits are verified.
+                                Current documentation, access, data, and third-party platform limits.
                             </li>
                             <li className="flex items-start gap-3">
                                 <Minus className="mt-1 h-4 w-4 flex-none text-sun" aria-hidden="true" />
-                                Ownership or support terms beyond what is written in the project agreement.
+                                Ownership, handoff, support, and the responsibilities written into scope.
                             </li>
                         </ul>
                     </div>
@@ -176,7 +186,7 @@ export default function ServiceDetailPage() {
                         <SectionHeading
                             eyebrow="Related work"
                             title="See the delivered pieces in context."
-                            description="These examples describe observable project scope. No unverified performance result is attached."
+                            description="These examples show how the service fits into a real customer or operating workflow."
                         />
                         <div className="mt-12 grid gap-6 lg:grid-cols-3">
                             {relatedProjects.slice(0, 3).map((project) => (
@@ -214,7 +224,13 @@ export default function ServiceDetailPage() {
                 </section>
             )}
 
-            <SystemReviewCTA />
+            <SystemReviewCTA
+                eyebrow={isPrimaryService ? 'Start with the customer path' : 'Start with the operating need'}
+                title={isPrimaryService ? 'Show us where customers or leads are getting stuck.' : 'Define the workflow before choosing the tool.'}
+                description={isPrimaryService
+                    ? 'Share the current website, inquiry sources, tools, and follow-up process. John will identify the first useful layer before recommending a broader system.'
+                    : 'Share the users, tools, information, handoffs, and exceptions as they exist today. The first release should solve a specific valuable problem.'}
+            />
             {previewProject && (
                 <ProjectPreviewModal project={previewProject} onClose={() => setPreviewProject(null)} />
             )}

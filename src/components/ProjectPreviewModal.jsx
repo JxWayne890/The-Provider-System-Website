@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import ProjectPreviewSurface from './ProjectPreviewSurface';
 import { cn } from '../lib/cn';
-import { supportsLivePreview, warmProjectPreview } from '../lib/projectPreview';
 
 export default function ProjectPreviewModal({ project, onClose }) {
     const [device, setDevice] = useState('desktop');
@@ -58,16 +57,10 @@ export default function ProjectPreviewModal({ project, onClose }) {
     const preview = project.preview?.[device];
     const previewKey = `${project.slug}-${device}`;
     const imageFailed = failedPreviewKey === previewKey;
-    const livePreviewAvailable = supportsLivePreview(project);
-    const effectivePreviewMode = livePreviewAvailable ? 'live' : 'snapshot';
 
     useEffect(() => {
         if (previewViewportRef.current) previewViewportRef.current.scrollTop = 0;
-    }, [device, effectivePreviewMode, project.slug]);
-
-    useEffect(() => {
-        warmProjectPreview(project);
-    }, [project]);
+    }, [device, project.slug]);
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6">
@@ -88,7 +81,7 @@ export default function ProjectPreviewModal({ project, onClose }) {
                     <div>
                         <div className="mb-1 flex items-center gap-2 font-data text-[0.58rem] font-bold uppercase tracking-[0.16em] text-teal">
                             <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-                            Interactive project preview
+                            Project preview
                         </div>
                         <h2 id={`preview-title-${project.slug}`} className="text-xl font-bold text-primary sm:text-2xl">
                             {project.client}
@@ -143,16 +136,14 @@ export default function ProjectPreviewModal({ project, onClose }) {
                                 </div>
                             </div>
                             <p className="text-xs leading-5 text-muted">
-                                {livePreviewAvailable
-                                    ? 'Scroll inside the real site. Forms and popups are disabled.'
-                                    : 'This site blocks secure embedding, so its full-page project record is shown automatically.'}
+                                Scroll through the stored launch view, or open the current live site in a new tab.
                             </p>
                         </div>
 
                         <ProjectPreviewSurface
                             project={project}
                             device={device}
-                            mode={effectivePreviewMode}
+                            mode="snapshot"
                             preview={preview}
                             imageFailed={imageFailed}
                             onImageError={() => setFailedPreviewKey(previewKey)}
@@ -170,9 +161,7 @@ export default function ProjectPreviewModal({ project, onClose }) {
                         </p>
                         <div className="mt-6 border-t border-primary/10 pt-6">
                             <p className="text-xs leading-5 text-muted">
-                                {livePreviewAvailable
-                                    ? 'This sandboxed frame loads the public website so its video, animation, and responsive behavior remain visible. Forms, popups, downloads, and top-level navigation stay restricted.'
-                                    : 'This website blocks third-party framing, so its stored full-page project record is shown as the reliable fallback.'}
+                                This stored desktop or mobile view keeps the portfolio reliable even when a client site blocks third-party embedding. Use the button below for the current public experience.
                             </p>
                         </div>
                         <a

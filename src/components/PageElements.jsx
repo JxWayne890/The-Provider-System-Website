@@ -109,9 +109,9 @@ export function SectionHeading({ eyebrow, title, description, align = 'left', da
 }
 
 export function SystemReviewCTA({
-    eyebrow = 'Start with the bottleneck',
-    title = 'Tell us where the system is breaking.',
-    description = 'Share the current workflow, what is getting lost, and what a better next step would look like. John will review the context before recommending a path.',
+    eyebrow = 'West Texas website and lead systems',
+    title = 'Make the next lead easier to find and follow.',
+    description = 'Share the website, lead-flow, or follow-up problem you want to fix. John will review the context and recommend a practical next step.',
 }) {
     return (
         <section className="bg-sand px-5 py-16 sm:px-8 md:py-20 lg:px-12">
@@ -124,8 +124,8 @@ export function SystemReviewCTA({
                     <p className="mt-4 max-w-2xl leading-7 text-white/65">{description}</p>
                 </div>
                 <div className="border-t border-white/10 p-8 sm:p-10 lg:border-l lg:border-t-0 lg:p-14">
-                    <Link to="/start" className="button-primary whitespace-nowrap">
-                        Start a system review
+                    <Link to="/start" className="button-primary w-full justify-center text-center sm:w-auto">
+                        Request a website and lead-flow review
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                 </div>

@@ -33,7 +33,7 @@ export default function CaseStudyPage() {
         <main>
             <SEO
                 title={`${project.client} Project`}
-                description={`${project.summary} Explore the challenge, delivered scope, and safe project preview.`}
+                description={project.summary}
                 url={`/work/${project.slug}`}
                 schemas={[
                     {
@@ -82,7 +82,7 @@ export default function CaseStudyPage() {
                             </div>
                             <div>
                                 <dt className="text-white/65">Evidence used</dt>
-                                <dd className="mt-1 font-bold text-white/80">Public project experience and observable scope</dd>
+                                <dd className="mt-1 font-bold text-white/80">Public site, stored previews, and observable scope</dd>
                             </div>
                         </dl>
                     </div>
@@ -103,8 +103,8 @@ export default function CaseStudyPage() {
                 <div className="page-shell">
                     <SectionHeading
                         eyebrow="Delivered scope"
-                        title="The pieces that can be observed."
-                        description="This list stays with the public experience and documented project record. It does not infer a business result."
+                        title="What The Provider System delivered."
+                        description="These are the customer-facing and operational pieces included in the documented project scope."
                     />
                     <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {project.delivered.map((item) => (
@@ -120,12 +120,11 @@ export default function CaseStudyPage() {
             <section className="section-pad bg-primary text-white">
                 <div className="page-shell grid gap-12 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
                     <div>
-                        <p className="eyebrow mb-4 text-sun">Safe project preview</p>
-                        <h2 className="section-title">See the real website in context.</h2>
+                        <p className="eyebrow mb-4 text-sun">Responsive project preview</p>
+                        <h2 className="section-title">See the delivered website in context.</h2>
                         <p className="mt-5 leading-7 text-white/62">
-                            Supported projects load inside a restricted frame so video, animation, and responsive
-                            behavior remain visible. If a website blocks secure embedding, the preview automatically
-                            uses its stored full-page project record.
+                            Compare stored desktop and mobile launch views inside the project preview. A direct link
+                            opens the current public site in a new tab whenever one is available.
                         </p>
                         <button type="button" onClick={() => setPreviewOpen(true)} className="button-primary mt-8">
                             Open project preview
@@ -134,10 +133,10 @@ export default function CaseStudyPage() {
                     </div>
                     <div className="rounded-3xl border border-white/10 bg-white/[0.055] p-8 sm:p-10">
                         <ShieldCheck className="h-8 w-8 text-sun" aria-hidden="true" />
-                        <h3 className="mt-7 text-2xl font-bold">Evidence boundary</h3>
+                        <h3 className="mt-7 text-2xl font-bold">Proof before promises</h3>
                         <p className="mt-4 leading-7 text-white/62">
-                            This case study makes no claim about revenue, ranking, lead volume, conversion, or time saved.
-                            Those outcomes require attributable data and client approval.
+                            The launch preview, current live link, and documented scope are available to inspect so
+                            the work can be evaluated in context.
                         </p>
                         <div className="mt-6 flex flex-wrap gap-2">
                             {project.services.map((service) => (
@@ -166,8 +165,8 @@ export default function CaseStudyPage() {
 
             <SystemReviewCTA
                 eyebrow="Start a related project"
-                title="Bring the workflow, not a request to copy the screen."
-                description="A similar engagement begins by understanding your customers, team, data, and constraints. The result should belong to your operation."
+                title="Build the version that fits your business."
+                description="A related engagement begins with your customers, territory, lead path, team, and constraints—not a copied screen."
             />
             {previewOpen && (
                 <ProjectPreviewModal project={project} onClose={() => setPreviewOpen(false)} />

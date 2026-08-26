@@ -1,18 +1,27 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Menu, Phone, X } from 'lucide-react';
 import Logo from './Logo';
 import { serviceGroups, services } from '../data/siteContent';
 import { cn } from '../lib/cn';
 
 const primaryNav = [
-    { label: 'Industries', to: '/industries' },
-    { label: 'Texas', to: '/texas' },
     { label: 'Work', to: '/work' },
+    { label: 'West Texas', to: '/texas' },
+    { label: 'Industries', to: '/industries' },
     { label: 'Process', to: '/process' },
-    { label: 'Playbooks', to: '/playbooks' },
     { label: 'About', to: '/about' },
 ];
+
+const featuredServiceGroups = serviceGroups.filter((group) =>
+    ['visibility', 'operations'].includes(group.id)
+);
+
+const featuredServices = featuredServiceGroups.flatMap((group) =>
+    group.serviceSlugs
+        .map((slug) => services.find((service) => service.slug === slug))
+        .filter(Boolean)
+);
 
 export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -76,8 +85,20 @@ export default function Navbar() {
 
     return (
         <header className="fixed inset-x-0 top-0 z-50">
-            <div className="bg-primary px-5 py-2 text-center font-data text-[0.62rem] font-bold uppercase tracking-[0.18em] text-white/70">
-                Texas-first systems <span className="mx-2 text-sun">•</span> Remote delivery available nationwide
+            <div className="bg-primary px-5 py-2 font-data text-[0.62rem] font-bold uppercase tracking-[0.16em] text-white/70">
+                <div className="page-shell flex items-center justify-center gap-4 sm:justify-between">
+                    <span>
+                        San Angelo based <span className="mx-2 text-sun">•</span> Serving West Texas
+                    </span>
+                    <a
+                        href="tel:+13252495191"
+                        className="hidden items-center gap-2 text-white/80 transition hover:text-white sm:inline-flex"
+                        aria-label="Call The Provider System at 325 249 5191"
+                    >
+                        <Phone className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
+                        (325) 249-5191
+                    </a>
+                </div>
             </div>
             <nav
                 aria-label="Primary navigation"
@@ -113,7 +134,7 @@ export default function Navbar() {
                                     className="absolute left-0 top-[calc(100%+0.8rem)] w-[46rem] rounded-3xl border border-primary/10 bg-white p-3 shadow-lift"
                                 >
                                     <div className="grid grid-cols-2 gap-2">
-                                        {serviceGroups.map((group) => (
+                                        {featuredServiceGroups.map((group) => (
                                             <div key={group.id} className="rounded-2xl bg-background/80 p-4">
                                                 <p className="mb-3 font-data text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
                                                     {group.number} — {group.name}
@@ -141,7 +162,7 @@ export default function Navbar() {
                                         onClick={closeMenus}
                                         className="mt-2 flex items-center justify-between rounded-2xl bg-primary px-5 py-4 text-sm font-bold text-white transition hover:bg-dark"
                                     >
-                                        Explore every service
+                                        View all services
                                         <ArrowUpRight className="h-4 w-4 text-sun" aria-hidden="true" />
                                     </Link>
                                 </div>
@@ -166,7 +187,7 @@ export default function Navbar() {
 
                     <div className="hidden xl:block">
                         <Link to="/start" className="button-primary">
-                            Start a system review
+                            Request a website and lead-flow review
                         </Link>
                     </div>
 
@@ -208,7 +229,7 @@ export default function Navbar() {
                     <div className="px-5 py-8">
                         <p className="eyebrow mb-4">Explore services</p>
                         <div className="grid gap-2 sm:grid-cols-2">
-                            {services.map((service) => (
+                            {featuredServices.map((service) => (
                                 <Link
                                     key={service.slug}
                                     to={`/services/${service.slug}`}
@@ -243,7 +264,7 @@ export default function Navbar() {
                         </div>
 
                         <Link to="/start" onClick={closeMenus} className="button-primary mt-8 w-full">
-                            Start a system review
+                            Request a website and lead-flow review
                         </Link>
                     </div>
                 </div>

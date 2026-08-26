@@ -31,7 +31,7 @@ export default function AboutPage() {
         <main>
             <SEO
                 title="About The Provider System"
-                description="Meet founder John W Johnson and learn how The Provider System approaches websites, CRM, automation, AI, and custom systems for service businesses."
+                description="Meet John W Johnson, founder of The Provider System, a West Texas website and lead-systems partner for service businesses."
                 url="/about"
                 schemas={[
                     {
@@ -44,13 +44,13 @@ export default function AboutPage() {
             />
             <PageHero
                 eyebrow="About"
-                title="A practitioner-led agency for the systems between the customer and the work."
-                description="The Provider System was founded by John W Johnson to close an implementation gap: service businesses are often sold a website, CRM, or AI tool without a clear plan for how the handoffs should work together."
+                title="West Texas websites and lead systems, built with the owner in the room."
+                description="John W Johnson founded The Provider System to connect the website customers see with the lead routing, follow-up, and operating tools the team uses next."
                 breadcrumbs={[{ label: 'About' }]}
                 actions={
                     <>
                         <Link to="/start" className="button-primary">
-                            Work directly with John
+                            Request a website and lead-flow review
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         <Link to="/process" className="button-ghost-dark">
@@ -125,13 +125,13 @@ export default function AboutPage() {
                 <div className="page-shell grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
                     <div>
                         <MapPin className="h-8 w-8 text-sun" aria-hidden="true" />
-                        <p className="eyebrow mb-4 mt-8 text-sun">Texas point of view</p>
-                        <h2 className="section-title">Local proof without invented proximity.</h2>
+                        <p className="eyebrow mb-4 mt-8 text-sun">West Texas focus</p>
+                        <h2 className="section-title">Built around the markets the work already serves.</h2>
                     </div>
                     <div className="space-y-5 text-lg leading-8 text-white/65">
                         <p>
-                            Texas is the primary market focus because the project record already spans Abilene,
-                            San Angelo, Anson, the Big Country, the Permian Basin, and broader West Texas service areas.
+                            West Texas is the primary market because the project record already spans San Angelo,
+                            Abilene, Anson, the Big Country, the Permian Basin, and broader regional service areas.
                         </p>
                         <p>
                             The Provider System does not claim an office, address, or staffed location where one has
@@ -142,7 +142,7 @@ export default function AboutPage() {
                             Remote engagements remain available nationwide when the problem and working model are a fit.
                         </p>
                         <Link to="/texas" className="button-primary mt-3">
-                            Explore Texas work
+                            Explore West Texas markets
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                     </div>

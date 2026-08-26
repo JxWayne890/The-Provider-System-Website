@@ -1,16 +1,33 @@
-# React + Vite
+# The Provider System Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Public website for The Provider System: websites and lead systems for West Texas service businesses.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## Release checks
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm run lint
+npm run build
+```
 
-## Expanding the ESLint configuration
+The production build regenerates the sitemap, builds the Vite app, and prerenders every canonical route.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Runtime configuration
+
+The public contact form is served by `api/contact.js`. Configure server secrets in the deployment project; never commit them.
+
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL` (optional override; defaults to `The Provider System <notifications@theprovidersystem.com>`)
+- `CONTACT_NOTIFICATION_EMAIL` (optional override; defaults to `theprovidersystem@gmail.com`)
+
+Public analytics is optional and only loads when this build-time variable is configured:
+
+- `VITE_GA_MEASUREMENT_ID`
+
+The private Search Console/Bing reporting app lives in `analytics-app/` and deploys as a separate Vercel project.

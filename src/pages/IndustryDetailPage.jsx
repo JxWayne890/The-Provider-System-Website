@@ -9,6 +9,15 @@ import { getIndustry, services } from '../data/siteContent';
 import { projects } from '../data/projects';
 import NotFoundPage from './NotFoundPage';
 
+const industrySeoNames = {
+    plumbing: 'Plumbing Contractor',
+    electrical: 'Electrical & Industrial',
+    hvac: 'HVAC Contractor',
+    roofing: 'Roofing Contractor',
+    'oilfield-industrial': 'Oilfield & Industrial',
+    'service-businesses': 'Service Business',
+};
+
 export default function IndustryDetailPage() {
     const { slug } = useParams();
     const industry = getIndustry(slug);
@@ -22,23 +31,24 @@ export default function IndustryDetailPage() {
     const relevantProjects = industry.relatedProjects
         .map((id) => projects.find((project) => project.slug === id))
         .filter(Boolean);
+    const industrySeoName = industrySeoNames[industry.slug] || industry.name;
 
     return (
         <main>
             <SEO
-                title={`Digital Systems for ${industry.name}`}
-                description={`Digital systems for ${industry.name}: websites, lead capture, CRM, automation, and practical AI shaped around the operating workflow.`}
+                title={`${industrySeoName} Websites & Lead Systems`}
+                description={`Websites, lead capture, CRM, and follow-up for West Texas ${industry.name.toLowerCase()}, shaped around the customer and operating workflow.`}
                 url={`/industries/${industry.slug}`}
             />
             <PageHero
-                eyebrow="Industry operating guide"
+                eyebrow="West Texas industry guide"
                 title={industry.name}
                 description={industry.summary}
                 breadcrumbs={[{ label: 'Industries', to: '/industries' }, { label: industry.name }]}
                 actions={
                     <>
                         <Link to="/start" className="button-primary">
-                            Map this workflow
+                            Request a website and lead-flow review
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         {relevantProjects.length > 0 && (

@@ -1,14 +1,29 @@
 const BASE_URL = 'https://theprovidersystem.com';
+const BUSINESS_PHONE = '+1-325-249-5191';
+const BUSINESS_EMAIL = 'theprovidersystem@gmail.com';
+const WEST_TEXAS_SERVICE_AREAS = [
+    { "@type": "AdministrativeArea", "name": "West Texas" },
+    { "@type": "City", "name": "San Angelo" },
+    { "@type": "AdministrativeArea", "name": "Concho Valley" },
+    { "@type": "City", "name": "Abilene" },
+    { "@type": "AdministrativeArea", "name": "Big Country" },
+    { "@type": "City", "name": "Midland" },
+    { "@type": "City", "name": "Odessa" },
+    { "@type": "AdministrativeArea", "name": "Permian Basin" },
+    { "@type": "City", "name": "Lubbock" },
+];
 
 /**
  * Full Organization / ProfessionalService schema for The Provider System.
  */
 export function buildOrganizationSchema() {
     return {
-        "@type": "Organization",
+        "@type": ["Organization", "ProfessionalService"],
         "@id": `${BASE_URL}/#organization`,
         "name": "The Provider System",
         "url": BASE_URL,
+        "telephone": BUSINESS_PHONE,
+        "email": BUSINESS_EMAIL,
         "logo": {
             "@type": "ImageObject",
             "url": `${BASE_URL}/favicon.svg`,
@@ -19,10 +34,13 @@ export function buildOrganizationSchema() {
         },
         "contactPoint": {
             "@type": "ContactPoint",
-            "email": "theprovidersystem@gmail.com",
+            "telephone": BUSINESS_PHONE,
+            "email": BUSINESS_EMAIL,
             "contactType": "customer service",
             "availableLanguage": "English",
+            "areaServed": "US-TX",
         },
+        "areaServed": WEST_TEXAS_SERVICE_AREAS,
         "knowsAbout": [
             "blue-collar websites",
             "local service business websites",
@@ -33,7 +51,6 @@ export function buildOrganizationSchema() {
             "booking systems",
             "custom operating systems",
         ],
-        "sameAs": [],
     };
 }
 
@@ -56,10 +73,7 @@ export function buildServiceSchema(service) {
             "@id": `${BASE_URL}/#organization`,
             "name": "The Provider System",
         },
-        "areaServed": {
-            "@type": "Country",
-            "name": "United States",
-        },
+        "areaServed": WEST_TEXAS_SERVICE_AREAS,
     };
 }
 
@@ -204,19 +218,27 @@ export function buildSoftwareApplicationSchema(app) {
  */
 export function buildLocalBusinessSchema() {
     return {
-        "@type": ["LocalBusiness", "ProfessionalService"],
-        "@id": `${BASE_URL}/#localbusiness`,
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": `${BASE_URL}/#organization`,
         "name": "The Provider System",
         "url": BASE_URL,
         "logo": `${BASE_URL}/favicon.svg`,
         "image": `${BASE_URL}/og-fallback.png`,
-        "email": "theprovidersystem@gmail.com",
+        "telephone": BUSINESS_PHONE,
+        "email": BUSINESS_EMAIL,
         "founder": {
             "@type": "Person",
             "name": "John W Johnson",
         },
-        "description": "The Provider System builds websites, CRMs, follow-up systems, and custom operating tools for blue-collar service businesses and select high-value operators.",
-        "priceRange": "$$",
+        "description": "The Provider System builds websites, local SEO foundations, lead follow-up, CRM workflows, automation, and custom tools for West Texas service businesses.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": BUSINESS_PHONE,
+            "email": BUSINESS_EMAIL,
+            "contactType": "sales and customer service",
+            "availableLanguage": "English",
+            "areaServed": "US-TX",
+        },
         "knowsAbout": [
             "blue-collar websites",
             "local service business websites",
@@ -226,9 +248,6 @@ export function buildLocalBusinessSchema() {
             "booking systems",
             "custom operating systems",
         ],
-        "areaServed": {
-            "@type": "Country",
-            "name": "United States",
-        },
+        "areaServed": WEST_TEXAS_SERVICE_AREAS,
     };
 }

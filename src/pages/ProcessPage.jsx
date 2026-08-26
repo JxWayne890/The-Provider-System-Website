@@ -38,8 +38,8 @@ export default function ProcessPage() {
     return (
         <main>
             <SEO
-                title="The Provider System Process"
-                description="See how website, CRM, automation, AI, and custom system projects move from current-state assessment through scoped build, verification, launch, and handoff."
+                title="West Texas Website & Lead System Process"
+                description="See how a West Texas website or lead-system project moves from assessment through scoped build, verification, launch, and handoff."
                 url="/process"
             />
             <PageHero
@@ -50,7 +50,7 @@ export default function ProcessPage() {
                 actions={
                     <>
                         <Link to="/start" className="button-primary">
-                            Start with the assessment
+                            Request a website and lead-flow review
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         <Link to="/work" className="button-ghost-dark">

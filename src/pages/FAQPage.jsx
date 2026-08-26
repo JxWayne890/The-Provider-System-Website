@@ -10,7 +10,7 @@ const faqGroups = [
         items: [
             {
                 q: 'What kind of businesses does The Provider System work with?',
-                a: 'The primary focus is Texas service businesses—especially trades, field services, local operators, and selected professional or high-value service companies. Remote projects outside Texas remain available when the operating problem and working model fit.',
+                a: 'The primary focus is West Texas service businesses—especially trades, field services, commercial and industrial operators, and selected local service companies. Remote projects outside West Texas remain available when the operating problem and working model fit.',
             },
             {
                 q: 'Do I need to know whether I need a website, CRM, automation, or AI system?',
@@ -57,14 +57,14 @@ const faqGroups = [
         ],
     },
     {
-        title: 'Texas and remote delivery',
+        title: 'West Texas and remote delivery',
         items: [
             {
                 q: 'Where is The Provider System located?',
-                a: 'The public site does not claim a street address or office location. Texas is the primary market focus, supported by project work across Abilene, San Angelo, Anson, the Big Country, the Permian Basin, and broader West Texas service markets.',
+                a: 'The Provider System is anchored in San Angelo and serves West Texas through a founder-led, remote-first delivery model. The site does not claim additional offices in Abilene, Lubbock, Midland, or Odessa.',
             },
             {
-                q: 'Do you create a page for every Texas city?',
+                q: 'Do you create a page for every West Texas city?',
                 a: 'No. A regional or city page should contain distinct local context or proof. Otherwise, statewide, service, industry, and case-study pages provide a more useful structure than a doorway-page matrix.',
             },
             {
@@ -80,7 +80,7 @@ export default function FAQPage() {
         <main>
             <SEO
                 title="Frequently Asked Questions"
-                description="Answers about The Provider System services, project fit, pricing, ownership, AI safeguards, Texas coverage, and remote delivery."
+                description="Answers about West Texas website and lead-system services, project fit, pricing, ownership, automation, and remote delivery."
                 url="/faq"
             />
             <PageHero
@@ -90,7 +90,7 @@ export default function FAQPage() {
                 breadcrumbs={[{ label: 'FAQ' }]}
                 actions={
                     <Link to="/start" className="button-primary">
-                        Ask about your system
+                        Request a website and lead-flow review
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                 }
