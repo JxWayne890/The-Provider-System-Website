@@ -39,6 +39,7 @@ const routeEntries = [
   { path: '/about' },
   { path: '/process' },
   { path: '/start' },
+  { path: '/walkthroughs' },
   { path: '/faq' },
   { path: '/privacy-policy' },
   { path: '/sms-consent' },

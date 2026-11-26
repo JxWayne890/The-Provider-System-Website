@@ -19,6 +19,7 @@ const PlaybookPage = lazy(() => import('./pages/PlaybookPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ProcessPage = lazy(() => import('./pages/ProcessPage'));
 const StartPage = lazy(() => import('./pages/StartPage'));
+const WalkthroughsPage = lazy(() => import('./pages/WalkthroughsPage'));
 const FAQPage = lazy(() => import('./pages/FAQPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const SmsConsentPage = lazy(() => import('./pages/SmsConsentPage'));
@@ -74,6 +75,7 @@ function App() {
                             <Route path="/about" element={<AboutPage />} />
                             <Route path="/process" element={<ProcessPage />} />
                             <Route path="/start" element={<StartPage />} />
+                            <Route path="/walkthroughs" element={<WalkthroughsPage />} />
                             <Route path="/faq" element={<FAQPage />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                             <Route path="/sms-consent" element={<SmsConsentPage />} />
