@@ -39,7 +39,6 @@ const routeEntries = [
   { path: '/about' },
   { path: '/process' },
   { path: '/start' },
-  { path: '/walkthroughs' },
   { path: '/faq' },
   { path: '/privacy-policy' },
   { path: '/sms-consent' },
@@ -62,6 +61,8 @@ export const canonicalRoutes = Object.freeze(
 );
 
 const exactRedirects = [
+  ['/walkthroughs', 'https://www.mastercleanhq.com/walkthroughs'],
+  ['/walkthroughs/', 'https://www.mastercleanhq.com/walkthroughs'],
   ['/websites', '/services/websites'],
   ['/lead-crm-system', '/services/crm-jobber-alternatives'],
   ['/custom-systems', '/services/custom-systems'],
@@ -300,8 +301,8 @@ const redirectSources = new Set();
 const canonicalRouteSet = new Set(canonicalRoutes);
 
 for (const { source, destination } of legacyRedirects) {
-  if (!source.startsWith('/') || !destination.startsWith('/')) {
-    throw new Error(`Redirect paths must be root-relative: ${source} -> ${destination}`);
+  if (!source.startsWith('/')) {
+    throw new Error(`Redirect source must be root-relative: ${source}`);
   }
   if (/[*:?()]/.test(source)) {
     throw new Error(`Redirect source must be exact: ${source}`);
@@ -312,8 +313,9 @@ for (const { source, destination } of legacyRedirects) {
   if (canonicalRouteSet.has(source)) {
     throw new Error(`Canonical route cannot also redirect: ${source}`);
   }
-  if (!canonicalRouteSet.has(destination)) {
-    throw new Error(`Redirect target is not canonical: ${source} -> ${destination}`);
+  const isExternalHttps = destination.startsWith('https://') && URL.canParse(destination);
+  if (!canonicalRouteSet.has(destination) && !isExternalHttps) {
+    throw new Error(`Redirect target must be canonical or an absolute HTTPS URL: ${source} -> ${destination}`);
   }
   redirectSources.add(source);
 }

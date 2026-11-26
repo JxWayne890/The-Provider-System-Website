@@ -1,6 +1,16 @@
 {
   "redirects": [
     {
+      "source": "/walkthroughs",
+      "destination": "https://www.mastercleanhq.com/walkthroughs",
+      "permanent": true
+    },
+    {
+      "source": "/walkthroughs/",
+      "destination": "https://www.mastercleanhq.com/walkthroughs",
+      "permanent": true
+    },
+    {
       "source": "/websites",
       "destination": "/services/websites",
       "permanent": true
