@@ -86,7 +86,7 @@ export default function Navbar() {
         <header className="fixed inset-x-0 top-0 z-50">
             <nav
                 aria-label="Primary navigation"
-                className="border-b border-primary/10 bg-background/95 shadow-[0_10px_35px_rgba(8,27,44,0.06)] backdrop-blur-xl"
+                className="relative border-b border-primary/10 bg-background/95 shadow-[0_10px_35px_rgba(8,27,44,0.06)] backdrop-blur-xl"
             >
                 <div className="page-shell flex h-[4.6rem] items-center justify-between">
                     <Link to="/" onClick={closeMenus} aria-label="The Provider System home">
@@ -94,7 +94,7 @@ export default function Navbar() {
                     </Link>
 
                     <div className="hidden items-center gap-1 lg:flex">
-                        <div className="relative">
+                        <div>
                             <button
                                 type="button"
                                 onClick={() => setServicesOpen((open) => !open)}
@@ -115,7 +115,7 @@ export default function Navbar() {
                             {servicesOpen && (
                                 <div
                                     id="services-menu"
-                                    className="absolute left-0 top-[calc(100%+0.8rem)] w-[46rem] rounded-3xl border border-primary/10 bg-white p-3 shadow-lift"
+                                    className="absolute left-1/2 top-full w-[46rem] -translate-x-1/2 rounded-3xl border border-primary/10 bg-white p-3 shadow-lift"
                                 >
                                     <div className="grid grid-cols-2 gap-2">
                                         {featuredServiceGroups.map((group) => (
