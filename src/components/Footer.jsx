@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, Phone } from 'lucide-react';
+import { ArrowUpRight, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 
@@ -19,42 +19,24 @@ const companyLinks = [
     ['FAQ', '/faq'],
 ];
 
-const marketLinks = [
-    ['San Angelo', '/texas/san-angelo-concho-valley'],
-    ['Abilene', '/texas/abilene-big-country'],
-    ['Midland–Odessa', '/texas/midland-odessa'],
-    ['Lubbock', '/texas/lubbock'],
-    ['All West Texas markets', '/texas'],
-];
-
 export default function Footer() {
     return (
         <footer className="bg-primary px-5 pb-10 pt-20 text-white sm:px-8 lg:px-12">
             <div className="mx-auto max-w-7xl">
-                <div className="grid gap-12 border-b border-white/10 pb-16 sm:grid-cols-2 lg:grid-cols-[1.35fr_0.75fr_0.72fr_0.65fr]">
+                <div className="grid gap-12 border-b border-white/10 pb-16 sm:grid-cols-2 lg:grid-cols-[1.35fr_0.75fr_0.72fr]">
                     <div>
                         <Logo inverted className="mb-7" />
                         <h2 className="max-w-xl font-heading text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl">
                             Websites that win trust. Lead systems that keep the opportunity moving.
                         </h2>
                         <p className="mt-5 max-w-xl text-base leading-7 text-white/60">
-                            The Provider System builds websites and local visibility for West Texas service
-                            businesses, then connects inquiries to CRM and follow-up. Based in San Angelo;
-                            nationwide remote engagements remain available when the fit is right.
+                            The Provider System builds websites, CRMs, and lead systems for service businesses, then connects every inquiry to follow up.
                         </p>
                         <div className="mt-8 flex flex-col items-start gap-3">
                             <Link to="/start" className="button-primary">
                                 Request a website and lead-flow review
                                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                             </Link>
-                            <a
-                                href="tel:+13252495191"
-                                className="button-ghost-dark"
-                                aria-label="Call The Provider System at 325 249 5191"
-                            >
-                                <Phone className="h-4 w-4" aria-hidden="true" />
-                                (325) 249-5191
-                            </a>
                         </div>
                     </div>
 
@@ -64,21 +46,6 @@ export default function Footer() {
                         </h3>
                         <ul className="space-y-3">
                             {serviceLinks.map(([label, to]) => (
-                                <li key={to}>
-                                    <Link to={to} className="text-sm font-semibold text-white/70 transition hover:text-white">
-                                        {label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 className="mb-5 font-data text-[0.65rem] font-bold uppercase tracking-[0.2em] text-sun">
-                            West Texas
-                        </h3>
-                        <ul className="space-y-3">
-                            {marketLinks.map(([label, to]) => (
                                 <li key={to}>
                                     <Link to={to} className="text-sm font-semibold text-white/70 transition hover:text-white">
                                         {label}
@@ -113,13 +80,6 @@ export default function Footer() {
                         <Link to="/sms-consent" className="transition hover:text-white">
                             SMS communications
                         </Link>
-                        <a
-                            href="tel:+13252495191"
-                            className="transition hover:text-white"
-                            aria-label="Call The Provider System at 325 249 5191"
-                        >
-                            (325) 249-5191
-                        </a>
                         <a href="mailto:theprovidersystem@gmail.com" className="transition hover:text-white">
                             <Mail className="mr-1.5 inline h-3.5 w-3.5" aria-hidden="true" />
                             theprovidersystem@gmail.com

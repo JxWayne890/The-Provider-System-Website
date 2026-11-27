@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowUpRight, ChevronDown, Menu, Phone, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import Logo from './Logo';
 import { serviceGroups, services } from '../data/siteContent';
 import { cn } from '../lib/cn';
 
 const primaryNav = [
     { label: 'Work', to: '/work' },
-    { label: 'West Texas', to: '/texas' },
     { label: 'Industries', to: '/industries' },
     { label: 'Process', to: '/process' },
     { label: 'About', to: '/about' },
@@ -85,24 +84,9 @@ export default function Navbar() {
 
     return (
         <header className="fixed inset-x-0 top-0 z-50">
-            <div className="bg-primary px-5 py-2 font-data text-[0.62rem] font-bold uppercase tracking-[0.16em] text-white/70">
-                <div className="page-shell flex items-center justify-center gap-4 sm:justify-between">
-                    <span>
-                        San Angelo based <span className="mx-2 text-sun">•</span> Serving West Texas
-                    </span>
-                    <a
-                        href="tel:+13252495191"
-                        className="hidden items-center gap-2 text-white/80 transition hover:text-white sm:inline-flex"
-                        aria-label="Call The Provider System at 325 249 5191"
-                    >
-                        <Phone className="h-3.5 w-3.5 text-sun" aria-hidden="true" />
-                        (325) 249-5191
-                    </a>
-                </div>
-            </div>
             <nav
                 aria-label="Primary navigation"
-                className="border-b border-primary/10 bg-background/95 shadow-[0_10px_35px_rgba(8,27,44,0.06)] backdrop-blur-xl"
+                className="relative border-b border-primary/10 bg-background/95 shadow-[0_10px_35px_rgba(8,27,44,0.06)] backdrop-blur-xl"
             >
                 <div className="page-shell flex h-[4.6rem] items-center justify-between">
                     <Link to="/" onClick={closeMenus} aria-label="The Provider System home">
@@ -110,7 +94,7 @@ export default function Navbar() {
                     </Link>
 
                     <div className="hidden items-center gap-1 lg:flex">
-                        <div className="relative">
+                        <div>
                             <button
                                 type="button"
                                 onClick={() => setServicesOpen((open) => !open)}
@@ -131,7 +115,7 @@ export default function Navbar() {
                             {servicesOpen && (
                                 <div
                                     id="services-menu"
-                                    className="absolute left-0 top-[calc(100%+0.8rem)] w-[46rem] rounded-3xl border border-primary/10 bg-white p-3 shadow-lift"
+                                    className="absolute left-1/2 top-full w-[46rem] -translate-x-1/2 rounded-3xl border border-primary/10 bg-white p-3 shadow-lift"
                                 >
                                     <div className="grid grid-cols-2 gap-2">
                                         {featuredServiceGroups.map((group) => (
